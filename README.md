@@ -910,3 +910,16 @@ Three fixes came from reading the transcripts:
 
 Caveat: these 16 tasks were used to find the fixes, so they are no longer blind. A claim
 about Notion needs a fresh blind set, and the code arm has no Claude Code equivalent here.
+
+## Notion, second blind set through Claude Code
+
+Twelve new tasks (8 read, 4 write, `src/notion/blind2tasks.ts`), written and sha256-frozen with the code they run on (`results/notion-blind2-freeze.sha256`) before any run. 3 reps per task, headless Claude Code on the subscription (`src/client_bench.ts --suite=notion-blind2`), so `usd` is notional. Log: `results/client-notion-blind2.jsonl`.
+
+| model | arm | pass | notional USD | mean turns | median per-task cost ratio glossary4/native |
+|---|---|---|---|---|---|
+| Sonnet 5.5 | glossary4 | 36/36 | 1.86 | 5.0 | 0.70 (0.46 to 1.21) |
+| Sonnet 5.5 | native | 35/36 | 2.98 | 5.7 | |
+| Haiku 5.5 | glossary4 | 35/36 | 0.12 | 4.8 | 0.65 (0.54 to 0.91) |
+| Haiku 5.5 | native | 32/36 | 0.17 | 5.7 | |
+
+Failures: native fails to uncheck the to-do in `n2-desmarcar-acuerdo` (Haiku 3/3, Sonnet 1/3), and Haiku native miscounts `n2-revisadas-s3` once. Glossary4 fails one Haiku run of `n2-onboarding-paso`. No code changed during the run.
