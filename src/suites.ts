@@ -15,6 +15,7 @@ import { bulkSeed, bulkTasks } from "./github/bulk.ts";
 import { bulk2Seed, bulk2Tasks, exactSeed, exactTasks } from "./github/v3tasks.ts";
 import { calcSeed, calcTasks } from "./github/calctasks.ts";
 import { blindSeed, blindTasks } from "./github/blindtasks.ts";
+import { set4Seed, set4Tasks } from "./github/set4tasks.ts";
 import { blind2Seed, blind2Tasks } from "./github/blind2tasks.ts";
 import { blind3Seed, blind3Tasks } from "./github/blind3tasks.ts";
 import { safetySeed, safetyTasks } from "./github/safetytasks.ts";
@@ -195,6 +196,7 @@ export const githubBulk2Suite = makeGithubSuite("github-bulk2", bulk2Tasks, bulk
 export const githubExactSuite = makeGithubSuite("github-exact", exactTasks, exactSeed);
 export const githubCalcSuite = makeGithubSuite("github-calc", calcTasks, calcSeed);
 export const githubBlindSuite = makeGithubSuite("github-blind", blindTasks, blindSeed);
+export const githubSet4Suite = makeGithubSuite("github-set4", set4Tasks, set4Seed);
 export const githubBlind2Suite = makeGithubSuite("github-blind2", blind2Tasks, blind2Seed);
 export const githubBlind3Suite = makeGithubSuite("github-blind3", blind3Tasks, blind3Seed);
 export const githubSafetySuite = makeGithubSuite("github-safety", safetyTasks, safetySeed);
@@ -202,6 +204,6 @@ export const githubSafetySuite = makeGithubSuite("github-safety", safetyTasks, s
 export const suites: Record<string, Suite> = {
   memory: memorySuite, github: githubSuite, "github-heldout": githubHeldoutSuite,
   "github-hard": githubHardSuite, "github-bulk": githubBulkSuite,
-  "github-bulk2": githubBulk2Suite, "github-exact": githubExactSuite, "github-calc": githubCalcSuite, "github-blind": githubBlindSuite, "github-blind2": githubBlind2Suite, "github-blind3": githubBlind3Suite, "github-safety": githubSafetySuite,
+  "github-bulk2": githubBulk2Suite, "github-exact": githubExactSuite, "github-calc": githubCalcSuite, "github-blind": githubBlindSuite, "github-set4": githubSet4Suite, "github-blind2": githubBlind2Suite, "github-blind3": githubBlind3Suite, "github-safety": githubSafetySuite,
   ...extraSuites,
 };
