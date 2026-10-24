@@ -674,7 +674,7 @@ export function startMock(port = 8787) {
     // A route the fake does not know is a harness gap, not a model error: record it.
     const detail = url.pathname === "/api/graphql" ? " " + (await req.clone().text().catch(() => "")).slice(0, 1500) : "";
     unhandled.get(token)?.push(`${req.method} ${url.pathname}${url.search}${detail}`);
-    return json({ message: `glosa mock: unhandled route ${req.method} ${url.pathname}` }, 501);
+    return json({ message: `phrasebook mock: unhandled route ${req.method} ${url.pathname}` }, 501);
   });
 }
 

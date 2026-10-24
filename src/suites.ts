@@ -86,7 +86,7 @@ export const memorySuite: Suite = {
   isCommandError: (e): e is Error => e instanceof MemoryCommandError,
   async start(taskId) {
     const task = memoryTasks.find((t) => t.id === taskId)!;
-    const dir = Deno.makeTempDirSync({ prefix: "glosa-" });
+    const dir = Deno.makeTempDirSync({ prefix: "phrasebook-" });
     const memFile = `${dir}/memory.jsonl`;
     writeSeed(memFile, task.seed);
     const server = await startMemoryServer(memFile);
@@ -102,7 +102,7 @@ export const memorySuite: Suite = {
     };
   },
   async listTools() {
-    const dir = Deno.makeTempDirSync({ prefix: "glosa-" });
+    const dir = Deno.makeTempDirSync({ prefix: "phrasebook-" });
     const s = await startMemoryServer(`${dir}/m.jsonl`);
     await s.close();
     Deno.removeSync(dir, { recursive: true });
@@ -124,7 +124,7 @@ export async function startGithubServer(token: string, toolsets = "default") {
     env: { PATH: Deno.env.get("PATH") ?? "", GITHUB_PERSONAL_ACCESS_TOKEN: token },
     stderr: "ignore",
   });
-  const client = new Client({ name: "glosa", version: "0.1.0" });
+  const client = new Client({ name: "phrasebook", version: "0.1.0" });
   await client.connect(transport);
   const { tools } = await client.listTools();
   async function call(name: string, args: Record<string, unknown>): Promise<ToolResult> {

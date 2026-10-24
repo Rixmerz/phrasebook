@@ -15,7 +15,7 @@ export async function startMemoryServer(memoryFile: string) {
     env: { ...Deno.env.toObject(), MEMORY_FILE_PATH: memoryFile },
     stderr: "ignore",
   });
-  const client = new Client({ name: "glosa", version: "0.1.0" });
+  const client = new Client({ name: "phrasebook", version: "0.1.0" });
   await client.connect(transport);
   const { tools } = await client.listTools();
 

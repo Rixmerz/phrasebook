@@ -45,14 +45,14 @@ function mcpConfig(arm: string, token: string) {
 async function runOnce(model: string, arm: string, task: GhTask, rep: number) {
   const token = `client-${crypto.randomUUID()}`;
   await mock("/__seed", token, { method: "POST", body: JSON.stringify(suite.seed()) });
-  const dir = Deno.makeTempDirSync({ prefix: "glosa-client-" });
+  const dir = Deno.makeTempDirSync({ prefix: "phrasebook-client-" });
   const cfg = `${dir}/mcp.json`;
   Deno.writeTextFileSync(cfg, JSON.stringify(mcpConfig(arm, token)));
   const t0 = performance.now();
   const cmd = new Deno.Command("claude", {
     args: [
       "-p", task.prompt, "--bare", "--strict-mcp-config", "--mcp-config", cfg, "--model", model,
-      ...(Deno.env.get("GLOSA_TRACE") ? ["--output-format", "stream-json", "--verbose"] : ["--output-format", "json"]),
+      ...(Deno.env.get("PHRASEBOOK_TRACE") ? ["--output-format", "stream-json", "--verbose"] : ["--output-format", "json"]),
       "--no-session-persistence", "--max-turns", "15",
       "--allowedTools", "mcp__gh", "--disallowedTools", ...DISALLOWED,
     ],
@@ -71,9 +71,9 @@ async function runOnce(model: string, arm: string, task: GhTask, rep: number) {
   let res: Record<string, unknown> = {};
   try {
     const raw = new TextDecoder().decode(out.stdout);
-    // With GLOSA_TRACE the output is a JSON event stream: keep it, and read the final result event.
-    if (Deno.env.get("GLOSA_TRACE")) Deno.writeTextFileSync(`scratch/trace-${model}-${arm}-${task.id}-${rep}.jsonl`, raw);
-    res = Deno.env.get("GLOSA_TRACE") ? JSON.parse(raw.trim().split("\n").at(-1)!) : JSON.parse(raw);
+    // With PHRASEBOOK_TRACE the output is a JSON event stream: keep it, and read the final result event.
+    if (Deno.env.get("PHRASEBOOK_TRACE")) Deno.writeTextFileSync(`scratch/trace-${model}-${arm}-${task.id}-${rep}.jsonl`, raw);
+    res = Deno.env.get("PHRASEBOOK_TRACE") ? JSON.parse(raw.trim().split("\n").at(-1)!) : JSON.parse(raw);
   } catch {
     res = { is_error: true, result: new TextDecoder().decode(out.stderr).slice(0, 500) };
   }

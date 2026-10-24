@@ -1,4 +1,4 @@
-// glosa proxy: an MCP server that wraps another MCP server and exposes a single
+// phrasebook proxy: an MCP server that wraps another MCP server and exposes a single
 // tool driven by a glossary, instead of the upstream's full tool list.
 // Usage (GitHub, hand-written v2 glossary):
 //   deno run -A src/proxy.ts --name=github -- <upstream command> [args...]
@@ -21,7 +21,7 @@ if (!upstreamCmd.length) {
   Deno.exit(1);
 }
 
-const upstream = new Client({ name: "glosa-proxy", version: "0.1.0" });
+const upstream = new Client({ name: "phrasebook-proxy", version: "0.1.0" });
 await upstream.connect(new StdioClientTransport({
   command: upstreamCmd[0],
   args: upstreamCmd.slice(1),
@@ -31,7 +31,7 @@ await upstream.connect(new StdioClientTransport({
 const { tools } = await upstream.listTools();
 const parse = makeParserV2(tools as McpTool[]);
 
-const server = new Server({ name: `glosa-${flags.name}`, version: "0.1.0" }, { capabilities: { tools: {} } });
+const server = new Server({ name: `phrasebook-${flags.name}`, version: "0.1.0" }, { capabilities: { tools: {} } });
 
 // Claude Code shows the model only the first paragraph of an MCP tool description,
 // so the glossary is sent without blank lines.

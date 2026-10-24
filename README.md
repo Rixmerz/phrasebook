@@ -1,4 +1,7 @@
-# glosa
+# Phrasebook
+
+A command language for MCP servers: the model gets one tool and a short phrasebook
+instead of every tool schema, and an engine turns each phrase into the real MCP calls.
 
 A benchmark of three ways to give an LLM agent the tools of an MCP server:
 
@@ -590,7 +593,7 @@ about 53.6 USD. Validation round: 13.0 USD. Token counting is free.
 
 ```sh
 # API key, read at runtime, never stored in the repo:
-#   ~/.config/glosa/env  ->  ANTHROPIC_API_KEY=...
+#   ~/.config/phrasebook/env  ->  ANTHROPIC_API_KEY=...
 deno test -A src/github/                       # parser tests, no API calls
 deno run -A src/github/count.ts                # definition tokens only
 deno run -A src/bench.ts --suite=github --models=claude-haiku-5-5 --reps=1

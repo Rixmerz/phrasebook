@@ -42,7 +42,7 @@ async function startStdio(command: string, args: string[], cwd: string, env: Rec
     command, args, cwd, stderr: "ignore",
     env: { PATH: Deno.env.get("PATH") ?? "", HOME: Deno.env.get("HOME") ?? "", ...env },
   });
-  const client = new Client({ name: "glosa", version: "0.1.0" });
+  const client = new Client({ name: "phrasebook", version: "0.1.0" });
   await client.connect(transport);
   // The bench compiles schemas with ajv (draft-07); drop the "$schema" dialect marker for every arm.
   const tools = stripDialect((await client.listTools()).tools as McpTool[]);
@@ -69,7 +69,7 @@ function makeDiskSuite(o: {
     ...autoGlossary(table),
     async start(taskId): Promise<Session> {
       const task = o.tasks.find((t) => t.id === taskId)!;
-      const dir = Deno.makeTempDirSync({ prefix: `glosa-${o.name}-` });
+      const dir = Deno.makeTempDirSync({ prefix: `phrasebook-${o.name}-` });
       o.seed(dir);
       const server = await startStdio(o.server.command, o.server.args, dir, o.server.env);
       return {
@@ -84,7 +84,7 @@ function makeDiskSuite(o: {
       };
     },
     async listTools() {
-      const dir = Deno.makeTempDirSync({ prefix: `glosa-${o.name}-` });
+      const dir = Deno.makeTempDirSync({ prefix: `phrasebook-${o.name}-` });
       o.seed(dir);
       const s = await startStdio(o.server.command, o.server.args, dir, o.server.env);
       await s.close();
