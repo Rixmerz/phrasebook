@@ -2,6 +2,7 @@
 // sandbox token. Every call outside Rixmerz/phrasebook-sandbox is refused before it leaves.
 // After each run, anything the agent changed is put back to the frozen snapshot, so runs
 // stay independent. Write tasks must run at --concurrency=1, apart from the read tasks.
+// Check the sandbox by hand with src/github/real/pristine.ts.
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import type { McpTool } from "../../mcp.ts";
@@ -71,7 +72,7 @@ async function restore(token: string, since: string): Promise<number[]> {
 }
 
 // Restored state must equal the snapshot on every issue, or later runs would be graded wrong.
-async function assertPristine(token: string) {
+export async function assertPristine(token: string) {
   const live = await fetchState(token);
   const byNum = new Map(live.repos[0].issues.map((i) => [i.number, i]));
   for (const s of realSnapshot.repos[0].issues) {
@@ -116,9 +117,4 @@ export function makeRealSuite(): Suite {
       return s.tools;
     },
   };
-}
-
-if (import.meta.main && Deno.args[0] === "--check-pristine") {
-  await assertPristine(Deno.env.get("SANDBOX_TOKEN") ?? tokenFromEnv());
-  console.log("sandbox matches the snapshot");
 }

@@ -1,0 +1,59 @@
+definition tokens  claude-sonnet-5-5: native=19436 glossary=1719 code=14532 glossary2=1765
+definition tokens  claude-haiku-5-5: native=19436 glossary=1719 code=14532 glossary2=1765
+PASS  claude-sonnet-5-5            native    w-label-cli-bugs       turns=3 in=8 out=906 invalid=0 42090ms
+PASS  claude-sonnet-5-5            native    w-label-cli-bugs       turns=3 in=8 out=978 invalid=0 39669ms
+PASS  claude-sonnet-5-5            native    w-label-cli-bugs       turns=3 in=8 out=915 invalid=0 42513ms
+PASS  claude-sonnet-5-5            native    w-assign-p0            turns=3 in=8 out=1307 invalid=0 47848ms
+PASS  claude-sonnet-5-5            native    w-assign-p0            turns=3 in=8 out=1263 invalid=0 45388ms
+PASS  claude-sonnet-5-5            native    w-assign-p0            turns=3 in=8 out=1286 invalid=0 45403ms
+PASS  claude-sonnet-5-5            native    w-close-duplicate      turns=2 in=6 out=400 invalid=0 32610ms
+PASS  claude-sonnet-5-5            native    w-close-duplicate      turns=2 in=6 out=451 invalid=0 30877ms
+PASS  claude-sonnet-5-5            native    w-close-duplicate      turns=2 in=6 out=501 invalid=0 31310ms
+PASS  claude-sonnet-5-5            code      w-label-cli-bugs       turns=3 in=8 out=569 invalid=0 55681ms
+PASS  claude-sonnet-5-5            code      w-label-cli-bugs       turns=3 in=8 out=554 invalid=0 38336ms
+PASS  claude-sonnet-5-5            code      w-label-cli-bugs       turns=3 in=8 out=552 invalid=0 36024ms
+PASS  claude-sonnet-5-5            code      w-assign-p0            turns=3 in=8 out=395 invalid=0 42365ms
+PASS  claude-sonnet-5-5            code      w-assign-p0            turns=3 in=8 out=396 invalid=0 42185ms
+PASS  claude-sonnet-5-5            code      w-assign-p0            turns=3 in=8 out=392 invalid=0 46196ms
+PASS  claude-sonnet-5-5            code      w-close-duplicate      turns=2 in=6 out=304 invalid=0 28755ms
+PASS  claude-sonnet-5-5            code      w-close-duplicate      turns=2 in=6 out=316 invalid=0 31223ms
+PASS  claude-sonnet-5-5            code      w-close-duplicate      turns=2 in=6 out=322 invalid=0 31765ms
+PASS  claude-sonnet-5-5            glossary4 w-label-cli-bugs       turns=4 in=10 out=557 invalid=0 41292ms
+PASS  claude-sonnet-5-5            glossary4 w-label-cli-bugs       turns=3 in=8 out=453 invalid=0 40987ms
+PASS  claude-sonnet-5-5            glossary4 w-label-cli-bugs       turns=4 in=10 out=535 invalid=0 38840ms
+PASS  claude-sonnet-5-5            glossary4 w-assign-p0            turns=3 in=8 out=498 invalid=0 44760ms
+PASS  claude-sonnet-5-5            glossary4 w-assign-p0            turns=3 in=8 out=501 invalid=0 47055ms
+PASS  claude-sonnet-5-5            glossary4 w-assign-p0            turns=3 in=8 out=498 invalid=0 50952ms
+PASS  claude-sonnet-5-5            glossary4 w-close-duplicate      turns=2 in=6 out=195 invalid=0 32370ms
+PASS  claude-sonnet-5-5            glossary4 w-close-duplicate      turns=2 in=6 out=170 invalid=0 31788ms
+PASS  claude-sonnet-5-5            glossary4 w-close-duplicate      turns=2 in=6 out=153 invalid=0 31887ms
+PASS  claude-haiku-5-5             native    w-label-cli-bugs       turns=4 in=10 out=2178 invalid=0 44889ms
+PASS  claude-haiku-5-5             native    w-label-cli-bugs       turns=5 in=12 out=2523 invalid=0 45308ms
+PASS  claude-haiku-5-5             native    w-label-cli-bugs       turns=3 in=8 out=1697 invalid=0 40363ms
+PASS  claude-haiku-5-5             native    w-assign-p0            turns=3 in=8 out=1370 invalid=0 44002ms
+PASS  claude-haiku-5-5             native    w-assign-p0            turns=3 in=8 out=1410 invalid=0 44560ms
+PASS  claude-haiku-5-5             native    w-assign-p0            turns=3 in=8 out=1471 invalid=0 43877ms
+PASS  claude-haiku-5-5             native    w-close-duplicate      turns=2 in=6 out=478 invalid=0 32494ms
+PASS  claude-haiku-5-5             native    w-close-duplicate      turns=2 in=6 out=501 invalid=0 32927ms
+PASS  claude-haiku-5-5             native    w-close-duplicate      turns=2 in=6 out=500 invalid=0 30154ms
+PASS  claude-haiku-5-5             code      w-label-cli-bugs       turns=4 in=10 out=1773 invalid=0 42829ms
+PASS  claude-haiku-5-5             code      w-label-cli-bugs       turns=4 in=10 out=1600 invalid=0 43770ms
+PASS  claude-haiku-5-5             code      w-label-cli-bugs       turns=4 in=10 out=1854 invalid=0 43652ms
+PASS  claude-haiku-5-5             code      w-assign-p0            turns=3 in=8 out=773 invalid=0 44810ms
+PASS  claude-haiku-5-5             code      w-assign-p0            turns=3 in=8 out=672 invalid=0 43527ms
+PASS  claude-haiku-5-5             code      w-assign-p0            turns=3 in=8 out=789 invalid=0 41558ms
+PASS  claude-haiku-5-5             code      w-close-duplicate      turns=3 in=8 out=625 invalid=0 34787ms
+PASS  claude-haiku-5-5             code      w-close-duplicate      turns=2 in=6 out=388 invalid=0 32326ms
+PASS  claude-haiku-5-5             code      w-close-duplicate      turns=3 in=8 out=573 invalid=0 33037ms
+PASS  claude-haiku-5-5             glossary4 w-label-cli-bugs       turns=3 in=8 out=585 invalid=0 40699ms
+PASS  claude-haiku-5-5             glossary4 w-label-cli-bugs       turns=3 in=8 out=633 invalid=0 40028ms
+PASS  claude-haiku-5-5             glossary4 w-label-cli-bugs       turns=3 in=8 out=675 invalid=0 40695ms
+PASS  claude-haiku-5-5             glossary4 w-assign-p0            turns=3 in=8 out=584 invalid=0 48111ms
+PASS  claude-haiku-5-5             glossary4 w-assign-p0            turns=3 in=8 out=755 invalid=0 48731ms
+PASS  claude-haiku-5-5             glossary4 w-assign-p0            turns=3 in=8 out=425 invalid=0 46667ms
+PASS  claude-haiku-5-5             glossary4 w-close-duplicate      turns=2 in=6 out=326 invalid=0 39900ms
+PASS  claude-haiku-5-5             glossary4 w-close-duplicate      turns=2 in=6 out=294 invalid=0 29613ms
+PASS  claude-haiku-5-5             glossary4 w-close-duplicate      turns=2 in=6 out=273 invalid=0 27649ms
+total tokens spent: 2123068
+ledger total (this phase): 70.64 USD
+log: results/real.jsonl

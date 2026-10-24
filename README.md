@@ -556,6 +556,37 @@ code: refuted (code costs 0.50x to 0.66x). (3) cheaper than v4.2 on filesystem-b
 Next fixes this points to (not built): stop advertising `full`, fan a command out over a list of
 paths with one combined pipe, parse CSV into columns, and a group-and-sum step.
 
+## Real GitHub (2026-10-24)
+
+Every earlier GitHub number came from a local mock. This round ran against api.github.com,
+on a private sandbox repo (`Rixmerz/phrasebook-sandbox`: 120 issues, 8 PRs, 13 labels),
+with the same github-mcp-server binary. Preregistration: `docs/preregistration-real.md`;
+set frozen in `results/real-freeze.sha256`. The set is NOT blind (written by the glossary's
+author from the seeded data); its job is to check that the mock results carry over.
+
+Runs were locked to the sandbox by an allowlist, and every issue an agent changed was put
+back to the frozen snapshot after the run; the repo matched the snapshot at the end.
+
+| model | arm | pass | cost vs glossary4 [95% CI] |
+|---|---|---|---|
+| Sonnet 5.5 | glossary4 | 36/36 | 1x |
+| Sonnet 5.5 | code | 36/36 | 3.34x [2.59, 4.82] |
+| Sonnet 5.5 | native | 36/36 | 4.35x [3.07, 7.03] |
+| Haiku 5.5 | glossary4 | 35/36 | 1x |
+| Haiku 5.5 | code | 36/36 | 3.06x [2.35, 3.83] |
+| Haiku 5.5 | native | 36/36 | 4.21x [3.25, 5.35] |
+
+All four predictions held. Both cost gaps are significant on both models and at least as
+large as on the mock (code 1.9x to 2.8x, native 2.3x to 5x on Sonnet). The one failure is
+Haiku answering 42% instead of 38% on a percentage task.
+
+What the real API changed: a model-free probe, before any run, found two places where the
+mock had hidden real behavior. Real `list_issues` returns open and closed issues when no
+state is given, and several labels match any of them, not all. Native and code mode see that
+behavior as is; the glossary engine now sends `state=OPEN` by default and filters for all
+labels over every page. Without the probe, the glossary would have given wrong answers on
+real GitHub that the mock never showed.
+
 ## Method
 
 ### Arms
