@@ -140,6 +140,28 @@ export function splitCommands(text: string): string[][] {
       else cur += ch;
       continue;
     }
+    // key={...} or key=[...]: keep the balanced JSON verbatim, or its quotes are stripped and
+    // the documented form filter={"a":"b"} reaches the table engine as invalid JSON.
+    if ((ch === "{" || ch === "[") && /^[a-z_]\w*=$/i.test(cur)) {
+      let depth = 0, str = false, j = i;
+      for (; j < text.length; j++) {
+        const c = text[j];
+        if (str) {
+          if (c === "\\") j++;
+          else if (c === '"') str = false;
+        } else if (c === '"') str = true;
+        else if (c === "{" || c === "[") depth++;
+        else if (c === "}" || c === "]") {
+          if (--depth === 0) break;
+        }
+      }
+      if (depth === 0 && j < text.length) {
+        cur += text.slice(i, j + 1);
+        hasTok = true;
+        i = j;
+        continue;
+      }
+    }
     if (ch === '"' || ch === "'") {
       inQuote = ch;
       hasTok = true;

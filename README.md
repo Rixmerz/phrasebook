@@ -834,3 +834,38 @@ Official `@notionhq/notion-mcp-server@2.5.2` against an in-process mock, 16 blin
 | sonnet-5-5 | native | 27/32 | 0.60x [0.43, 0.83] |
 
 On a second large server, with an auto-generated glossary, code mode is about 5x cheaper than glossary4 and native is cheaper too. The GitHub advantage did not transfer. Likely causes to study, not yet tested: the auto glossary was never hand-tuned, Notion's nested JSON arguments (filters, rich text) fit code better than a word table, and the pilot showed models writing unquoted JSON into glossary commands. Raw log: `results/notion-main.jsonl`, `results/notion-main.out`.
+
+## Post-hoc audit of both blind runs (2026-10-24, no API spend)
+
+**Notion: the glossary4 loss is mostly a harness bug.** The v4 runtime splits a command
+line with the GitHub tokenizer (`splitCommands` in `src/github/parser.ts`) before the table
+engine sees it. That tokenizer stripped the quotes out of unquoted JSON, so the form the
+Notion glossary itself documents, `filter={"property":"Sprint",...}`, reached the engine as
+`filter={property:Sprint,...}` and was refused with `filter must be a JSON object`.
+26 of the 32 Sonnet glossary4 runs hit it (67 refused `filter=`, plus `properties=`,
+`parent=`, `edits=`). The models were right and the harness was wrong.
+
+| Sonnet glossary4 runs | Runs | Mean turns | Mean cache-write tokens | Pass |
+|---|---|---|---|---|
+| hit the bug | 26 | 7.7 | 48,240 | 22/26 |
+| did not | 6 | 4.0 | 944 | 6/6 |
+
+Across arms, glossary4 averaged 7.0 turns and 2.8 refused calls per run; code averaged
+3.9 turns and 0.1. The fix keeps a balanced `key={...}` or `key=[...]` verbatim, as the
+table engine's own tokenizer already did. The Notion result above therefore measures the
+bug, not the glossary. It needs a re-run (about 4 USD for Sonnet glossary4 alone) before it
+says anything about glossary4 on Notion. GitHub runs are unaffected: no GitHub command
+takes JSON.
+
+**GitHub: `rb-prs-plus-cli-bugs` is ambiguous.** The prompt asks for open PRs plus open
+issues "que tienen las etiquetas cli y bug". The checker reads the label clause as applying
+to the issues only: 8 PRs + 11 issues = 19. Every other answer was 11, which reads it as
+applying to both (no PR has those labels, so 0 + 11). That reading is grammatical. Accepting
+both answers:
+
+| Model | glossary4 | code | native |
+|---|---|---|---|
+| Haiku 5.5 | 36/36 | 33/36 | 34/36 |
+| Sonnet 5.5 | 36/36 | 32/36 | 32/36 |
+
+glossary4 stays first, by a smaller margin. The cost ratios do not change.
