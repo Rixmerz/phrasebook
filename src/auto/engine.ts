@@ -160,8 +160,14 @@ export function compile(table: Table, tools: McpTool[]) {
     if (exact) return exact;
     // Drop one generic verb ("get pr files" -> "pr files").
     const i = words.findIndex((w) => generic.has(fold(w)));
-    if (i >= 0 && words.length > 1) return bags.get(bagKey(words.filter((_, j) => j !== i))) ?? null;
-    return null;
+    if (i >= 0 && words.length > 1) {
+      const hit = bags.get(bagKey(words.filter((_, j) => j !== i)));
+      if (hit) return hit;
+    }
+    // One word short ("read <id>" for "read page <id>"): take it only when a single command fits.
+    const mine = new Set(words.map(fold));
+    const fits = mine.size ? table.commands.filter((c) => c.words.length === mine.size + 1 && [...mine].every((w) => c.words.map(fold).includes(w))) : [];
+    return new Set(fits.map((c) => c.tool)).size === 1 ? fits[0] : null;
   }
 
   function closest(words: string[]) {

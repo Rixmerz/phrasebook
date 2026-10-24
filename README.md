@@ -925,3 +925,23 @@ Twelve new tasks (8 read, 4 write, `src/notion/blind2tasks.ts`), written and sha
 Failures: native fails to uncheck the to-do in `n2-desmarcar-acuerdo` (Haiku 3/3, Sonnet 1/3), and Haiku native miscounts `n2-revisadas-s3` once. Glossary4 fails one Haiku run of `n2-onboarding-paso`. No code changed during the run.
 
 Why native fails `n2-desmarcar-acuerdo` (traced with `PHRASEBOOK_TRACE=1`, 4 extra Haiku runs, not part of the frozen results): the official `API-update-a-block` schema has a parameter literally named `type`, described as "the block object `type` value with the properties to be updated". It is a placeholder from Notion's OpenAPI spec, not a real key. Models follow it and send `type={"to_do":{"checked":false}}` or `to_do="{\"checked\":false}"` (a string). The mock ignores both, as an unknown key and a non-object, and returns the block unchanged with `checked: true`. Whether the real Notion API rejects these bodies with a 400 or ignores them was not checked. Glossary4's update command sends `to_do={...}` as a JSON object through `passthrough`, and passed 2/2. The glossary4 `n2-onboarding-paso` failure and the native `n2-revisadas-s3` miscount did not repeat on rerun (2/2 and not rerun, respectively); they look like run-to-run noise.
+
+## Glossary 4.1 (tuned Notion set, Sonnet 5.5, Claude Code subscription)
+
+The only blind2 task where glossary4 cost more than native (n2-onboarding-paso, 1.21x) was traced:
+the model re-read the page after a successful append, and once sent `read <id>` and got an error.
+Two generic changes followed, neither aimed at a task:
+
+- Engine: a command one word short (`read <id>`) resolves when exactly one command fits.
+- Notion glossary: writes return the changed object; no need to read again to check.
+
+Validated on the tuned set (notion-blind, 16 tasks x 2 reps), never on blind2:
+
+| run | pass | USD per run | turns |
+|---|---|---|---|
+| glossary4 (before) | 30/32 | 0.0752 | 5.59 |
+| glossary4.1 | 32/32 | 0.0628 | 5.34 |
+
+About 16% cheaper per run. Two reps per task is small; treat it as a direction, to be confirmed on a fresh blind set.
+Log: `results/client-notion-v41.jsonl`.
+
