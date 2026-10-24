@@ -402,6 +402,46 @@ Cost of this round: 13.0 USD (`results/ledger.jsonl`, tokens only).
 Raw logs of every run in this README, with full transcripts, are in `results/logs.tar.gz`
 (`tar xzf results/logs.tar.gz` restores `results/*.jsonl`).
 
+## Glossary v4 (2026-10-24): compact results
+
+Design: `docs/v4-analysis.md`. Preregistration: `docs/preregistration-v4.md`, frozen with
+the new blind set before any v4 run (`results/blind2-freeze.sha256`).
+
+v4 is the v3 feedback arm with smaller tool results: lists show a few default columns
+(a `more fields:` line names the rest, `| select` brings them back), values shared by
+every row go into one header line, branch objects become their name, SHAs are dropped,
+each hint is given once per run, `| select` / `| where` work on a single object,
+`get issue o/r#1,5,9` batches gets, and list filters the tool lacks run as a client-side
+`where` over every page.
+
+New blind set `github-blind2` (14 tasks on a new repo, octo/telemetry, written by an agent
+that could not read the glossary, the engine or any result), 3 reps:
+
+| model | arm | pass | cost vs glossary4 [95% CI] |
+|---|---|---|---|
+| Haiku 5.5 | glossary4 | 42/42 | 1x |
+| Haiku 5.5 | glossary3-feedback | 42/42 | 1.78x [1.19, 2.36] |
+| Haiku 5.5 | code | 42/42 | 1.63x [1.32, 2.18] |
+| Sonnet 5.5 | glossary4 | 39/42 | 1x |
+| Sonnet 5.5 | glossary3-feedback | 40/42 | 2.34x [1.10, 3.89] |
+| Sonnet 5.5 | code | 39/42 | 2.78x [1.83, 4.92] |
+
+Tool-result characters per run fell 78% on Sonnet 5.5 (7,740 to 1,669) and 67% on Haiku 5.5.
+All Sonnet failures, in every arm, are on `c-close-obsolete`: the exact comment ends in a
+period and Sonnet drops it as sentence punctuation. The task is frozen, so it stays as is.
+
+Regression on Sonnet 5.5 (3 reps; these sets were inspected while designing v4, so they
+show no regression, not improvement): `github-calc` 24/24, code 2.89x [2.36, 3.64] and v3
+1.16x [0.62, 2.02] the cost of v4; `github-blind` 33/36 like every other arm, code 1.73x
+[1.19, 2.50], v3 1.56x [0.81, 2.48], native 3.31x, PTC 2.23x.
+
+Scorecard: (1) accuracy within 2 runs of v3 and code on each model: held. (2) cheaper than v3
+on Sonnet with the interval below 1x: held (v3 costs 2.34x). (3) cheaper than code mode:
+held and significant on both models. (4) no regression on calc and blind: held.
+(5) tool-result characters down at least 40%: held (78%).
+
+The v4 round cost 2.32 USD.
+
 ## Method
 
 ### Arms
