@@ -11,6 +11,7 @@ import { makeGithubSuite } from "../../suites.ts";
 import { all, api, NAME, OWNER, REPO, tokenFromEnv } from "./api.ts";
 import { fetchState } from "./snapshot.ts";
 import { realSnapshot, realTasks } from "./tasks.ts";
+import type { GhTask } from "../tasks.ts";
 
 const GH_BINARY = new URL("../../../vendor/github-mcp/github-mcp-server", import.meta.url).pathname;
 
@@ -89,14 +90,14 @@ export async function assertPristine(token: string) {
   }
 }
 
-export function makeRealSuite(): Suite {
-  const base = makeGithubSuite("github-real", realTasks, () => realSnapshot);
+export function makeRealSuite(name = "github-real", tasks: (GhTask & { writes?: boolean })[] = realTasks): Suite {
+  const base = makeGithubSuite(name, tasks, () => realSnapshot);
   // SANDBOX_TOKEN (the gh CLI login) can write; the fine-grained token in the env file is read-only.
   const token = Deno.env.get("SANDBOX_TOKEN") ?? tokenFromEnv();
   return {
     ...base,
     async start(taskId) {
-      const task = realTasks.find((t) => t.id === taskId)!;
+      const task = tasks.find((t) => t.id === taskId)!;
       const since = new Date(Date.now() - 5000).toISOString();
       const server = await startReal(token);
       return {
