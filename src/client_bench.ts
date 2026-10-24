@@ -100,7 +100,9 @@ const SUITES: Record<string, ClientSuite> = {
 };
 const suite = SUITES[flags.suite];
 
-const DISALLOWED = ["Bash", "Edit", "Write", "NotebookEdit", "WebFetch", "WebSearch", "Task", "Agent", "Read", "Glob", "Grep"];
+const DISALLOWED = ["Bash", "Edit", "Write", "NotebookEdit", "WebFetch", "WebSearch", "Task", "Agent", "Read", "Glob", "Grep",
+  // Runs must not reach other sessions or start workflows: a peer could hand them the answer.
+  "SendMessage", "ListAgents", "Workflow", "Skill"];
 
 const mcpConfig = (arm: string, token: string) => ({ mcpServers: { [flags.suite.startsWith("notion") ? "notion" : "gh"]: suite.server(arm, token) } });
 

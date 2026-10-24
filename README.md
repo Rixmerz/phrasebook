@@ -967,3 +967,12 @@ Real misses: Haiku glossary counted 18 to-dos instead of 17; Haiku native return
 (one hit max turns at 16).
 Logs: `results/client-notion-blind3.jsonl`, `.out`.
 
+### Harness leak found and closed (2026-10-24)
+
+Claude Code runs could reach other local sessions: during a Haiku 4.5 baseline, two native runs used
+`ListAgents`/`SendMessage` to ask another session for the answer. Neither got one, and that run was discarded.
+Runs now also disallow `SendMessage`, `ListAgents`, `Workflow` and `Skill`.
+Audit of the 72 saved traces: SendMessage/ListAgents appear only in the discarded Haiku 4.5 run. Four
+Haiku 5.5 traces from blind2 called `Workflow`, which stopped at its approval prompt and did nothing.
+Untraced runs from earlier sets cannot be audited this way; no session reported answering one.
+
