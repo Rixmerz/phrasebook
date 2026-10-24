@@ -945,3 +945,25 @@ Validated on the tuned set (notion-blind, 16 tasks x 2 reps), never on blind2:
 About 16% cheaper per run. Two reps per task is small; treat it as a direction, to be confirmed on a fresh blind set.
 Log: `results/client-notion-v41.jsonl`.
 
+## Notion, third blind set through Claude Code (glossary 4.1)
+
+Twelve new tasks (8 read, 4 write), frozen before any run (`results/notion-blind3-freeze.sha256`, commit 1bfe726).
+3 reps per task, Claude Code subscription runs.
+
+| model | arm | pass (strict) | pass (last line) | USD total | turns |
+|---|---|---|---|---|---|
+| Sonnet 5.5 | glossary4.1 | 30/36 | 36/36 | 1.84 | 4.75 |
+| Sonnet 5.5 | native | 31/36 | 36/36 | 4.79 | 6.69 |
+| Haiku 5.5 | glossary4.1 | 35/36 | 35/36 | 0.15 | 4.61 |
+| Haiku 5.5 | native | 34/36 | 34/36 | 0.43 | 7.11 |
+
+Median per-task cost ratio glossary/native: 0.58 on Sonnet (range 0.12 to 0.91), 0.60 on Haiku (0.13 to 0.93).
+No task cost more with the glossary on either model; in blind2 the worst task was 1.21.
+
+"Strict" is the frozen grader. Every strict failure on Sonnet, in both arms, is a correct answer printed
+after its arithmetic ("2+3+3+4+3+2 = 17 / **17**"), which the "only the number" check rejects. "Last line"
+grades only the final line and is reported as a reading aid; the frozen grader is not changed.
+Real misses: Haiku glossary counted 18 to-dos instead of 17; Haiku native returned nothing twice
+(one hit max turns at 16).
+Logs: `results/client-notion-blind3.jsonl`, `.out`.
+
