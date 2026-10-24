@@ -42,7 +42,8 @@ const V4_EXTRAS = `v4:
   A list filter the tool lacks (assignees=ana) is applied for you as | where over every page.
   A field lists leave out (state_reason) is fetched per record when a step names it: list issue octo/app state=closed all | where state_reason = not_planned | count
   edit file octo/app path=config/a.yaml branch=main old="limit: 5" new="limit: 8": replaces one exact occurrence; no need to read or retype the file.
-  Send dependent steps in one call, one per line (create branch, write file, create pr): they run in order and stop at the first error.`;
+  Send dependent steps in one call, one per line (create branch, write file, create pr): they run in order and stop at the first error.
+  A file over 40 lines shows its first 15; filter it with a pipe, or add full to print it all.`;
 
 export const GITHUB_GLOSSARY_V4 = `${GITHUB_GLOSSARY_V3_FEEDBACK}\n\n${V4_EXTRAS}`;
 
@@ -55,6 +56,7 @@ export const GENERIC_V4_EXTRAS = `Runtime:
     | sum <field> | avg <field> | min <field> | max <field> | distinct <field>
     ops: = != > >= < <= has contains starts empty notempty, in / notin @n[*].field
   Text results (files, logs, command output) pipe as one row per line, field "line": @2 | where line contains ERROR | count
+  Text over 40 lines shows its first 15; filter it with a pipe, or add full to print it all.
   calc does arithmetic over numbers and results: calc @4 / @5 * 100
   Send dependent steps in one call, one per line: they run in order and stop at the first error.
   Lists come back as tables: name[count]{fields}: one row per record.`;

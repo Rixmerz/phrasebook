@@ -19,3 +19,7 @@ Predictions:
 2. set5: glossary4 costs no more than 1.2x code on each model (point estimate).
 3. filesystem-blind: v4.3 costs less than v4.2 on Sonnet (point estimate below 1x), same accuracy within 2 runs.
 4. github-blind3: v4.3 within 2 failed runs of v4.2 and costs no more than 1.1x it on Sonnet.
+
+Added before any run: `| where <field> contains <value>` is smart-case (case-sensitive when the
+value has a capital letter), so `contains ERROR` no longer matches "after error". This changes
+every glossary arm's pipeline from v4.3 on.

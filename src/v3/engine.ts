@@ -349,6 +349,16 @@ async function editFile(session: Session, tokens: string[], parse: (c: string) =
   return `edited ${path}${branch ? ` on ${branch}` : ""}: 1 replacement, rest of the file unchanged`;
 }
 
+// v4.3: long text shows its head only; the whole text stays in @n for pipes and content=@n.
+const TEXT_MAX_LINES = 40;
+const TEXT_HEAD = 15;
+function clip(text: string, n: number, full: boolean): string {
+  const lines = text.replace(/\n$/, "").split("\n");
+  if (full || lines.length <= TEXT_MAX_LINES) return text;
+  return `${lines.slice(0, TEXT_HEAD).join("\n")}\n... ${lines.length - TEXT_HEAD} more lines (${lines.length} in all) kept in @${n}: ` +
+    `@${n} | where line contains <text> | count, or add full to the command to print everything`;
+}
+
 const isRead = (tool: string) => /^(get_|list_|search_)|_read$/.test(tool);
 
 // v4: list filters the tool does not take become client-side where steps over every page.
@@ -481,6 +491,8 @@ export async function runV3(
       cmd = macro(cmd);
       if (mode === "v4") cmd = targetFromKeys(cmd);
       const wantAll = cmd.some((t) => t.toLowerCase() === "all");
+      const wantFull = mode === "v4" && cmd.some((t) => t.toLowerCase() === "full");
+      if (wantFull) cmd = cmd.filter((t) => t.toLowerCase() !== "full");
       cmd = cmd.filter((t) => t.toLowerCase() !== "all");
       let notes: string[] = [];
       let forceAll = false;
@@ -606,8 +618,8 @@ export async function runV3(
         } else if (mode === "v4" && res.content === undefined && listOf(mode, res.data)) {
           body = renderV4(res.data);
         } else if (mode === "v4" && typeof res.data === "string") {
-          body = res.data; // plain text as is, not JSON-escaped
-        } else body = res.content !== undefined ? res.content : render(res.data);
+          body = clip(res.data, n, wantFull); // plain text as is, not JSON-escaped
+        } else body = res.content !== undefined ? (mode === "v4" ? clip(res.content, n, wantFull) : res.content) : render(res.data);
         const sha = res.content !== undefined ? (res.data as Record<string, Json>)?.sha : null;
         const head = res.content !== undefined
           ? `@${n} = file bytes${sha ? `, sha ${sha} (to overwrite this file add sha=@${n}.sha)` : ""}; pass them on exactly with content=@${n}`

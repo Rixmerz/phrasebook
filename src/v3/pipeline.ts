@@ -24,7 +24,11 @@ function matches(row: Json, field: string, op: string, value: string, resolve?: 
     case "=": case "==": return list ? list.some((x) => lc(x) === value.toLowerCase()) : lc(v) === value.toLowerCase();
     case "!=": return list ? !list.some((x) => lc(x) === value.toLowerCase()) : lc(v) !== value.toLowerCase();
     case "has": return (list ?? [v]).some((x) => lc(x) === value.toLowerCase());
-    case "contains": return (list ? list.join(" ") : lc(v)).toLowerCase().includes(value.toLowerCase());
+    // Smart case, as in ripgrep: a value with capitals matches case-sensitively.
+    case "contains": {
+      const hay = list ? list.join(" ") : String(v ?? "");
+      return /[A-Z]/.test(value) ? hay.includes(value) : hay.toLowerCase().includes(value.toLowerCase());
+    }
     case "starts": return lc(v).startsWith(value.toLowerCase());
     case "empty": return list ? list.length === 0 : v === null || v === "";
     case "notempty": return list ? list.length > 0 : !(v === null || v === "");
