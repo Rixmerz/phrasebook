@@ -1,0 +1,167 @@
+definition tokens  claude-sonnet-5-5: native=19436 glossary=1719 code=14532 glossary2=1765
+definition tokens  claude-haiku-5-5: native=19436 glossary=1719 code=14532 glossary2=1765
+PASS  claude-sonnet-5-5            native    rb-ui-p1-unassigned    turns=2 in=6 out=408 invalid=0 5556ms
+PASS  claude-sonnet-5-5            native    rb-ui-p1-unassigned    turns=2 in=6 out=368 invalid=0 5499ms
+PASS  claude-sonnet-5-5            native    rb-ui-p1-unassigned    turns=2 in=6 out=526 invalid=0 6247ms
+PASS  claude-sonnet-5-5            native    rb-top-urgent-area     turns=2 in=6 out=190 invalid=0 4255ms
+PASS  claude-sonnet-5-5            native    rb-top-urgent-area     turns=2 in=6 out=190 invalid=0 3682ms
+PASS  claude-sonnet-5-5            native    rb-top-urgent-area     turns=2 in=6 out=190 invalid=0 5188ms
+PASS  claude-sonnet-5-5            native    rb-workaround-comments turns=3 in=8 out=2718 invalid=0 23231ms
+PASS  claude-sonnet-5-5            native    rb-workaround-comments turns=3 in=8 out=2714 invalid=0 22999ms
+PASS  claude-sonnet-5-5            native    rb-workaround-comments turns=3 in=8 out=2730 invalid=0 22584ms
+FAIL  claude-sonnet-5-5            native    rb-pct-not-planned     turns=3 in=8 out=580 invalid=0 9194ms
+FAIL  claude-sonnet-5-5            native    rb-pct-not-planned     turns=3 in=8 out=702 invalid=0 10618ms
+FAIL  claude-sonnet-5-5            native    rb-pct-not-planned     turns=4 in=10 out=642 invalid=0 11180ms
+PASS  claude-sonnet-5-5            native    rb-all-v10-bugs        turns=2 in=6 out=655 invalid=0 7140ms
+PASS  claude-sonnet-5-5            native    rb-all-v10-bugs        turns=2 in=6 out=533 invalid=0 6808ms
+PASS  claude-sonnet-5-5            native    rb-all-v10-bugs        turns=2 in=6 out=735 invalid=0 7577ms
+PASS  claude-sonnet-5-5            native    rb-p0-no-version       turns=2 in=6 out=194 invalid=0 3763ms
+PASS  claude-sonnet-5-5            native    rb-p0-no-version       turns=2 in=6 out=194 invalid=0 3743ms
+PASS  claude-sonnet-5-5            native    rb-p0-no-version       turns=2 in=6 out=192 invalid=0 3778ms
+FAIL  claude-sonnet-5-5            native    rb-prs-plus-cli-bugs   turns=3 in=8 out=753 invalid=0 9104ms
+FAIL  claude-sonnet-5-5            native    rb-prs-plus-cli-bugs   turns=3 in=8 out=745 invalid=0 10225ms
+FAIL  claude-sonnet-5-5            native    rb-prs-plus-cli-bugs   turns=4 in=10 out=1571 invalid=0 17304ms
+PASS  claude-sonnet-5-5            native    rb-avg-comments        turns=3 in=8 out=622 invalid=0 10876ms
+PASS  claude-sonnet-5-5            native    rb-avg-comments        turns=3 in=8 out=619 invalid=0 11681ms
+PASS  claude-sonnet-5-5            native    rb-avg-comments        turns=3 in=8 out=628 invalid=0 8592ms
+PASS  claude-sonnet-5-5            native    rb-config-upload       turns=2 in=6 out=146 invalid=0 3745ms
+PASS  claude-sonnet-5-5            native    rb-config-upload       turns=2 in=6 out=146 invalid=0 3722ms
+PASS  claude-sonnet-5-5            native    rb-config-upload       turns=2 in=6 out=146 invalid=0 3723ms
+FAIL  claude-sonnet-5-5            code      rb-ui-p1-unassigned    turns=1 in=4 out=276 invalid=0 3963ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-ui-p1-unassigned    turns=1 in=4 out=274 invalid=0 4094ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-top-urgent-area     turns=0 in=0 out=0 invalid=0 335ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-top-urgent-area     turns=0 in=0 out=0 invalid=0 352ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-top-urgent-area     turns=0 in=0 out=0 invalid=0 320ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-workaround-comments turns=0 in=0 out=0 invalid=0 331ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-workaround-comments turns=0 in=0 out=0 invalid=0 356ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-workaround-comments turns=0 in=0 out=0 invalid=0 325ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-pct-not-planned     turns=0 in=0 out=0 invalid=0 334ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-pct-not-planned     turns=0 in=0 out=0 invalid=0 404ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-ui-p1-unassigned    turns=1 in=4 out=279 invalid=0 3779ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-pct-not-planned     turns=0 in=0 out=0 invalid=0 356ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-all-v10-bugs        turns=0 in=0 out=0 invalid=0 369ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-all-v10-bugs        turns=0 in=0 out=0 invalid=0 381ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-p0-no-version       turns=0 in=0 out=0 invalid=0 359ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-all-v10-bugs        turns=0 in=0 out=0 invalid=0 634ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-p0-no-version       turns=0 in=0 out=0 invalid=0 377ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-p0-no-version       turns=0 in=0 out=0 invalid=0 326ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-prs-plus-cli-bugs   turns=0 in=0 out=0 invalid=0 333ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-prs-plus-cli-bugs   turns=0 in=0 out=0 invalid=0 381ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-prs-plus-cli-bugs   turns=0 in=0 out=0 invalid=0 364ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-avg-comments        turns=0 in=0 out=0 invalid=0 365ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-avg-comments        turns=0 in=0 out=0 invalid=0 418ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-avg-comments        turns=0 in=0 out=0 invalid=0 307ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-config-upload       turns=0 in=0 out=0 invalid=0 346ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-config-upload       turns=0 in=0 out=0 invalid=0 378ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            code      rb-config-upload       turns=0 in=0 out=0 invalid=0 346ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-ui-p1-unassigned    turns=0 in=0 out=0 invalid=0 398ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-ui-p1-unassigned    turns=0 in=0 out=0 invalid=0 362ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-ui-p1-unassigned    turns=0 in=0 out=0 invalid=0 314ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-top-urgent-area     turns=0 in=0 out=0 invalid=0 365ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-top-urgent-area     turns=0 in=0 out=0 invalid=0 353ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-top-urgent-area     turns=0 in=0 out=0 invalid=0 364ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-workaround-comments turns=0 in=0 out=0 invalid=0 340ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-workaround-comments turns=0 in=0 out=0 invalid=0 355ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-workaround-comments turns=0 in=0 out=0 invalid=0 344ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-pct-not-planned     turns=0 in=0 out=0 invalid=0 329ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-pct-not-planned     turns=0 in=0 out=0 invalid=0 352ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-pct-not-planned     turns=0 in=0 out=0 invalid=0 333ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-all-v10-bugs        turns=0 in=0 out=0 invalid=0 351ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-all-v10-bugs        turns=0 in=0 out=0 invalid=0 406ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-all-v10-bugs        turns=0 in=0 out=0 invalid=0 335ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-p0-no-version       turns=0 in=0 out=0 invalid=0 352ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-p0-no-version       turns=0 in=0 out=0 invalid=0 339ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-p0-no-version       turns=0 in=0 out=0 invalid=0 343ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-prs-plus-cli-bugs   turns=0 in=0 out=0 invalid=0 306ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-prs-plus-cli-bugs   turns=0 in=0 out=0 invalid=0 373ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-prs-plus-cli-bugs   turns=0 in=0 out=0 invalid=0 389ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-avg-comments        turns=0 in=0 out=0 invalid=0 337ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-avg-comments        turns=0 in=0 out=0 invalid=0 343ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-avg-comments        turns=0 in=0 out=0 invalid=0 380ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-config-upload       turns=0 in=0 out=0 invalid=0 349ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-config-upload       turns=0 in=0 out=0 invalid=0 349ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-sonnet-5-5            glossary4 rb-config-upload       turns=0 in=0 out=0 invalid=0 343ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-ui-p1-unassigned    turns=0 in=0 out=0 invalid=0 321ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-ui-p1-unassigned    turns=0 in=0 out=0 invalid=0 416ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-ui-p1-unassigned    turns=0 in=0 out=0 invalid=0 341ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-top-urgent-area     turns=0 in=0 out=0 invalid=0 368ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-top-urgent-area     turns=0 in=0 out=0 invalid=0 340ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-top-urgent-area     turns=0 in=0 out=0 invalid=0 354ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-workaround-comments turns=0 in=0 out=0 invalid=0 341ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-workaround-comments turns=0 in=0 out=0 invalid=0 382ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-workaround-comments turns=0 in=0 out=0 invalid=0 410ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-pct-not-planned     turns=0 in=0 out=0 invalid=0 330ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-pct-not-planned     turns=0 in=0 out=0 invalid=0 362ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-pct-not-planned     turns=0 in=0 out=0 invalid=0 368ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-all-v10-bugs        turns=0 in=0 out=0 invalid=0 361ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-all-v10-bugs        turns=0 in=0 out=0 invalid=0 337ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-all-v10-bugs        turns=0 in=0 out=0 invalid=0 338ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-p0-no-version       turns=0 in=0 out=0 invalid=0 423ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-p0-no-version       turns=0 in=0 out=0 invalid=0 322ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-p0-no-version       turns=0 in=0 out=0 invalid=0 441ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-prs-plus-cli-bugs   turns=0 in=0 out=0 invalid=0 365ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-prs-plus-cli-bugs   turns=0 in=0 out=0 invalid=0 335ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-prs-plus-cli-bugs   turns=0 in=0 out=0 invalid=0 342ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-avg-comments        turns=0 in=0 out=0 invalid=0 362ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-avg-comments        turns=0 in=0 out=0 invalid=0 337ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-avg-comments        turns=0 in=0 out=0 invalid=0 416ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-config-upload       turns=0 in=0 out=0 invalid=0 394ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-config-upload       turns=0 in=0 out=0 invalid=0 352ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             native    rb-config-upload       turns=0 in=0 out=0 invalid=0 400ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-ui-p1-unassigned    turns=0 in=0 out=0 invalid=0 357ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-ui-p1-unassigned    turns=0 in=0 out=0 invalid=0 344ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-ui-p1-unassigned    turns=0 in=0 out=0 invalid=0 390ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-top-urgent-area     turns=0 in=0 out=0 invalid=0 343ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-top-urgent-area     turns=0 in=0 out=0 invalid=0 330ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-top-urgent-area     turns=0 in=0 out=0 invalid=0 346ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-workaround-comments turns=0 in=0 out=0 invalid=0 344ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-workaround-comments turns=0 in=0 out=0 invalid=0 297ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-workaround-comments turns=0 in=0 out=0 invalid=0 321ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-pct-not-planned     turns=0 in=0 out=0 invalid=0 362ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-pct-not-planned     turns=0 in=0 out=0 invalid=0 339ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-pct-not-planned     turns=0 in=0 out=0 invalid=0 306ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-all-v10-bugs        turns=0 in=0 out=0 invalid=0 324ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-all-v10-bugs        turns=0 in=0 out=0 invalid=0 326ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-all-v10-bugs        turns=0 in=0 out=0 invalid=0 337ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-p0-no-version       turns=0 in=0 out=0 invalid=0 363ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-p0-no-version       turns=0 in=0 out=0 invalid=0 371ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-p0-no-version       turns=0 in=0 out=0 invalid=0 347ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-prs-plus-cli-bugs   turns=0 in=0 out=0 invalid=0 397ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-prs-plus-cli-bugs   turns=0 in=0 out=0 invalid=0 432ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-prs-plus-cli-bugs   turns=0 in=0 out=0 invalid=0 384ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-avg-comments        turns=0 in=0 out=0 invalid=0 361ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-avg-comments        turns=0 in=0 out=0 invalid=0 411ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-avg-comments        turns=0 in=0 out=0 invalid=0 353ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-config-upload       turns=0 in=0 out=0 invalid=0 385ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-config-upload       turns=0 in=0 out=0 invalid=0 395ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             code      rb-config-upload       turns=0 in=0 out=0 invalid=0 311ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-ui-p1-unassigned    turns=0 in=0 out=0 invalid=0 344ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-ui-p1-unassigned    turns=0 in=0 out=0 invalid=0 305ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-ui-p1-unassigned    turns=0 in=0 out=0 invalid=0 386ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-top-urgent-area     turns=0 in=0 out=0 invalid=0 362ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-top-urgent-area     turns=0 in=0 out=0 invalid=0 376ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-top-urgent-area     turns=0 in=0 out=0 invalid=0 394ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-workaround-comments turns=0 in=0 out=0 invalid=0 383ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-workaround-comments turns=0 in=0 out=0 invalid=0 350ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-workaround-comments turns=0 in=0 out=0 invalid=0 348ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-pct-not-planned     turns=0 in=0 out=0 invalid=0 406ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-pct-not-planned     turns=0 in=0 out=0 invalid=0 359ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-pct-not-planned     turns=0 in=0 out=0 invalid=0 350ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-all-v10-bugs        turns=0 in=0 out=0 invalid=0 337ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-all-v10-bugs        turns=0 in=0 out=0 invalid=0 343ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-all-v10-bugs        turns=0 in=0 out=0 invalid=0 332ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-p0-no-version       turns=0 in=0 out=0 invalid=0 371ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-p0-no-version       turns=0 in=0 out=0 invalid=0 381ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-p0-no-version       turns=0 in=0 out=0 invalid=0 362ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-prs-plus-cli-bugs   turns=0 in=0 out=0 invalid=0 334ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-prs-plus-cli-bugs   turns=0 in=0 out=0 invalid=0 332ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-prs-plus-cli-bugs   turns=0 in=0 out=0 invalid=0 354ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-avg-comments        turns=0 in=0 out=0 invalid=0 346ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-avg-comments        turns=0 in=0 out=0 invalid=0 511ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-config-upload       turns=0 in=0 out=0 invalid=0 338ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-avg-comments        turns=0 in=0 out=0 invalid=0 435ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-config-upload       turns=0 in=0 out=0 invalid=0 324ms  error: budget of 1500000 tokens exhausted
+FAIL  claude-haiku-5-5             glossary4 rb-config-upload       turns=0 in=0 out=0 invalid=0 348ms  error: budget of 1500000 tokens exhausted
+total tokens spent: 1520564
+ledger total (this phase): 71.88 USD
+log: results/real-blind.jsonl

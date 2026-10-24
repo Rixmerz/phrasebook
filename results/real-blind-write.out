@@ -1,0 +1,31 @@
+definition tokens  claude-sonnet-5-5: native=19436 glossary=1719 code=14532 glossary2=1765
+definition tokens  claude-haiku-5-5: native=19436 glossary=1719 code=14532 glossary2=1765
+FAIL  claude-sonnet-5-5            native    rb-w-assign-infra-p1-bugs turns=3 in=8 out=833 invalid=0 34418ms
+FAIL  claude-sonnet-5-5            native    rb-w-assign-infra-p1-bugs turns=5 in=12 out=1331 invalid=0 40266ms
+FAIL  claude-sonnet-5-5            native    rb-w-assign-infra-p1-bugs turns=5 in=12 out=1316 invalid=0 39104ms
+FAIL  claude-sonnet-5-5            native    rb-w-label-docs-p2     turns=3 in=8 out=1212 invalid=0 46725ms
+FAIL  claude-sonnet-5-5            native    rb-w-label-docs-p2     turns=3 in=8 out=1206 invalid=0 40950ms
+FAIL  claude-sonnet-5-5            native    rb-w-label-docs-p2     turns=3 in=8 out=1313 invalid=0 43008ms
+FAIL  claude-sonnet-5-5            native    rb-w-reopen            turns=2 in=6 out=353 invalid=0 31279ms
+FAIL  claude-sonnet-5-5            native    rb-w-reopen            turns=2 in=6 out=353 invalid=0 34699ms
+FAIL  claude-sonnet-5-5            native    rb-w-reopen            turns=2 in=6 out=353 invalid=0 30709ms
+FAIL  claude-sonnet-5-5            code      rb-w-assign-infra-p1-bugs turns=3 in=8 out=444 invalid=0 35313ms
+FAIL  claude-sonnet-5-5            code      rb-w-assign-infra-p1-bugs turns=3 in=8 out=434 invalid=0 32144ms
+FAIL  claude-sonnet-5-5            code      rb-w-assign-infra-p1-bugs turns=3 in=8 out=438 invalid=0 32793ms
+FAIL  claude-sonnet-5-5            code      rb-w-label-docs-p2     turns=3 in=8 out=545 invalid=0 41098ms
+FAIL  claude-sonnet-5-5            code      rb-w-label-docs-p2     turns=3 in=8 out=713 invalid=0 40490ms
+FAIL  claude-sonnet-5-5            code      rb-w-label-docs-p2     turns=5 in=12 out=955 invalid=1 44056ms
+FAIL  claude-sonnet-5-5            code      rb-w-reopen            turns=2 in=6 out=258 invalid=0 29488ms
+FAIL  claude-sonnet-5-5            code      rb-w-reopen            turns=2 in=6 out=268 invalid=0 27326ms
+FAIL  claude-sonnet-5-5            code      rb-w-reopen            turns=2 in=6 out=263 invalid=0 29548ms
+FAIL  claude-sonnet-5-5            glossary4 rb-w-assign-infra-p1-bugs turns=3 in=8 out=387 invalid=0 33757ms
+FAIL  claude-sonnet-5-5            glossary4 rb-w-assign-infra-p1-bugs turns=3 in=8 out=371 invalid=0 33677ms
+FAIL  claude-sonnet-5-5            glossary4 rb-w-assign-infra-p1-bugs turns=3 in=8 out=390 invalid=0 35151ms
+FAIL  claude-sonnet-5-5            glossary4 rb-w-label-docs-p2     turns=3 in=8 out=548 invalid=0 42482ms
+FAIL  claude-sonnet-5-5            glossary4 rb-w-label-docs-p2     turns=3 in=8 out=592 invalid=0 44077ms
+FAIL  claude-sonnet-5-5            glossary4 rb-w-label-docs-p2     turns=3 in=8 out=572 invalid=0 40549ms
+FAIL  claude-sonnet-5-5            glossary4 rb-w-reopen            turns=2 in=6 out=227 invalid=0 28662ms
+FAIL  claude-sonnet-5-5            glossary4 rb-w-reopen            turns=2 in=6 out=239 invalid=0 28202ms
+FAIL  claude-sonnet-5-5            glossary4 rb-w-reopen            turns=2 in=6 out=210 invalid=0 30376ms
+FAIL  claude-haiku-5-5             native    rb-w-assign-infra-p1-bugs turns=5 in=12 out=1925 invalid=0 43349ms
+FAIL  claude-haiku-5-5             native    rb-w-assign-infra-p1-bugs turns=5 in=12 out=2321 invalid=0 45572ms

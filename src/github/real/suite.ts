@@ -51,7 +51,7 @@ async function startReal(token: string) {
 
 // Puts every issue or PR touched since `since` back to the snapshot: state, labels, assignees,
 // and deletes comments the snapshot lacks. Returns the numbers it had to restore.
-async function restore(token: string, since: string): Promise<number[]> {
+export async function restore(token: string, since: string): Promise<number[]> {
   const touched = await all(token, `/repos/${REPO}/issues?state=all&since=${since}`);
   const snapIssues = new Map(realSnapshot.repos[0].issues.map((i) => [i.number, i]));
   const snapPulls = new Map(realSnapshot.repos[0].pulls.map((p) => [p.number, p]));

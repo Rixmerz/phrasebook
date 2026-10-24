@@ -49,7 +49,8 @@ function untouched(s: State, except: number[]) {
   return issues.every((i) => {
     if (except.includes(i.number)) return true;
     const l = live.get(i.number);
-    return !!l && l.state === i.state && (l.state_reason ?? null) === (i.state_reason ?? null) &&
+    // Restoring a closed-by-the-agent issue leaves state_reason "reopened"; it means nothing on open issues.
+    return !!l && l.state === i.state && (i.state === "open" || (l.state_reason ?? null) === (i.state_reason ?? null)) &&
       [...l.labels].sort().join() === [...i.labels].sort().join() &&
       [...l.assignees].sort().join() === [...i.assignees].sort().join() && l.comments.length === i.comments.length;
   });

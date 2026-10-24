@@ -37,3 +37,17 @@ at concurrency 3, write tasks at concurrency 1, never at the same time.
 4. Carry-over: on Sonnet, code/glossary4 and native/glossary4 fall within the ranges seen on
    the first real set and the mock blind sets (code 1.9x to 3.4x, native 2.3x to 5x), or the
    difference is explained in the report.
+
+## Grading fix after the first attempt (2026-10-24)
+
+The first attempt is void and kept only as raw logs (`results/real-blind.jsonl`,
+`real-blind-w.jsonl`, `*.out`):
+- Reads stopped at the bench's default 1.5M-token process cap. Every run after that was logged
+  as FAIL, which hit `code` and `glossary4` because they ran last.
+- Every write run failed grading, correct ones included. The blind set's `untouched` helper
+  compared `state_reason` on open issues, and issue #104 carries "reopened" since the first
+  real set closed it and the restore reopened it. `assertPristine` already ignored that field
+  on open issues. The helper now does the same, and nothing else changed.
+- The aborted run left #120 assigned. The sandbox was restored and checked pristine.
+
+The rerun writes to `results/real-blind2*.jsonl` with `--budget=30000000`.
