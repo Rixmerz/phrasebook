@@ -990,3 +990,15 @@ Two harness fixes landed first, for every arm: Claude Code's own task tools (Tas
 | glossary4s | 30/32 | 1.04 |
 
 This is the tuned set, so it is an upper bound; the blind check follows.
+
+## Notion, fourth blind set through Claude Code (Haiku 4.5)
+
+`src/notion/blind4tasks.ts`, frozen in 2aa8ff1 (sha256 `3c68205e…`) before any run; nothing was tuned on it. Haiku 4.5, 3 reps, subscription (`results/client-blind4-h45.jsonl`).
+
+| arm | pass | USD |
+|---|---|---|
+| native MCP | 19/36 | 1.36 |
+| glossary4 | 25/36 | 0.90 |
+| glossary4s | 29/36 | 0.66 |
+
+glossary4s lost three of its seven failures on one task: it passed `{"people":{"contains":"Diego"}}` to the server filter, which takes a user id, got an empty list and answered 0. The pipeline's `| where Responsable contains Diego` would have worked. Native failures were mostly the model trying to write a local script instead of answering.
