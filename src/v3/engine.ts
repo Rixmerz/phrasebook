@@ -281,6 +281,66 @@ async function bothStates(session: Session, call: Call, paging: Paging | null, l
   return { text: JSON.stringify(Array.isArray(shape) ? rows : { ...shape, [key]: rows }), isError: false };
 }
 
+// v4.2: fields a list leaves out (state_reason on issue lists) are filled in by fetching each
+// record, when a pipeline step names them. Capped so a typo cannot fan out without end.
+const MAX_HYDRATE = 300;
+async function hydrate(session: Session, call: Call, rows: Json[], stages: string[][], log: Log): Promise<string | null> {
+  const recs = rows.filter((r): r is Record<string, Json> => !!r && typeof r === "object" && !Array.isArray(r));
+  if (!recs.length || typeof recs[0].number !== "number") return null;
+  const getter = call.tool === "list_issues" ? "issue_read" : call.tool === "list_pull_requests" ? "pull_request_read" : null;
+  if (!getter) return null;
+  const named = new Set<string>();
+  for (const [op, ...args] of stages) {
+    const o = (op ?? "").toLowerCase();
+    if (o === "select") args.join(",").split(",").forEach((f) => f.trim() && named.add(f.trim().split(".")[0]));
+    else if (["where", "sort", "group", "sum", "avg", "min", "max", "distinct"].includes(o) && args[0]) named.add(args[0].split(".")[0]);
+  }
+  const missing = [...named].filter((f) => recs.every((r) => !(f in r)));
+  if (!missing.length || recs.length > MAX_HYDRATE) return null;
+  for (const r of recs) {
+    const args = getter === "issue_read"
+      ? { method: "get", owner: call.args.owner, repo: call.args.repo, issue_number: r.number }
+      : { method: "get", owner: call.args.owner, repo: call.args.repo, pullNumber: r.number };
+    const got = await session.call(getter, args);
+    log({ tool: getter, input: args, outcome: got.isError ? "backend_error" : "ok" });
+    if (got.isError) continue;
+    const full = flatten(simplify(JSON.parse(got.text))) as Record<string, Json>;
+    for (const f of missing) r[f] = full[f] ?? null;
+  }
+  return `${missing.join(", ")} is not in list results: read from each of the ${recs.length} records`;
+}
+
+// v4.2: edit file o/r path=P [branch=B] old="..." new="..." [message=M]: exact replacement of one occurrence.
+async function editFile(session: Session, tokens: string[], parse: (c: string) => Call[], log: Log): Promise<string> {
+  const kv = new Map<string, string>();
+  for (const t of tokens.slice(2)) {
+    const i = t.indexOf("=");
+    if (i > 0) kv.set(t.slice(0, i), t.slice(i + 1));
+  }
+  const target = tokens.slice(2).find((t) => !t.includes("=") && t.includes("/"));
+  const path = kv.get("path"), oldText = kv.get("old"), newText = kv.get("new");
+  if (!target || !path || oldText === undefined || newText === undefined) {
+    throw new CommandError('Usage: edit file <owner>/<repo> path=<file> [branch=<b>] old="<exact text>" new="<text>" [message=<m>]');
+  }
+  const branch = kv.get("branch");
+  const [read] = parse(join(["get", "file", target, `path=${path}`, ...(branch ? [`ref=${branch}`] : [])]));
+  const r = await session.call(read.tool, read.args);
+  log({ tool: read.tool, input: read.args, outcome: r.isError ? "backend_error" : "ok" });
+  if (r.isError) throw new CommandError(r.text);
+  const { data, content } = parseResult(read.tool, r.text);
+  if (content === undefined) throw new CommandError(`${path} is not a file.`);
+  const hits = content.split(oldText).length - 1;
+  if (hits !== 1) throw new CommandError(`old= text found ${hits} times in ${path}; it must match exactly once. Include more of the line to make it unique.`);
+  const sha = (data as Record<string, Json>)?.sha;
+  const write = ["write", "file", target, `path=${path}`, ...(branch ? [`branch=${branch}`] : []),
+    `message=${kv.get("message") ?? `Edit ${path}`}`, `content=${content.replace(oldText, newText)}`, ...(sha ? [`sha=${sha}`] : [])];
+  const [w] = parse(join(write));
+  const wr = await session.call(w.tool, w.args);
+  log({ tool: w.tool, input: { ...w.args, content: "(edited)" }, outcome: wr.isError ? "backend_error" : "ok" });
+  if (wr.isError) throw new CommandError(wr.text);
+  return `edited ${path}${branch ? ` on ${branch}` : ""}: 1 replacement, rest of the file unchanged`;
+}
+
 const isRead = (tool: string) => /^(get_|list_|search_)|_read$/.test(tool);
 
 // v4: list filters the tool does not take become client-side where steps over every page.
@@ -357,7 +417,13 @@ export async function runV3(
     throw e;
   }
 
+  // v4.2: lines run in order and stop at the first error, so a failed step is not built on.
+  let skipped = 0;
   for (const rawTokens of lines) {
+    if (mode === "v4" && anyError) {
+      skipped++;
+      continue;
+    }
     const pipeAt = rawTokens.indexOf("|");
     let cmd = pipeAt >= 0 ? rawTokens.slice(0, pipeAt) : rawTokens;
     const stages: string[][] = [];
@@ -375,6 +441,12 @@ export async function runV3(
       if (cmd[0]?.toLowerCase() === "form") {
         outputs.push(await form(session, session.tools, cmd.slice(1)));
         log({ tool: "form", input: join(cmd), outcome: "ok" });
+        continue;
+      }
+      if (mode === "v4" && cmd[0]?.toLowerCase() === "edit" && fold(cmd[1] ?? "") === "file") {
+        const msg = await editFile(session, targetFromKeys(cmd), parse, log);
+        st.refs.push({ line: join(cmd), data: msg });
+        outputs.push(`@${st.refs.length}\n${msg}`);
         continue;
       }
       // calc <expression over numbers and results>, e.g. calc @1 / @2 * 100
@@ -514,6 +586,10 @@ export async function runV3(
           // v4: a single object pipes as a one-row list (get issue ... | select title,user).
           const rows = listOf(mode, res.data)?.rows ?? (mode === "v4" && res.data && typeof res.data === "object" ? [res.data] : null);
           if (!rows) throw new PipelineError("This result has no list to pipe into.");
+          if (mode === "v4") {
+            const note = await hydrate(session, res.call, rows, stages, log);
+            if (note) notes.push(note);
+          }
           const out = runPipeline(rows, stages, (x) => refValue(st, x) as Json);
           st.refs[n - 1].data = Array.isArray(out) ? { items: out } : out;
           body = typeof out === "number" ? `${stages.at(-1)?.[0] ?? "value"}: ${out}`
@@ -542,6 +618,7 @@ export async function runV3(
       outputs.push(mode !== "legend" ? withCorrections(e.message, rawTokens, parse) : e.message);
     }
   }
+  if (skipped) outputs.push(`stopped after the error: ${skipped} later line(s) not run; fix it and send them again`);
   return { text: outputs.join("\n---\n"), isError: anyError };
 }
 

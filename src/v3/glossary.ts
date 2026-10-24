@@ -39,6 +39,9 @@ const V4_EXTRAS = `v4:
   a "more fields:" line names the rest, and | select number,body (or any field) brings them back. "all rows:" lists values shared by every row.
   | select and | where also work on a single result: get issue octo/app#4 | select title,user
   Several numbers in one command: get issue octo/app#1,5,9 (one table back).
-  A list filter the tool lacks (assignees=ana) is applied for you as | where over every page.`;
+  A list filter the tool lacks (assignees=ana) is applied for you as | where over every page.
+  A field lists leave out (state_reason) is fetched per record when a step names it: list issue octo/app state=closed all | where state_reason = not_planned | count
+  edit file octo/app path=config/a.yaml branch=main old="limit: 5" new="limit: 8": replaces one exact occurrence; no need to read or retype the file.
+  Send dependent steps in one call, one per line (create branch, write file, create pr): they run in order and stop at the first error.`;
 
 export const GITHUB_GLOSSARY_V4 = `${GITHUB_GLOSSARY_V3_FEEDBACK}\n\n${V4_EXTRAS}`;
