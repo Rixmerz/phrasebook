@@ -56,6 +56,8 @@ const fold = (w: string) => FOLD[w.toLowerCase()] ?? w.toLowerCase();
 
 // close / reopen / comment, written the way people say them.
 function macro(tokens: string[]): string[] {
+  // "add comment T body=..." is the same as "comment T body=...".
+  if (tokens[0]?.toLowerCase() === "add" && fold(tokens[1] ?? "") === "comment") tokens = ["comment", ...tokens.slice(2)];
   const [verb, maybeNoun, ...rest] = tokens;
   const v = verb?.toLowerCase();
   if (!["close", "reopen", "comment"].includes(v)) return tokens;
@@ -245,6 +247,40 @@ const listOf = (mode: Mode, v: Json) => (mode === "v4" && isRecord(v) ? null : r
 // Stages that keep whole records (filters, sorts) still print compactly; select and the like print what was asked.
 const keepsRecords = (stages: string[][]) => stages.every((s) => ["where", "sort", "top", "first", "limit"].includes((s[0] ?? "").toLowerCase()));
 
+// v4: owner=o repo=r, or repo=o/r, become the o/r target the commands expect.
+function targetFromKeys(cmd: string[]): string[] {
+  if (cmd.some((t) => /^[\w.-]+\/[\w.-]+(#.*)?$/.test(t))) return cmd;
+  const repo = cmd.find((t) => /^repo=/.test(t))?.slice(5);
+  const owner = cmd.find((t) => /^owner=/.test(t))?.slice(6);
+  const full = repo?.includes("/") ? repo : owner && repo ? `${owner}/${repo}` : null;
+  if (!full) return cmd;
+  const num = cmd.find((t) => /^(number|issue_number|pullNumber)=\d+$/.test(t))?.split("=")[1];
+  const rest = cmd.filter((t) => !/^(repo|owner|number|issue_number|pullNumber)=/.test(t));
+  const at = rest.findIndex((t) => t.includes("="));
+  const target = num ? `${full}#${num}` : full;
+  return at < 0 ? [...rest, target] : [...rest.slice(0, at), target, ...rest.slice(at)];
+}
+
+// v4: list_issues has no ALL state; fetch open and closed and merge them.
+async function bothStates(session: Session, call: Call, paging: Paging | null, log: Log): Promise<{ text: string; isError: boolean }> {
+  const rows: Json[] = [];
+  let shape: Record<string, Json> | null = null;
+  let key = "issues";
+  for (const state of ["OPEN", "CLOSED"]) {
+    const c = { ...call, args: { ...call.args, state } };
+    const r = paging ? await fetchAll(session, c, paging, log) : await session.call(c.tool, c.args);
+    if (!paging) log({ tool: c.tool, input: c.args, outcome: r.isError ? "backend_error" : "ok" });
+    if (r.isError) return r;
+    const data = JSON.parse(r.text);
+    const found = rowsOf(data);
+    if (!found) return r;
+    key = found.key;
+    shape ??= data;
+    rows.push(...found.rows);
+  }
+  return { text: JSON.stringify(Array.isArray(shape) ? rows : { ...shape, [key]: rows }), isError: false };
+}
+
 const isRead = (tool: string) => /^(get_|list_|search_)|_read$/.test(tool);
 
 // v4: list filters the tool does not take become client-side where steps over every page.
@@ -363,6 +399,7 @@ export async function runV3(
         continue;
       }
       cmd = macro(cmd);
+      if (mode === "v4") cmd = targetFromKeys(cmd);
       const wantAll = cmd.some((t) => t.toLowerCase() === "all");
       cmd = cmd.filter((t) => t.toLowerCase() !== "all");
       let notes: string[] = [];
@@ -388,7 +425,8 @@ export async function runV3(
       } else if (fanIdx >= 0) {
         const [base, expr] = cmd[fanIdx].split("#");
         const vals = refValue(st, expr);
-        for (const v of Array.isArray(vals) ? vals : [vals]) variants.push(cmd.map((t, i) => (i === fanIdx ? `${base}#${v}` : t)));
+        const numOf = (v: Json | string) => (v && typeof v === "object" && !Array.isArray(v) && "number" in v ? (v as Record<string, Json>).number : v);
+        for (const v of (Array.isArray(vals) ? vals : [vals]).map(numOf)) variants.push(cmd.map((t, i) => (i === fanIdx ? `${base}#${v}` : t)));
       } else variants.push(cmd);
 
       const results: { data: Json; content?: string; raw: Json; call: Call }[] = [];
@@ -429,7 +467,9 @@ export async function runV3(
         const calls = parse(join(variant));
         for (const call of calls) {
           const paging = wantAll || forceAll ? pagingOf(session.tools.find((t) => t.name === call.tool)) : null;
-          const r = paging ? await fetchAll(session, call, paging, log) : await session.call(call.tool, call.args);
+          const r = mode === "v4" && call.tool === "list_issues" && /^all$/i.test(String(call.args.state ?? ""))
+            ? await bothStates(session, call, paging, log)
+            : paging ? await fetchAll(session, call, paging, log) : await session.call(call.tool, call.args);
           if (!paging) log({ tool: call.tool, input: call.args, outcome: r.isError ? "backend_error" : "ok", detail: r.isError ? r.text : undefined });
           if (r.isError) {
             anyError = true;

@@ -299,7 +299,7 @@ export const blind2Tasks: GhTask[] = [
   {
     id: "c-close-obsolete",
     prompt: "En octo/telemetry, cierra todos los issues abiertos que tengan la etiqueta obsolete, con motivo \"not planned\", " +
-      "y deja en cada uno el comentario exacto: Cerrado: ya no aplica tras la migración a v4.",
+      "y deja en cada uno el comentario exacto \"Cerrado: ya no aplica tras la migración a v4.\" (con el punto final).",
     check: (s) =>
       obsolete.every((n) => {
         const i = iss(s, n);

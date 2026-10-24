@@ -15,3 +15,11 @@ arm-agnostic.
    say what they are.
 3. Mock routes added for gaps the pilot found (repository labels and label by
    name over GraphQL, `GET /git/trees/:ref`). Same backend for every arm.
+
+## 2026-10-24: exact-comment wording in github-blind and github-blind2
+
+`b-close-duplicates` and `c-close-obsolete` asked for an exact comment written after a colon
+at the end of the sentence, so its final period read as sentence punctuation; Sonnet 5.5 dropped
+it in every arm, code mode included. The comment now goes in double quotes with "(con el punto
+final)". Only these two tasks were rerun, for every arm on the affected suite and models, into
+`results/*-amended.jsonl`; the original rows stay in their files. The checks did not change.

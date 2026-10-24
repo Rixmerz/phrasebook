@@ -200,7 +200,7 @@ export const blindTasks: GhTask[] = [
   {
     id: "b-close-duplicates",
     prompt: "En octo/shop, cierra todos los issues abiertos que tengan la etiqueta duplicate, con motivo \"not planned\", " +
-      "y deja en cada uno el comentario exacto: Cerrado por duplicado.",
+      "y deja en cada uno el comentario exacto \"Cerrado por duplicado.\" (con el punto final).",
     check: (s) =>
       dupes.every((n) => {
         const i = iss(s, n);
