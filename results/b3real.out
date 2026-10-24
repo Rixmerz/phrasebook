@@ -1,0 +1,53 @@
+definition tokens  claude-sonnet-5-5: native=19384 glossary=1719 code=14480 glossary2=1765
+Deno.serve: request.signal aborts on successful responses (legacy behavior). To detect when a request has been fully delivered use the `completed` promise on the handler's info argument. Move cleanup to the handler's return path, or opt in to the new behavior with --unstable-no-legacy-abort. See https://docs.deno.com/go/unstable-no-legacy-abort
+PASS  claude-sonnet-5-5            glossary4 t3-issue-facts         turns=2 in=6 out=72 invalid=0 2005ms
+PASS  claude-sonnet-5-5            glossary4 t3-issue-facts         turns=2 in=6 out=72 invalid=0 1876ms
+PASS  claude-sonnet-5-5            glossary4 t3-issue-facts         turns=2 in=6 out=72 invalid=0 1998ms
+PASS  claude-sonnet-5-5            glossary4 t3-pr-base-author      turns=2 in=6 out=72 invalid=0 2130ms
+PASS  claude-sonnet-5-5            glossary4 t3-pr-base-author      turns=2 in=6 out=72 invalid=0 2308ms
+PASS  claude-sonnet-5-5            glossary4 t3-release-flag        turns=2 in=6 out=74 invalid=0 2485ms
+PASS  claude-sonnet-5-5            glossary4 t3-release-flag        turns=2 in=6 out=74 invalid=0 2446ms
+PASS  claude-sonnet-5-5            glossary4 t3-pr-base-author      turns=2 in=6 out=72 invalid=0 2377ms
+PASS  claude-sonnet-5-5            glossary4 t3-release-flag        turns=2 in=6 out=74 invalid=0 2001ms
+PASS  claude-sonnet-5-5            glossary4 t3-pr-issue-assignee   turns=3 in=8 out=119 invalid=0 2631ms
+PASS  claude-sonnet-5-5            glossary4 t3-pr-issue-assignee   turns=3 in=8 out=119 invalid=0 2739ms
+PASS  claude-sonnet-5-5            glossary4 t3-top-pr-authors      turns=2 in=6 out=83 invalid=0 2054ms
+PASS  claude-sonnet-5-5            glossary4 t3-open-sync-bugs      turns=2 in=6 out=138 invalid=0 2650ms
+PASS  claude-sonnet-5-5            glossary4 t3-open-sync-bugs      turns=2 in=6 out=122 invalid=0 2476ms
+PASS  claude-sonnet-5-5            glossary4 t3-pr-issue-assignee   turns=3 in=8 out=119 invalid=0 3180ms
+PASS  claude-sonnet-5-5            glossary4 t3-top-pr-authors      turns=2 in=6 out=83 invalid=0 1993ms
+PASS  claude-sonnet-5-5            glossary4 t3-open-sync-bugs      turns=3 in=8 out=220 invalid=0 4128ms
+PASS  claude-sonnet-5-5            glossary4 t3-top-pr-authors      turns=2 in=6 out=139 invalid=0 2894ms
+PASS  claude-sonnet-5-5            glossary4 t3-pct-unassigned-v42  turns=2 in=6 out=122 invalid=0 2384ms
+PASS  claude-sonnet-5-5            glossary4 t3-pct-unassigned-v42  turns=2 in=6 out=124 invalid=0 2252ms
+PASS  claude-sonnet-5-5            glossary4 t3-completed-v41       turns=2 in=6 out=81 invalid=0 2102ms
+PASS  claude-sonnet-5-5            glossary4 t3-p0-without-pr       turns=2 in=6 out=511 invalid=0 4398ms
+PASS  claude-sonnet-5-5            glossary4 t3-p0-without-pr       turns=2 in=6 out=485 invalid=0 4541ms
+PASS  claude-sonnet-5-5            glossary4 t3-pct-unassigned-v42  turns=2 in=6 out=124 invalid=0 3515ms
+PASS  claude-sonnet-5-5            glossary4 t3-completed-v41       turns=2 in=6 out=81 invalid=0 1913ms
+PASS  claude-sonnet-5-5            glossary4 t3-completed-v41       turns=2 in=6 out=81 invalid=0 2007ms
+PASS  claude-sonnet-5-5            glossary4 t3-p0-without-pr       turns=2 in=6 out=553 invalid=0 5021ms
+PASS  claude-sonnet-5-5            glossary4 t3-author-features     turns=3 in=8 out=193 invalid=0 3584ms
+PASS  claude-sonnet-5-5            glossary4 t3-author-features     turns=3 in=8 out=186 invalid=0 3619ms
+PASS  claude-sonnet-5-5            glossary4 t3-author-features     turns=3 in=8 out=228 invalid=0 5213ms
+PASS  claude-sonnet-5-5            glossary4 t3-close-stale         turns=3 in=8 out=305 invalid=0 3947ms
+PASS  claude-sonnet-5-5            glossary4 t3-close-stale         turns=3 in=8 out=320 invalid=0 4254ms
+PASS  claude-sonnet-5-5            glossary4 t3-move-offline-milestone turns=4 in=10 out=322 invalid=0 4805ms
+PASS  claude-sonnet-5-5            glossary4 t3-move-offline-milestone turns=4 in=10 out=358 invalid=0 5264ms
+PASS  claude-sonnet-5-5            glossary4 t3-move-offline-milestone turns=4 in=10 out=390 invalid=0 5249ms
+PASS  claude-sonnet-5-5            glossary4 t3-close-stale         turns=3 in=8 out=307 invalid=0 3906ms
+PASS  claude-sonnet-5-5            glossary4 t3-edit-flags          turns=3 in=8 out=283 invalid=0 3704ms
+PASS  claude-sonnet-5-5            glossary4 t3-edit-flags          turns=3 in=8 out=230 invalid=0 3326ms
+PASS  claude-sonnet-5-5            glossary4 t3-edit-flags          turns=3 in=8 out=232 invalid=0 3444ms
+PASS  claude-sonnet-5-5            glossary4 t3-gpx-doc-pr          turns=2 in=6 out=413 invalid=0 3856ms
+PASS  claude-sonnet-5-5            glossary4 t3-gpx-doc-pr          turns=2 in=6 out=407 invalid=0 3612ms
+PASS  claude-sonnet-5-5            glossary4 t3-comment-r41-prs     turns=3 in=8 out=229 invalid=0 3497ms
+PASS  claude-sonnet-5-5            glossary4 t3-gpx-doc-pr          turns=2 in=6 out=421 invalid=0 3713ms
+PASS  claude-sonnet-5-5            glossary4 t3-comment-r41-prs     turns=3 in=8 out=228 invalid=0 3202ms
+PASS  claude-sonnet-5-5            glossary4 t3-comment-r41-prs     turns=3 in=8 out=228 invalid=0 3325ms
+PASS  claude-sonnet-5-5            glossary4 t3-reassign-tomas      turns=4 in=10 out=618 invalid=0 6630ms
+PASS  claude-sonnet-5-5            glossary4 t3-reassign-tomas      turns=4 in=10 out=426 invalid=0 5929ms
+PASS  claude-sonnet-5-5            glossary4 t3-reassign-tomas      turns=4 in=10 out=664 invalid=0 7084ms
+total tokens spent: 424542
+ledger total (this phase): 70.97 USD
+log: results/blind3-v4real.jsonl

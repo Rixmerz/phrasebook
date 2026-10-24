@@ -587,6 +587,8 @@ behavior as is; the glossary engine now sends `state=OPEN` by default and filter
 labels over every page. Without the probe, the glossary would have given wrong answers on
 real GitHub that the mock never showed.
 
+Regression after the real-API engine fixes (default `state=OPEN`, multi-label lists read every page): github-blind3 on Sonnet 5.5, 48/48, cost 1.02x [0.96, 1.12] of v4.3. No regression. Log: `results/blind3-v4real.jsonl`.
+
 ## Method
 
 ### Arms
