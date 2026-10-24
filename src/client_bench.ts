@@ -3,7 +3,10 @@
 // Isolation: --bare (no hooks, plugins, CLAUDE.md or OAuth; auth only from
 // ANTHROPIC_API_KEY), --strict-mcp-config with only the test server, built-in
 // tools disallowed, and a fresh temporary working directory per run.
-// Usage: deno run -A src/client_bench.ts --suite=github --models=a,b --arms=native,glossary [--reps=1] [--tasks=..]
+// --auth=subscription runs on the logged-in Claude Code plan instead of ANTHROPIC_API_KEY:
+// --bare forbids OAuth, so isolation comes from --setting-sources "" (no CLAUDE.md, plugins or
+// hooks), no slash commands and auto-memory off. Runs stay off the API ledger.
+// Usage: deno run -A src/client_bench.ts --suite=github --models=a,b --arms=native,glossary [--reps=1] [--tasks=..] [--auth=api|subscription]
 import { parseArgs } from "@std/cli/parse-args";
 import { loadEnv } from "./env.ts";
 import { startMock } from "./github/mock.ts";
@@ -16,8 +19,8 @@ import { LEDGER, ledgerTotal } from "./cost.ts";
 
 await loadEnv();
 const flags = parseArgs(Deno.args, {
-  string: ["suite", "models", "arms", "reps", "tasks", "out", "concurrency", "usd-cap"],
-  default: { suite: "github", models: "claude-haiku-5-5", arms: "native,glossary", reps: "1", concurrency: "4", "usd-cap": "70" },
+  string: ["suite", "models", "arms", "reps", "tasks", "out", "concurrency", "usd-cap", "auth"],
+  default: { suite: "github", models: "claude-haiku-5-5", arms: "native,glossary", reps: "1", concurrency: "4", "usd-cap": "70", auth: "api" },
 });
 
 const SUITES: Record<string, { tasks: GhTask[]; seed: () => State }> = {
@@ -26,6 +29,7 @@ const SUITES: Record<string, { tasks: GhTask[]; seed: () => State }> = {
   "github-blind3": { tasks: blind3Tasks, seed: blind3Seed },
 };
 const suite = SUITES[flags.suite];
+const SUB = flags.auth === "subscription";
 const GH = new URL("../vendor/github-mcp/github-mcp-server", import.meta.url).pathname;
 const PROXY = new URL("./proxy.ts", import.meta.url).pathname;
 const port = (startMock(0).addr as Deno.NetAddr).port;
@@ -53,14 +57,14 @@ async function runOnce(model: string, arm: string, task: GhTask, rep: number) {
   const t0 = performance.now();
   const cmd = new Deno.Command("claude", {
     args: [
-      "-p", task.prompt, "--bare", "--strict-mcp-config", "--mcp-config", cfg, "--model", model,
+      "-p", task.prompt, ...(SUB ? ["--setting-sources", "", "--disable-slash-commands"] : ["--bare"]), "--strict-mcp-config", "--mcp-config", cfg, "--model", model,
       ...(Deno.env.get("PHRASEBOOK_TRACE") ? ["--output-format", "stream-json", "--verbose"] : ["--output-format", "json"]),
       "--no-session-persistence", "--max-turns", "15",
       "--allowedTools", "mcp__gh", "--disallowedTools", ...DISALLOWED,
     ],
     cwd: dir,
     env: {
-      ANTHROPIC_API_KEY: Deno.env.get("ANTHROPIC_API_KEY")!, PATH: Deno.env.get("PATH") ?? "", HOME: Deno.env.get("HOME") ?? "",
+      ...(SUB ? { CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1" } : { ANTHROPIC_API_KEY: Deno.env.get("ANTHROPIC_API_KEY")! }), PATH: Deno.env.get("PATH") ?? "", HOME: Deno.env.get("HOME") ?? "",
       // native-defer: Claude Code's own deferred MCP tool loading (tool search), forced on.
       ...(arm === "native-defer" ? { ENABLE_TOOL_SEARCH: "true" } : {}),
     },
@@ -86,7 +90,7 @@ async function runOnce(model: string, arm: string, task: GhTask, rep: number) {
   const finalText = String(res.result ?? "");
   const usage = (res.usage ?? {}) as Record<string, number>;
   return {
-    kind: "run", suite: flags.suite, client: "claude-code", model, arm, task: task.id, rep,
+    kind: "run", suite: flags.suite, client: "claude-code", auth: flags.auth, model, arm, task: task.id, rep,
     success: !res.is_error && task.check(state, finalText), harness_gaps: gaps,
     turns: Number(res.num_turns ?? 0), latency_ms: latency, usd: Number(res.total_cost_usd ?? 0),
     input_tokens: usage.input_tokens ?? 0, output_tokens: usage.output_tokens ?? 0,
@@ -107,14 +111,14 @@ for (const m of models) for (const a of arms) for (const t of tasks) for (let r 
 let next = 0;
 async function worker() {
   while (next < jobs.length) {
-    if (ledgerTotal() > USD_CAP) {
+    if (!SUB && ledgerTotal() > USD_CAP) {
       console.log(`ledger reached the ${USD_CAP} USD cap, stopping`);
       return;
     }
     const [m, a, t, r] = jobs[next++];
     const row = await runOnce(m, a, t, r);
     Deno.writeTextFileSync(outFile, JSON.stringify(row) + "\n", { append: true });
-    Deno.writeTextFileSync(LEDGER, JSON.stringify({ ts: new Date().toISOString(), suite: `client:${flags.suite}`, model: m, arm: a, task: t.id, usd: row.usd }) + "\n", { append: true });
+    if (!SUB) Deno.writeTextFileSync(LEDGER, JSON.stringify({ ts: new Date().toISOString(), suite: `client:${flags.suite}`, model: m, arm: a, task: t.id, usd: row.usd }) + "\n", { append: true });
     console.log(
       `${row.harness_gaps.length ? "GAP " : row.success ? "PASS" : "FAIL"}  ${m.padEnd(26)} ${a.padEnd(9)} ${t.id.padEnd(22)} ` +
         `turns=${row.turns} in=${row.input_tokens} cr=${row.cache_read_tokens} cw=${row.cache_write_tokens} out=${row.output_tokens} usd=${row.usd.toFixed(4)} ${latency(row.latency_ms)}` +
