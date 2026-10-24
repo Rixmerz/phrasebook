@@ -63,10 +63,10 @@ for (const [k, rs] of groups) {
   );
 }
 
-console.log(`\nPass rate per task (model: ${["native", "toolsearch", "glossary", "glossary2", "glossary3-legend", "glossary3-feedback", "code", "codesearch", "ptc"].filter((a) => runs.some((r) => r.arm === a)).join(" / ")})`);
+console.log(`\nPass rate per task (model: ${["native", "toolsearch", "glossary", "glossary2", "glossary3-legend", "glossary3-feedback", "glossary4", "code", "codesearch", "ptc"].filter((a) => runs.some((r) => r.arm === a)).join(" / ")})`);
 const taskIds = [...new Set(runs.map((r) => r.task))];
 const models = [...new Set(runs.map((r) => short(r.model)))];
-const arms = ["native", "toolsearch", "glossary", "glossary2", "glossary3-legend", "glossary3-feedback", "code", "codesearch", "ptc"].filter((a) => runs.some((r) => r.arm === a));
+const arms = ["native", "toolsearch", "glossary", "glossary2", "glossary3-legend", "glossary3-feedback", "glossary4", "code", "codesearch", "ptc"].filter((a) => runs.some((r) => r.arm === a));
 for (const t of taskIds) {
   const cells = models.map((m) => {
     const parts = arms.map((a) => {

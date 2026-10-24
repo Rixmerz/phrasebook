@@ -32,3 +32,13 @@ const FEEDBACK = "Each answer ends with what was applied and ready-to-send next 
 
 export const GITHUB_GLOSSARY_V3_LEGEND = `${GITHUB_GLOSSARY_V2}\n\n${EXTRAS}\n\n${LEGEND}`;
 export const GITHUB_GLOSSARY_V3_FEEDBACK = `${GITHUB_GLOSSARY_V2}\n\n${EXTRAS}\n\n${FEEDBACK}`;
+
+// v4: the feedback variant, plus how compact lists, single-object pipes and batched gets work.
+const V4_EXTRAS = `v4:
+  Lists show a few columns (issues: number,title,state,labels,assignees,comments; PRs: number,title,state,merged,user,head,base);
+  a "more fields:" line names the rest, and | select number,body (or any field) brings them back. "all rows:" lists values shared by every row.
+  | select and | where also work on a single result: get issue octo/app#4 | select title,user
+  Several numbers in one command: get issue octo/app#1,5,9 (one table back).
+  A list filter the tool lacks (assignees=ana) is applied for you as | where over every page.`;
+
+export const GITHUB_GLOSSARY_V4 = `${GITHUB_GLOSSARY_V3_FEEDBACK}\n\n${V4_EXTRAS}`;

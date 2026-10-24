@@ -23,7 +23,7 @@ import { toolsearchArm } from "./arms/toolsearch.ts";
 import { codesearchArm } from "./arms/codesearch.ts";
 import { ptcArm } from "./arms/ptc.ts";
 import { glossaryHelpArm } from "./arms/glossary_help.ts";
-import { glossary3FeedbackArm, glossary3LegendArm } from "./v3/arms.ts";
+import { glossary3FeedbackArm, glossary3LegendArm, glossary4Arm } from "./v3/arms.ts";
 
 export const extraArms: Record<string, ExtraArm> = {
   toolsearch: toolsearchArm,
@@ -32,4 +32,5 @@ export const extraArms: Record<string, ExtraArm> = {
   ptc: ptcArm,
   "glossary3-legend": glossary3LegendArm,
   "glossary3-feedback": glossary3FeedbackArm,
+  glossary4: glossary4Arm,
 };

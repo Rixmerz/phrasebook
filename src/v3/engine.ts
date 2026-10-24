@@ -11,12 +11,14 @@ import type { McpTool } from "../mcp.ts";
 import type { Call, Session } from "../suites.ts";
 import { ALL_SPECS, CommandError, splitCommands } from "../github/parser.ts";
 import { specBags } from "../github/parser_v2.ts";
+import { compactTable, flatten } from "./compact.ts";
 import { type Json, render, rowsOf, simplify, table } from "./format.ts";
 import { PipelineError, runPipeline } from "./pipeline.ts";
 
-export type Mode = "legend" | "feedback";
+export type Mode = "legend" | "feedback" | "v4";
 type Ref = { line: string; data: Json; content?: string };
-export type V3State = { refs: Ref[] };
+// seen: hints already given in this run (v4 gives each one once).
+export type V3State = { refs: Ref[]; seen?: Set<string> };
 type Log = (entry: { tool: string; input: unknown; outcome: string; detail?: string }) => void;
 
 const MAX_PAGES = 30;
@@ -209,6 +211,64 @@ function footer(call: Call, line: string, raw: Json, n: number, didAll: boolean,
   return out.map((l) => "-> " + l);
 }
 
+// v4: conventions once per run; paging hints only when rows are missing; next steps once.
+function footerV4(st: V3State, call: Call, line: string, raw: Json, n: number, didAll: boolean, piped: boolean, notes: string[]): string[] {
+  const seen = st.seen ??= new Set();
+  const once = (key: string, text: string) => {
+    if (seen.has(key)) return [];
+    seen.add(key);
+    return [text];
+  };
+  const out: string[] = [...notes];
+  const found = rowsOf(raw);
+  if (found && !piped) {
+    const r = raw as Record<string, Record<string, unknown> | number>;
+    const total = typeof r.totalCount === "number" ? r.totalCount : typeof r.total_count === "number" ? r.total_count : null;
+    const more = !didAll && ((r.pageInfo as Record<string, unknown>)?.hasNextPage === true ||
+      (total !== null && total > found.rows.length) || (total === null && found.rows.length >= Number(call.args.perPage ?? 30)));
+    if (more) out.push(`only ${found.rows.length}${total !== null ? ` of ${total}` : ""} shown; every page at once: ${line} all`);
+    if (!found.rows.length) out.push(...appliedDefaults(call));
+    else for (const d of appliedDefaults(call)) out.push(...once(d, d));
+  }
+  if (found && found.rows.length && typeof (found.rows[0] as Record<string, Json>)?.number === "number") {
+    const target = `${call.args.owner}/${call.args.repo}`;
+    const noun = /pull/.test(call.tool) ? "pr" : "issue";
+    out.push(...once("act", `act on every row: update ${noun} ${target}#@${n}[*].number <key=value ...>`));
+    if (!piped) out.push(...once("pipe", `filter or count here: ${line}${didAll ? "" : " all"} | where <field> <op> <value> | count`));
+  }
+  return out.map((l) => "-> " + l);
+}
+
+// v4: an issue or PR (top-level number) is one record even when it holds an empty list like assignees: [].
+const isRecord = (v: Json) => !!v && typeof v === "object" && !Array.isArray(v) && typeof (v as Record<string, Json>).number === "number";
+const listOf = (mode: Mode, v: Json) => (mode === "v4" && isRecord(v) ? null : rowsOf(v));
+// Stages that keep whole records (filters, sorts) still print compactly; select and the like print what was asked.
+const keepsRecords = (stages: string[][]) => stages.every((s) => ["where", "sort", "top", "first", "limit"].includes((s[0] ?? "").toLowerCase()));
+
+const isRead = (tool: string) => /^(get_|list_|search_)|_read$/.test(tool);
+
+// v4: list filters the tool does not take become client-side where steps over every page.
+function lowerFilters(tokens: string[], parse: (c: string) => Call[]): { tokens: string[]; stages: string[][]; notes: string[] } {
+  const stages: string[][] = [];
+  const notes: string[] = [];
+  let cur = tokens;
+  for (let tries = 0; tries < 4; tries++) {
+    try {
+      parse(join(cur));
+      return { tokens: cur, stages, notes };
+    } catch (e) {
+      const m = e instanceof CommandError && e.message.match(/^Unknown key "([\w.]+)" for "(list|search)/);
+      const tok = m && cur.find((t) => t.startsWith(`${m[1]}=`));
+      if (!m || !tok) throw e;
+      const value = tok.slice(m[1].length + 1);
+      cur = cur.filter((t) => t !== tok);
+      stages.push(["where", m[1], value === "" ? "empty" : "=", ...(value === "" ? [] : [value])]);
+      notes.push(`${m[1]} is not a server filter: applied as | where ${m[1]} = ${value} over every page`);
+    }
+  }
+  return { tokens: cur, stages, notes };
+}
+
 async function liveOptions(session: Session, owner: string, repo: string, kind: string): Promise<string> {
   const r = await session.call("ui_get", { method: kind, owner, repo });
   if (r.isError) return "(unavailable)";
@@ -293,7 +353,8 @@ export async function runV3(
       if (/^@\d+$/.test(cmd[0] ?? "") && cmd.length === 1) {
         const src = st.refs[Number(cmd[0].slice(1)) - 1];
         if (!src) throw new CommandError(`No result ${cmd[0]} yet.`);
-        const rows = rowsOf(src.data)?.rows ?? (Array.isArray(src.data) ? src.data : null);
+        const rows = listOf(mode, src.data)?.rows ?? (Array.isArray(src.data) ? src.data
+          : mode === "v4" && src.data && typeof src.data === "object" ? [src.data] : null);
         if (!rows) throw new PipelineError(`${cmd[0]} has no list to pipe into.`);
         const out = runPipeline(rows, stages, (x) => refValue(st, x) as Json);
         st.refs.push({ line: join(rawTokens), data: Array.isArray(out) ? { items: out } : out });
@@ -304,11 +365,27 @@ export async function runV3(
       cmd = macro(cmd);
       const wantAll = cmd.some((t) => t.toLowerCase() === "all");
       cmd = cmd.filter((t) => t.toLowerCase() !== "all");
+      let notes: string[] = [];
+      let forceAll = false;
+      if (mode === "v4" && /^(list|search)$/i.test(cmd[0] ?? "")) {
+        const lowered = lowerFilters(cmd, parse);
+        if (lowered.stages.length) {
+          cmd = lowered.tokens;
+          stages.unshift(...lowered.stages);
+          notes = lowered.notes;
+          forceAll = true;
+        }
+      }
+      // v4 batched get: owner/repo#1,5,9 runs the command once per number.
+      const batchIdx = mode === "v4" ? cmd.findIndex((t) => /^[\w.-]+\/[\w.-]+#\d+(,\d+)+$/.test(t)) : -1;
 
       // Fan-out: owner/repo#@n[*].number becomes one command per value.
       const fanIdx = cmd.findIndex((t) => /#@\d+/.test(t));
       const variants: string[][] = [];
-      if (fanIdx >= 0) {
+      if (batchIdx >= 0) {
+        const [base, nums] = cmd[batchIdx].split("#");
+        for (const v of nums.split(",")) variants.push(cmd.map((t, i) => (i === batchIdx ? `${base}#${v}` : t)));
+      } else if (fanIdx >= 0) {
         const [base, expr] = cmd[fanIdx].split("#");
         const vals = refValue(st, expr);
         for (const v of Array.isArray(vals) ? vals : [vals]) variants.push(cmd.map((t, i) => (i === fanIdx ? `${base}#${v}` : t)));
@@ -351,7 +428,7 @@ export async function runV3(
         });
         const calls = parse(join(variant));
         for (const call of calls) {
-          const paging = wantAll ? pagingOf(session.tools.find((t) => t.name === call.tool)) : null;
+          const paging = wantAll || forceAll ? pagingOf(session.tools.find((t) => t.name === call.tool)) : null;
           const r = paging ? await fetchAll(session, call, paging, log) : await session.call(call.tool, call.args);
           if (!paging) log({ tool: call.tool, input: call.args, outcome: r.isError ? "backend_error" : "ok", detail: r.isError ? r.text : undefined });
           if (r.isError) {
@@ -369,6 +446,19 @@ export async function runV3(
         }
       }
 
+      if (variants.length > 1 && mode === "v4" && results.length && results.every((r) => isRead(r.call.tool))) {
+        let rows = results.map((r) => flatten(r.content !== undefined ? { ...(r.data as Record<string, Json>), content: r.content } : r.data));
+        if (stages.length) {
+          const out = runPipeline(rows, stages, (x) => refValue(st, x) as Json);
+          rows = Array.isArray(out) ? out : [out];
+          st.refs.push({ line: join(cmd), data: Array.isArray(out) ? { items: out } : out });
+          outputs.push(`@${st.refs.length}\n${typeof out === "number" ? out : keepsRecords(stages) ? compactTable("items", rows) : table("items", rows)}`);
+        } else {
+          st.refs.push({ line: join(cmd), data: { items: rows } });
+          outputs.push(`@${st.refs.length}\n${compactTable("items", rows)}`);
+        }
+        continue;
+      }
       if (variants.length > 1) {
         const done = results.map((r) => String(r.call.args.issue_number ?? r.call.args.pullNumber ?? "?"));
         st.refs.push({ line: join(cmd), data: { items: done.map((n) => ({ number: Number(n), ok: true })) } });
@@ -376,15 +466,20 @@ export async function runV3(
         continue;
       }
       for (const res of results) {
+        if (mode === "v4") res.data = flatten(res.data);
         st.refs.push({ line: join(cmd), data: res.data, content: res.content });
         const n = st.refs.length;
         let body: string;
         if (stages.length) {
-          const rows = rowsOf(res.data)?.rows;
+          // v4: a single object pipes as a one-row list (get issue ... | select title,user).
+          const rows = listOf(mode, res.data)?.rows ?? (mode === "v4" && res.data && typeof res.data === "object" ? [res.data] : null);
           if (!rows) throw new PipelineError("This result has no list to pipe into.");
           const out = runPipeline(rows, stages, (x) => refValue(st, x) as Json);
           st.refs[n - 1].data = Array.isArray(out) ? { items: out } : out;
-          body = typeof out === "number" ? `${stages.at(-1)?.[0] ?? "value"}: ${out}` : table("items", out as Json[]);
+          body = typeof out === "number" ? `${stages.at(-1)?.[0] ?? "value"}: ${out}`
+            : mode === "v4" && keepsRecords(stages) ? compactTable("items", out as Json[]) : table("items", out as Json[]);
+        } else if (mode === "v4" && res.content === undefined && listOf(mode, res.data)) {
+          body = renderV4(res.data);
         } else body = res.content !== undefined ? res.content : render(res.data);
         const sha = res.content !== undefined ? (res.data as Record<string, Json>)?.sha : null;
         const head = res.content !== undefined
@@ -392,8 +487,10 @@ export async function runV3(
           : `@${n}`;
         // After a pipeline that ends in a single number there are no rows to act on.
         const scalar = stages.length > 0 && typeof st.refs[n - 1].data === "number";
-        const foot = mode === "feedback" && !scalar ? footer(res.call, join(cmd), res.raw, n, wantAll, stages.length > 0) : [];
-        if (mode === "feedback" && res.content !== undefined && !res.content.endsWith("\n")) {
+        const foot = scalar ? notes.map((l) => "-> " + l)
+          : mode === "v4" ? footerV4(st, res.call, join(cmd), res.raw, n, wantAll || forceAll, stages.length > 0, notes)
+          : mode === "feedback" ? footer(res.call, join(cmd), res.raw, n, wantAll, stages.length > 0) : [];
+        if (mode !== "legend" && res.content !== undefined && !res.content.endsWith("\n")) {
           foot.push(`-> this file does not end with a newline: copy it with content=@${n}, or end a literal block with EOF! to leave the newline out`);
         }
         outputs.push([head, body, ...foot].join("\n"));
@@ -402,7 +499,7 @@ export async function runV3(
       if (!(e instanceof CommandError || e instanceof PipelineError)) throw e;
       anyError = true;
       log({ tool: "glossary", input: join(rawTokens), outcome: "parse_error", detail: e.message });
-      outputs.push(mode === "feedback" ? withCorrections(e.message, rawTokens, parse) : e.message);
+      outputs.push(mode !== "legend" ? withCorrections(e.message, rawTokens, parse) : e.message);
     }
   }
   return { text: outputs.join("\n---\n"), isError: anyError };
@@ -469,4 +566,16 @@ function withCorrections(message: string, tokens: string[], parse: (c: string) =
     if (ok.length === 2) break;
   }
   return ok.length ? `${message}\nReady to send:\n  ${ok.join("\n  ")}` : message;
+}
+
+// v4: an object holding a list prints its scalar fields, then the list as a compact table.
+function renderV4(v: Json): string {
+  const found = rowsOf(v)!;
+  if (Array.isArray(v)) return compactTable("items", found.rows);
+  const lines: string[] = [];
+  for (const [k, x] of Object.entries(v as Record<string, Json>)) {
+    if (k === found.key) lines.push(compactTable(k, found.rows));
+    else if (k !== "pageInfo" && (x === null || typeof x !== "object")) lines.push(`${k}: ${x}`);
+  }
+  return lines.join("\n");
 }
