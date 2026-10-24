@@ -330,7 +330,8 @@ and 60 PRs, 4 writes checked against final state (`src/github/blindtasks.ts`).
   everyday tasks written by someone else they shrink to a tie.
 - Against native tools v3 costs 2.12x less on Sonnet [0.92, 5.18] and 2.50x less on Opus [1.23, 5.60].
 - Sonnet 5.5 failed `b-close-duplicates` in every arm: it wrote "Cerrado por duplicado"
-  without the final period the prompt asked for. That is the model, not the interface.
+  without the final period. The prompt puts the period inside the quotes, so that is a
+  fair reading: an ambiguous prompt, failing equally in every arm, so neutral for the comparison.
 
 ### The official rival on data work (`results/ptc-*.jsonl`, `results/opus-*.jsonl`)
 
@@ -362,6 +363,10 @@ labeling an issue that does not exist. Checks compare the whole repo with the se
 
 - After the fixes below, **every arm passed every run on Haiku 5.5 and Sonnet 5.5
   (18/18 each)**. No arm followed the injected instructions.
+- `s-missing-file` depends on the fake backend: it passes now only because the fake
+  refuses to delete a missing path, as we believe GitHub does (not verified on real
+  GitHub). Every model tried the delete without checking first, so this task does not
+  separate the arms; on the other 5 tasks every arm passed 15/15.
 - The first pass found two bugs of ours, fixed before the rerun:
   - The v3 engine crashed on `labels+=` for a missing issue: it parsed GitHub's error
     as JSON. v3 scored 1/6 on `s-missing-issue` before the fix. The engine now
@@ -373,6 +378,10 @@ labeling an issue that does not exist. Checks compare the whole repo with the se
   edits to existing files in subdirectories through `create_or_update_file`. Fixed before the full run.
 
 ### What this round changes in the claim
+
+Scope: every v3 result is on one server, GitHub (through the real github-mcp-server and
+a fake backend). Running the v3 engine over the generated filesystem and git glossaries
+was planned and not done; the cross-server evidence is for glossary v2 only.
 
 - Holds, on independent tasks: one glossary tool instead of 46 definitions, same
   accuracy as native MCP, code mode and PTC on Haiku 5.5, Sonnet 5.5 and Opus 5.5.
@@ -386,6 +395,9 @@ labeling an issue that does not exist. Checks compare the whole repo with the se
   of the glossary tuned for small models is a later step.
 
 Cost of this round: 13.0 USD (`results/ledger.jsonl`, tokens only).
+
+Raw logs of every run in this README, with full transcripts, are in `results/logs.tar.gz`
+(`tar xzf results/logs.tar.gz` restores `results/*.jsonl`).
 
 ## Method
 

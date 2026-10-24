@@ -72,7 +72,7 @@ async function runOnce(model: string, arm: string, taskId: string, rep: number) 
 
   try {
     // A programmatic tool call pauses the code and costs a request but no model decision,
-    // so the ptc arm gets a larger request cap; its model turns are still counted in "turns".
+    // so the ptc arm gets a larger request cap. For ptc, "turns" counts API requests, not model decisions.
     const maxRequests = extraArms[arm]?.keepContainer ? MAX_TURNS * 6 : MAX_TURNS;
     while (turns < maxRequests) {
       if (spent > BUDGET) throw new Error(`budget of ${BUDGET} tokens exhausted`);

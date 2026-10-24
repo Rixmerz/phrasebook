@@ -1,7 +1,9 @@
 results/*.jsonl
 results/auto-gen/
 node_modules/
-vendor/github-mcp/
+vendor/github-mcp/github-mcp-server*
+vendor/github-mcp/LICENSE
+vendor/github-mcp/README.md
 .env
 scratch/
 logs/
