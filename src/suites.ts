@@ -15,6 +15,7 @@ import { bulkSeed, bulkTasks } from "./github/bulk.ts";
 import { bulk2Seed, bulk2Tasks, exactSeed, exactTasks } from "./github/v3tasks.ts";
 import { calcSeed, calcTasks } from "./github/calctasks.ts";
 import { blindSeed, blindTasks } from "./github/blindtasks.ts";
+import { blind2Seed, blind2Tasks } from "./github/blind2tasks.ts";
 import { safetySeed, safetyTasks } from "./github/safetytasks.ts";
 import type { GhTask } from "./github/tasks.ts";
 import type { State } from "./github/mock.ts";
@@ -193,11 +194,12 @@ export const githubBulk2Suite = makeGithubSuite("github-bulk2", bulk2Tasks, bulk
 export const githubExactSuite = makeGithubSuite("github-exact", exactTasks, exactSeed);
 export const githubCalcSuite = makeGithubSuite("github-calc", calcTasks, calcSeed);
 export const githubBlindSuite = makeGithubSuite("github-blind", blindTasks, blindSeed);
+export const githubBlind2Suite = makeGithubSuite("github-blind2", blind2Tasks, blind2Seed);
 export const githubSafetySuite = makeGithubSuite("github-safety", safetyTasks, safetySeed);
 
 export const suites: Record<string, Suite> = {
   memory: memorySuite, github: githubSuite, "github-heldout": githubHeldoutSuite,
   "github-hard": githubHardSuite, "github-bulk": githubBulkSuite,
-  "github-bulk2": githubBulk2Suite, "github-exact": githubExactSuite, "github-calc": githubCalcSuite, "github-blind": githubBlindSuite, "github-safety": githubSafetySuite,
+  "github-bulk2": githubBulk2Suite, "github-exact": githubExactSuite, "github-calc": githubCalcSuite, "github-blind": githubBlindSuite, "github-blind2": githubBlind2Suite, "github-safety": githubSafetySuite,
   ...extraSuites,
 };
