@@ -13,6 +13,7 @@ import { gitTasks } from "./git/tasks.ts";
 import { AGENT_GIT_ENV, seedGit } from "./git/seed.ts";
 import { fsBlindTasks, seedFsBlind } from "./fs/blindtasks.ts";
 import { gitBlindTasks, seedGitBlind } from "./git/blindtasks.ts";
+import { seedSet5, set5Tasks } from "./fs/set5tasks.ts";
 import { ghTasks, seed as githubSeed } from "./github/tasks.ts";
 import { heldoutSeed, heldoutTasks } from "./github/heldout.ts";
 import { bulkSeed, bulkTasks } from "./github/bulk.ts";
@@ -156,6 +157,15 @@ const candidates: Record<string, Suite | null> = {
       "use relative paths such as notes/todo.md. Complete the user's request, then reply briefly. " +
       "When asked for a specific answer, give only that answer.",
     tasks: fsBlindTasks, seed: seedFsBlind, table: "filesystem-auto",
+    server: { command: "deno", args: ["run", "-A", "npm:@modelcontextprotocol/server-filesystem@2.0.0", "."] },
+  }),
+  "filesystem-set5": makeDiskSuite({
+    name: "filesystem-set5",
+    system:
+      "You work on the files of a project through the provided tool(s). The project is the current directory: " +
+      "use relative paths such as notes/todo.md. Complete the user's request, then reply briefly. " +
+      "When asked for a specific answer, give only that answer.",
+    tasks: set5Tasks, seed: seedSet5, table: "filesystem-auto",
     server: { command: "deno", args: ["run", "-A", "npm:@modelcontextprotocol/server-filesystem@2.0.0", "."] },
   }),
   "git-blind": makeDiskSuite({
