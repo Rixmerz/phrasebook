@@ -33,16 +33,22 @@ function tsType(s: Schema | undefined): string {
   return "unknown";
 }
 
+const ident = (n: string) => /^[A-Za-z_$][\w$]*$/.test(n);
+
 export function codeTool(tools: McpTool[]) {
   const api = tools
-    .map((t) => `  /** ${t.description ?? ""} */\n  ${t.name}(args: ${tsType(t.inputSchema as Schema)}): Promise<any>;`)
+    .map((t) => `  /** ${t.description ?? ""} */\n  ${ident(t.name) ? t.name : JSON.stringify(t.name)}(args: ${tsType(t.inputSchema as Schema)}): Promise<any>;`)
     .join("\n");
+  // Names such as "API-post-search" are not identifiers: say how to call them.
+  const quotedNote = tools.some((t) => !ident(t.name))
+    ? `Tool names that are not identifiers are called with brackets, e.g. await tools["${tools.find((t) => !ident(t.name))!.name}"]({...}).\n\n`
+    : "";
   return {
     name: CODE_TOOL_NAME,
     description:
       "Run JavaScript (an async function body) against the knowledge graph API below. " +
       "Only what you console.log comes back to you. No network or filesystem.\n\n" +
-      `declare const tools: {\n${api}\n};\n\n` +
+      `declare const tools: {\n${api}\n};\n\n` + quotedNote +
       'Example: const g = await tools.search_nodes({ query: "Ana" }); console.log(JSON.stringify(g));',
     input_schema: {
       type: "object" as const,

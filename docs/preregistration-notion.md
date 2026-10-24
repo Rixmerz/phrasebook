@@ -42,3 +42,21 @@ Arms `native`, `code`, `glossary4`; claude-sonnet-5-5 and claude-haiku-5-5; 3 re
    claim stays "GitHub only" and the report says so.
 4. Generalization: on Sonnet the code/glossary4 ratio is at least 1.5x (the low end of the
    GitHub blind sets). Below 1.5x but above 1x counts as a weaker carry-over and is reported so.
+
+## Pilot findings, fixed before the main run (2026-10-24)
+
+The pilot (Haiku 5.5, 1 rep, 4 tasks) found three harness problems, fixed before any main run.
+Pilot rows are in `results/notion-pilot.jsonl` and are not used for any claim.
+
+1. Code mode: the API declaration printed hyphenated tool names (`API-post-search`) as bare
+   identifiers, so models wrote `tools.API-post-search(...)`, a syntax error. Names that are not
+   identifiers are now declared quoted, with one line saying to call them as `tools["name"]`.
+   Other suites have identifier names only, so their declarations do not change.
+2. Generic engine (`src/auto/engine.ts`, the glossary arm): `key={...}` lost its double quotes in
+   the shell-style tokenizer, and object-typed parameters were never parsed as JSON, so filters
+   reached the server as strings. Now a `key=` followed by `{` or `[` takes the balanced JSON
+   verbatim, and object-typed values are parsed. This fixes the documented syntax of the
+   generated glossary; the glossary text is unchanged. Earlier suites had no object parameters
+   in their tasks; their results are not rerun.
+3. Mock: a non-object `filter` or non-array `sorts` now gets a 400 validation_error, as the
+   real API returns, instead of being ignored.

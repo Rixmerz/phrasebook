@@ -1,0 +1,574 @@
+{
+ "server": "notion-auto",
+ "glossary": "Notion. One command per line: <verb> <noun> [id] [key=value]. Word order is free; plurals are fine. 'data source', 'source' and 'datasource' all work; db = database.\nIds are bare Notion UUIDs. Object keys take JSON with no spaces, e.g. parent={\"page_id\":\"..\"}. Array keys MUST be single-quoted: children='[{..}]' text='[..]' title='[..]' sorts='[..]'.\n  page      get <page_id> [filter_properties=] | read <page_id> (as markdown) [include_transcript=true] | create parent={\"page_id\":..} or {\"database_id\":..} properties={..} [children='[..]'] [icon=] [cover=] | update <page_id> [properties={..}] [icon={\"emoji\":..}] [cover=] [in_trash=] | delete/restore <page_id> (trash) | move <page_id> parent={\"type\":\"page_id\",\"page_id\":..} or {\"type\":\"workspace\"}\n  page markdown  write <page_id> content={\"new_str\":\"..\"} (replace all) | edit <page_id> edits={\"content_updates\":[{\"old_str\":..,\"new_str\":..}]} | update page markdown <page_id> type=replace_content|update_content|insert_content|replace_content_range\n  page property  get <page_id> <property_id> [limit=] [cursor=]\n  block     get|update|delete <block_id> [type={..}] [archived=] | list children <block_id> | append block <block_id> children='[block objects]' [after=<block_id>]\n  comment   list <block_or_page_id> | create parent={\"page_id\":..} text='[{\"text\":{\"content\":..}}]'\n  data source  get|query|update <data_source_id> [filter={..}] [sorts='[{\"property\":..,\"direction\":\"ascending|descending\"}]'] [title='[..]'] [properties={..}] | create parent={\"page_id\":..} properties={..} [title='[..]'] | list templates <data_source_id>\n  database  get <database_id> (lists its data sources)\n  user      get <user_id> | list | get self (bot)\n  search    [query] [filter={\"property\":\"object\",\"value\":\"page|data_source\"}] [sort={\"direction\":\"descending\",\"timestamp\":\"last_edited_time\"}]\nPaging keys: limit=N cursor=<next_cursor>\nExamples: search \"Meeting notes\" limit=5\n  query data source 59833787-2cf9-4fdf-8782-e53db20768a5 filter={\"property\":\"Status\",\"select\":{\"equals\":\"Done\"}}\n  append block 59833787-2cf9-4fdf-8782-e53db20768a5 children='[{\"type\":\"paragraph\",\"paragraph\":{\"rich_text\":[{\"type\":\"text\",\"text\":{\"content\":\"Hi\"}}]}}]'",
+ "targetStyle": "none",
+ "genericVerbs": [
+  "get",
+  "list"
+ ],
+ "fold": {
+  "users": "user",
+  "me": "self",
+  "bot": "self",
+  "blocks": "block",
+  "children": "child",
+  "pages": "page",
+  "comments": "comment",
+  "properties": "property",
+  "props": "property",
+  "prop": "property",
+  "sources": "source",
+  "datasource": "source",
+  "datasources": "source",
+  "databases": "database",
+  "db": "database",
+  "templates": "template",
+  "md": "markdown",
+  "show": "get",
+  "retrieve": "get",
+  "fetch": "get",
+  "add": "create",
+  "new": "create",
+  "append": "create",
+  "remove": "delete",
+  "trash": "delete",
+  "archive": "delete",
+  "unarchive": "restore",
+  "untrash": "restore",
+  "patch": "update",
+  "modify": "update",
+  "find": "search"
+ },
+ "commands": [
+  {
+   "words": [
+    "get",
+    "user"
+   ],
+   "tool": "API-get-user",
+   "positional": [
+    "user_id"
+   ],
+   "usage": "get user <user_id>",
+   "example": "get user 59833787-2cf9-4fdf-8782-e53db20768a5"
+  },
+  {
+   "words": [
+    "list",
+    "user"
+   ],
+   "tool": "API-get-users",
+   "rename": {
+    "limit": "page_size",
+    "cursor": "start_cursor"
+   },
+   "usage": "list user [limit=N] [cursor=..]",
+   "example": "list users limit=50"
+  },
+  {
+   "words": [
+    "get",
+    "self"
+   ],
+   "tool": "API-get-self",
+   "usage": "get self",
+   "example": "get self"
+  },
+  {
+   "words": [
+    "search"
+   ],
+   "tool": "API-post-search",
+   "rename": {
+    "limit": "page_size",
+    "cursor": "start_cursor"
+   },
+   "positional": [
+    "query"
+   ],
+   "usage": "search [query] [filter={\"property\":\"object\",\"value\":\"page|data_source\"}] [sort={..}] [limit=N] [cursor=..]",
+   "example": "search \"Meeting notes\" filter={\"property\":\"object\",\"value\":\"page\"} limit=5"
+  },
+  {
+   "words": [
+    "child",
+    "block"
+   ],
+   "tool": "API-get-block-children",
+   "rename": {
+    "limit": "page_size",
+    "cursor": "start_cursor"
+   },
+   "positional": [
+    "block_id"
+   ],
+   "usage": "list block children <block_id> [limit=N] [cursor=..]",
+   "example": "list block children 59833787-2cf9-4fdf-8782-e53db20768a5"
+  },
+  {
+   "words": [
+    "child"
+   ],
+   "tool": "API-get-block-children",
+   "rename": {
+    "limit": "page_size",
+    "cursor": "start_cursor"
+   },
+   "positional": [
+    "block_id"
+   ],
+   "usage": "list children <block_id> [limit=N] [cursor=..]",
+   "example": "list children 59833787-2cf9-4fdf-8782-e53db20768a5 limit=20"
+  },
+  {
+   "words": [
+    "create",
+    "block"
+   ],
+   "tool": "API-patch-block-children",
+   "positional": [
+    "block_id"
+   ],
+   "usage": "append block <block_id> children='[block objects]' [after=<block_id>]",
+   "example": "append block 59833787-2cf9-4fdf-8782-e53db20768a5 children='[{\"type\":\"paragraph\",\"paragraph\":{\"rich_text\":[{\"type\":\"text\",\"text\":{\"content\":\"Hello\"}}]}}]'"
+  },
+  {
+   "words": [
+    "create",
+    "child"
+   ],
+   "tool": "API-patch-block-children",
+   "positional": [
+    "block_id"
+   ],
+   "usage": "append children <block_id> children='[block objects]' [after=<block_id>]",
+   "example": "append children 59833787-2cf9-4fdf-8782-e53db20768a5 children='[{\"type\":\"paragraph\",\"paragraph\":{\"rich_text\":[{\"type\":\"text\",\"text\":{\"content\":\"Hello\"}}]}}]'"
+  },
+  {
+   "words": [
+    "create",
+    "block",
+    "child"
+   ],
+   "tool": "API-patch-block-children",
+   "positional": [
+    "block_id"
+   ],
+   "usage": "append block children <block_id> children='[block objects]' [after=<block_id>]",
+   "example": "append block children 59833787-2cf9-4fdf-8782-e53db20768a5 children='[{\"type\":\"bulleted_list_item\",\"bulleted_list_item\":{\"rich_text\":[{\"type\":\"text\",\"text\":{\"content\":\"Item\"}}]}}]'"
+  },
+  {
+   "words": [
+    "get",
+    "block"
+   ],
+   "tool": "API-retrieve-a-block",
+   "positional": [
+    "block_id"
+   ],
+   "usage": "get block <block_id>",
+   "example": "get block 59833787-2cf9-4fdf-8782-e53db20768a5"
+  },
+  {
+   "words": [
+    "update",
+    "block"
+   ],
+   "tool": "API-update-a-block",
+   "positional": [
+    "block_id"
+   ],
+   "usage": "update block <block_id> [type={..}] [archived=true|false]",
+   "example": "update block 59833787-2cf9-4fdf-8782-e53db20768a5 archived=false"
+  },
+  {
+   "words": [
+    "delete",
+    "block"
+   ],
+   "tool": "API-delete-a-block",
+   "positional": [
+    "block_id"
+   ],
+   "usage": "delete block <block_id>",
+   "example": "delete block 59833787-2cf9-4fdf-8782-e53db20768a5"
+  },
+  {
+   "words": [
+    "get",
+    "page"
+   ],
+   "tool": "API-retrieve-a-page",
+   "positional": [
+    "page_id"
+   ],
+   "usage": "get page <page_id> [filter_properties=<property_id>]",
+   "example": "get page 59833787-2cf9-4fdf-8782-e53db20768a5"
+  },
+  {
+   "words": [
+    "update",
+    "page"
+   ],
+   "tool": "API-patch-page",
+   "positional": [
+    "page_id"
+   ],
+   "usage": "update page <page_id> [properties={..}] [icon={\"emoji\":..}] [cover={..}] [in_trash=true|false] [archived=]",
+   "example": "update page 59833787-2cf9-4fdf-8782-e53db20768a5 properties={\"Status\":{\"select\":{\"name\":\"Done\"}}}"
+  },
+  {
+   "words": [
+    "delete",
+    "page"
+   ],
+   "tool": "API-patch-page",
+   "fixed": {
+    "in_trash": "true"
+   },
+   "positional": [
+    "page_id"
+   ],
+   "usage": "delete page <page_id>",
+   "example": "delete page 59833787-2cf9-4fdf-8782-e53db20768a5"
+  },
+  {
+   "words": [
+    "restore",
+    "page"
+   ],
+   "tool": "API-patch-page",
+   "fixed": {
+    "in_trash": "false"
+   },
+   "positional": [
+    "page_id"
+   ],
+   "usage": "restore page <page_id>",
+   "example": "restore page 59833787-2cf9-4fdf-8782-e53db20768a5"
+  },
+  {
+   "words": [
+    "create",
+    "page"
+   ],
+   "tool": "API-post-page",
+   "usage": "create page parent={\"page_id\":..}|{\"database_id\":..} properties={..} [children='[..]'] [icon=] [cover=]",
+   "example": "create page parent={\"page_id\":\"59833787-2cf9-4fdf-8782-e53db20768a5\"} properties={\"title\":[{\"text\":{\"content\":\"Notes\"}}]}"
+  },
+  {
+   "words": [
+    "get",
+    "page",
+    "property"
+   ],
+   "tool": "API-retrieve-a-page-property",
+   "rename": {
+    "limit": "page_size",
+    "cursor": "start_cursor"
+   },
+   "positional": [
+    "page_id",
+    "property_id"
+   ],
+   "usage": "get page property <page_id> <property_id> [limit=N] [cursor=..]",
+   "example": "get page property 59833787-2cf9-4fdf-8782-e53db20768a5 title"
+  },
+  {
+   "words": [
+    "list",
+    "comment"
+   ],
+   "tool": "API-retrieve-a-comment",
+   "rename": {
+    "limit": "page_size",
+    "cursor": "start_cursor"
+   },
+   "positional": [
+    "block_id"
+   ],
+   "usage": "list comment <block_or_page_id> [limit=N] [cursor=..]",
+   "example": "list comments 59833787-2cf9-4fdf-8782-e53db20768a5"
+  },
+  {
+   "words": [
+    "get",
+    "comment"
+   ],
+   "tool": "API-retrieve-a-comment",
+   "rename": {
+    "limit": "page_size",
+    "cursor": "start_cursor"
+   },
+   "positional": [
+    "block_id"
+   ],
+   "usage": "get comment <block_or_page_id> [limit=N] [cursor=..]",
+   "example": "get comments 59833787-2cf9-4fdf-8782-e53db20768a5 limit=10"
+  },
+  {
+   "words": [
+    "create",
+    "comment"
+   ],
+   "tool": "API-create-a-comment",
+   "rename": {
+    "text": "rich_text"
+   },
+   "usage": "create comment parent={\"page_id\":..} text='[{\"text\":{\"content\":..}}]'",
+   "example": "create comment parent={\"page_id\":\"59833787-2cf9-4fdf-8782-e53db20768a5\"} text='[{\"text\":{\"content\":\"LGTM\"}}]'"
+  },
+  {
+   "words": [
+    "query",
+    "source"
+   ],
+   "tool": "API-query-data-source",
+   "rename": {
+    "limit": "page_size",
+    "cursor": "start_cursor"
+   },
+   "positional": [
+    "data_source_id"
+   ],
+   "usage": "query source <data_source_id> [filter={..}] [sorts='[{\"property\":..,\"direction\":\"ascending|descending\"}]'] [filter_properties='[..]'] [archived=] [in_trash=] [limit=N] [cursor=..]",
+   "example": "query source 59833787-2cf9-4fdf-8782-e53db20768a5 filter={\"property\":\"Status\",\"select\":{\"equals\":\"Done\"}} limit=10"
+  },
+  {
+   "words": [
+    "query",
+    "data",
+    "source"
+   ],
+   "tool": "API-query-data-source",
+   "rename": {
+    "limit": "page_size",
+    "cursor": "start_cursor"
+   },
+   "positional": [
+    "data_source_id"
+   ],
+   "usage": "query data source <data_source_id> [filter={..}] [sorts='[{\"property\":..,\"direction\":\"ascending|descending\"}]'] [filter_properties='[..]'] [archived=] [in_trash=] [limit=N] [cursor=..]",
+   "example": "query data source 59833787-2cf9-4fdf-8782-e53db20768a5 sorts='[{\"property\":\"Name\",\"direction\":\"ascending\"}]' limit=10"
+  },
+  {
+   "words": [
+    "get",
+    "source"
+   ],
+   "tool": "API-retrieve-a-data-source",
+   "positional": [
+    "data_source_id"
+   ],
+   "usage": "get source <data_source_id>",
+   "example": "get source 59833787-2cf9-4fdf-8782-e53db20768a5"
+  },
+  {
+   "words": [
+    "get",
+    "data",
+    "source"
+   ],
+   "tool": "API-retrieve-a-data-source",
+   "positional": [
+    "data_source_id"
+   ],
+   "usage": "get data source <data_source_id>",
+   "example": "get data source 59833787-2cf9-4fdf-8782-e53db20768a5"
+  },
+  {
+   "words": [
+    "update",
+    "source"
+   ],
+   "tool": "API-update-a-data-source",
+   "positional": [
+    "data_source_id"
+   ],
+   "usage": "update source <data_source_id> [title='[..]'] [description='[..]'] [properties={..}]",
+   "example": "update source 59833787-2cf9-4fdf-8782-e53db20768a5 title='[{\"text\":{\"content\":\"Tasks\"}}]'"
+  },
+  {
+   "words": [
+    "update",
+    "data",
+    "source"
+   ],
+   "tool": "API-update-a-data-source",
+   "positional": [
+    "data_source_id"
+   ],
+   "usage": "update data source <data_source_id> [title='[..]'] [description='[..]'] [properties={..}]",
+   "example": "update data source 59833787-2cf9-4fdf-8782-e53db20768a5 properties={\"Priority\":{\"number\":{}}}"
+  },
+  {
+   "words": [
+    "create",
+    "source"
+   ],
+   "tool": "API-create-a-data-source",
+   "usage": "create source parent={\"page_id\":..} properties={..} [title='[..]']",
+   "example": "create source parent={\"page_id\":\"59833787-2cf9-4fdf-8782-e53db20768a5\"} properties={\"Name\":{\"title\":{}}}"
+  },
+  {
+   "words": [
+    "create",
+    "data",
+    "source"
+   ],
+   "tool": "API-create-a-data-source",
+   "usage": "create data source parent={\"page_id\":..} properties={..} [title='[..]']",
+   "example": "create data source parent={\"page_id\":\"59833787-2cf9-4fdf-8782-e53db20768a5\"} properties={\"Name\":{\"title\":{}}} title='[{\"text\":{\"content\":\"Tasks\"}}]'"
+  },
+  {
+   "words": [
+    "template"
+   ],
+   "tool": "API-list-data-source-templates",
+   "rename": {
+    "limit": "page_size",
+    "cursor": "start_cursor"
+   },
+   "positional": [
+    "data_source_id"
+   ],
+   "usage": "list template <data_source_id> [limit=N] [cursor=..]",
+   "example": "list templates 59833787-2cf9-4fdf-8782-e53db20768a5"
+  },
+  {
+   "words": [
+    "template",
+    "source"
+   ],
+   "tool": "API-list-data-source-templates",
+   "rename": {
+    "limit": "page_size",
+    "cursor": "start_cursor"
+   },
+   "positional": [
+    "data_source_id"
+   ],
+   "usage": "list source template <data_source_id> [limit=N] [cursor=..]",
+   "example": "list source templates 59833787-2cf9-4fdf-8782-e53db20768a5"
+  },
+  {
+   "words": [
+    "template",
+    "data",
+    "source"
+   ],
+   "tool": "API-list-data-source-templates",
+   "rename": {
+    "limit": "page_size",
+    "cursor": "start_cursor"
+   },
+   "positional": [
+    "data_source_id"
+   ],
+   "usage": "list data source template <data_source_id> [limit=N] [cursor=..]",
+   "example": "list data source templates 59833787-2cf9-4fdf-8782-e53db20768a5"
+  },
+  {
+   "words": [
+    "get",
+    "database"
+   ],
+   "tool": "API-retrieve-a-database",
+   "positional": [
+    "database_id"
+   ],
+   "usage": "get database <database_id>",
+   "example": "get database 59833787-2cf9-4fdf-8782-e53db20768a5"
+  },
+  {
+   "words": [
+    "move",
+    "page"
+   ],
+   "tool": "API-move-page",
+   "positional": [
+    "page_id"
+   ],
+   "usage": "move page <page_id> parent={\"type\":\"page_id\",\"page_id\":..}|{\"type\":\"database_id\",\"database_id\":..}|{\"type\":\"workspace\"}",
+   "example": "move page 59833787-2cf9-4fdf-8782-e53db20768a5 parent={\"type\":\"page_id\",\"page_id\":\"1c2d3e4f-5a6b-4c7d-8e9f-0a1b2c3d4e5f\"}"
+  },
+  {
+   "words": [
+    "read",
+    "page"
+   ],
+   "tool": "API-retrieve-page-markdown",
+   "positional": [
+    "page_id"
+   ],
+   "usage": "read page <page_id> [include_transcript=true|false]",
+   "example": "read page 59833787-2cf9-4fdf-8782-e53db20768a5"
+  },
+  {
+   "words": [
+    "get",
+    "page",
+    "markdown"
+   ],
+   "tool": "API-retrieve-page-markdown",
+   "positional": [
+    "page_id"
+   ],
+   "usage": "get page markdown <page_id> [include_transcript=true|false]",
+   "example": "get page markdown 59833787-2cf9-4fdf-8782-e53db20768a5 include_transcript=true"
+  },
+  {
+   "words": [
+    "write",
+    "page"
+   ],
+   "tool": "API-update-page-markdown",
+   "fixed": {
+    "type": "replace_content"
+   },
+   "rename": {
+    "content": "replace_content"
+   },
+   "positional": [
+    "page_id"
+   ],
+   "usage": "write page <page_id> content={\"new_str\":\"<markdown>\",\"allow_deleting_content\":false}",
+   "example": "write page 59833787-2cf9-4fdf-8782-e53db20768a5 content={\"new_str\":\"Hello\"}"
+  },
+  {
+   "words": [
+    "edit",
+    "page"
+   ],
+   "tool": "API-update-page-markdown",
+   "fixed": {
+    "type": "update_content"
+   },
+   "rename": {
+    "edits": "update_content"
+   },
+   "positional": [
+    "page_id"
+   ],
+   "usage": "edit page <page_id> edits={\"content_updates\":[{\"old_str\":..,\"new_str\":..,\"replace_all_matches\":false}]}",
+   "example": "edit page 59833787-2cf9-4fdf-8782-e53db20768a5 edits={\"content_updates\":[{\"old_str\":\"draft\",\"new_str\":\"final\"}]}"
+  },
+  {
+   "words": [
+    "update",
+    "page",
+    "markdown"
+   ],
+   "tool": "API-update-page-markdown",
+   "rename": {
+    "content": "replace_content",
+    "edits": "update_content"
+   },
+   "positional": [
+    "page_id"
+   ],
+   "usage": "update page markdown <page_id> type=replace_content|update_content|insert_content|replace_content_range [content={..}] [edits={..}] [insert_content={..}] [replace_content_range={..}]",
+   "example": "update page markdown 59833787-2cf9-4fdf-8782-e53db20768a5 type=replace_content content={\"new_str\":\"Hello\"}"
+  }
+ ]
+}

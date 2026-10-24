@@ -61,6 +61,27 @@ export function tokenize(text: string): Token[][] {
       else cur += ch;
       continue;
     }
+    // key={...} or key=[...]: take the balanced JSON verbatim, so its quotes and spaces survive.
+    if ((ch === "{" || ch === "[") && /^[a-z_]\w*=$/i.test(cur)) {
+      let depth = 0, str = false, j = i;
+      for (; j < text.length; j++) {
+        const c = text[j];
+        if (str) {
+          if (c === "\\") j++;
+          else if (c === '"') str = false;
+        } else if (c === '"') str = true;
+        else if (c === "{" || c === "[") depth++;
+        else if (c === "}" || c === "]") {
+          if (--depth === 0) break;
+        }
+      }
+      if (depth === 0 && j < text.length) {
+        cur += text.slice(i, j + 1);
+        hasTok = true;
+        i = j;
+        continue;
+      }
+    }
     if (ch === '"' || ch === "'") {
       // Only a token that starts with a quote is a quoted value; key="v" stays a key=value.
       if (!hasTok) quoted = true;
@@ -106,6 +127,12 @@ function coerce(raw: string, prop: Prop | undefined, key: string): unknown {
         throw new CommandError(`${key} must be a JSON array, e.g. ${key}='[{"a":"b"}]'`);
       }
     } else v = raw.split(",").map((s) => s.trim()).filter(Boolean);
+  } else if (t === "object" || (!t && raw.trim().startsWith("{"))) {
+    try {
+      v = JSON.parse(raw);
+    } catch {
+      throw new CommandError(`${key} must be a JSON object, e.g. ${key}={"a":"b"}`);
+    }
   }
   // Enum values: accept any case, send the schema's spelling.
   if (typeof v === "string" && prop?.enum) {

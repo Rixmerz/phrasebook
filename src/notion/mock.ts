@@ -513,6 +513,8 @@ function handle(r: Run, method: string, path: string, q: URLSearchParams, body: 
     const d = dsOf(s, seg[1]);
     if (!d) throw notFound(seg[1]);
     if (seg[2] === "query" && method === "POST") {
+      if (body.filter !== undefined && (typeof body.filter !== "object" || Array.isArray(body.filter))) throw invalid("body.filter should be an object.");
+      if (body.sorts !== undefined && !Array.isArray(body.sorts)) throw invalid("body.sorts should be an array.");
       let rows = s.pages.filter((p) => p.parent.kind === "data_source" && p.parent.id === d.id && p.in_trash === !!(body.in_trash ?? body.archived));
       if (body.filter) rows = rows.filter(propFilter(r, d, body.filter as Json));
       rows = [...rows].sort(body.sorts ? sorter(d, body.sorts as Json[]) : (a, b) => b.created_time.localeCompare(a.created_time));
