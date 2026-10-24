@@ -11,6 +11,8 @@ import { type DiskTask, fsTasks } from "./fs/tasks.ts";
 import { seedFs } from "./fs/seed.ts";
 import { gitTasks } from "./git/tasks.ts";
 import { AGENT_GIT_ENV, seedGit } from "./git/seed.ts";
+import { fsBlindTasks, seedFsBlind } from "./fs/blindtasks.ts";
+import { gitBlindTasks, seedGitBlind } from "./git/blindtasks.ts";
 import { ghTasks, seed as githubSeed } from "./github/tasks.ts";
 import { heldoutSeed, heldoutTasks } from "./github/heldout.ts";
 import { bulkSeed, bulkTasks } from "./github/bulk.ts";
@@ -145,6 +147,23 @@ const candidates: Record<string, Suite | null> = {
       'You work on a git repository through the provided tool(s). The repository is the current directory; its path is ".". ' +
       "Complete the user's request, then reply briefly. When asked for a specific answer, give only that answer.",
     tasks: gitTasks, seed: seedGit, table: "git-auto",
+    server: { command: "uvx", args: ["mcp-server-git==2026.10.19", "--repository", "."], env: AGENT_GIT_ENV },
+  }),
+  "filesystem-blind": makeDiskSuite({
+    name: "filesystem-blind",
+    system:
+      "You work on the files of a project through the provided tool(s). The project is the current directory: " +
+      "use relative paths such as notes/todo.md. Complete the user's request, then reply briefly. " +
+      "When asked for a specific answer, give only that answer.",
+    tasks: fsBlindTasks, seed: seedFsBlind, table: "filesystem-auto",
+    server: { command: "deno", args: ["run", "-A", "npm:@modelcontextprotocol/server-filesystem@2.0.0", "."] },
+  }),
+  "git-blind": makeDiskSuite({
+    name: "git-blind",
+    system:
+      'You work on a git repository through the provided tool(s). The repository is the current directory; its path is ".". ' +
+      "Complete the user's request, then reply briefly. When asked for a specific answer, give only that answer.",
+    tasks: gitBlindTasks, seed: seedGitBlind, table: "git-auto",
     server: { command: "uvx", args: ["mcp-server-git==2026.10.19", "--repository", "."], env: AGENT_GIT_ENV },
   }),
   "github-auto": githubWithTable("github-auto", "github-auto", "default"),
