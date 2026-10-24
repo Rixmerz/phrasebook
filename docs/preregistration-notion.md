@@ -60,3 +60,7 @@ Pilot rows are in `results/notion-pilot.jsonl` and are not used for any claim.
    in their tasks; their results are not rerun.
 3. Mock: a non-object `filter` or non-array `sorts` now gets a 400 validation_error, as the
    real API returns, instead of being ignored.
+
+## Amendment before the main run (2026-10-24)
+
+The ledger stood at 75.69 USD of the ~83 USD ceiling after the real-GitHub blind run, so the main run uses 2 reps instead of 3, with `--usd-cap=83`. Tasks, glossary and grading are unchanged (hashes in `results/notion-freeze.sha256`).
