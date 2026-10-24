@@ -4,8 +4,10 @@
 // ANTHROPIC_API_KEY), --strict-mcp-config with only the test server, built-in
 // tools disallowed, and a fresh temporary working directory per run.
 // --auth=subscription runs on the logged-in Claude Code plan instead of ANTHROPIC_API_KEY:
-// --bare forbids OAuth, so isolation comes from --setting-sources "" (no CLAUDE.md, plugins or
-// hooks), no slash commands and auto-memory off. Runs stay off the API ledger.
+// --bare forbids OAuth, so each arm runs inside clients/<suite>/<arm>/, a folder whose
+// .mcp.json is preconfigured (written once below; the per-run mock token comes in through
+// ${PHRASEBOOK_GH_TOKEN}). Only project settings load: no user CLAUDE.md, plugins or hooks.
+// Runs stay off the API ledger.
 // Usage: deno run -A src/client_bench.ts --suite=github --models=a,b --arms=native,glossary [--reps=1] [--tasks=..] [--auth=api|subscription]
 import { parseArgs } from "@std/cli/parse-args";
 import { loadEnv } from "./env.ts";
@@ -48,23 +50,34 @@ function mcpConfig(arm: string, token: string) {
   return { mcpServers: { gh: server } };
 }
 
+// One folder per arm with its MCP servers already configured, reused by every run.
+function armFolder(arm: string): string {
+  const dir = new URL(`../clients/${flags.suite}/${arm}/`, import.meta.url).pathname;
+  Deno.mkdirSync(`${dir}.claude`, { recursive: true });
+  const cfg = mcpConfig(arm, "${PHRASEBOOK_GH_TOKEN}");
+  Deno.writeTextFileSync(`${dir}.mcp.json`, JSON.stringify(cfg, null, 2) + "\n");
+  Deno.writeTextFileSync(`${dir}.claude/settings.json`, JSON.stringify({ enableAllProjectMcpServers: true }, null, 2) + "\n");
+  return dir;
+}
+
 async function runOnce(model: string, arm: string, task: GhTask, rep: number) {
   const token = `client-${crypto.randomUUID()}`;
   await mock("/__seed", token, { method: "POST", body: JSON.stringify(suite.seed()) });
-  const dir = Deno.makeTempDirSync({ prefix: "phrasebook-client-" });
+  const dir = SUB ? armFolder(arm) : Deno.makeTempDirSync({ prefix: "phrasebook-client-" });
   const cfg = `${dir}/mcp.json`;
-  Deno.writeTextFileSync(cfg, JSON.stringify(mcpConfig(arm, token)));
+  if (!SUB) Deno.writeTextFileSync(cfg, JSON.stringify(mcpConfig(arm, token)));
   const t0 = performance.now();
   const cmd = new Deno.Command("claude", {
     args: [
-      "-p", task.prompt, ...(SUB ? ["--setting-sources", "", "--disable-slash-commands"] : ["--bare"]), "--strict-mcp-config", "--mcp-config", cfg, "--model", model,
+      "-p", task.prompt,
+      ...(SUB ? ["--setting-sources", "project", "--disable-slash-commands"] : ["--bare", "--strict-mcp-config", "--mcp-config", cfg]), "--model", model,
       ...(Deno.env.get("PHRASEBOOK_TRACE") ? ["--output-format", "stream-json", "--verbose"] : ["--output-format", "json"]),
       "--no-session-persistence", "--max-turns", "15",
       "--allowedTools", "mcp__gh", "--disallowedTools", ...DISALLOWED,
     ],
     cwd: dir,
     env: {
-      ...(SUB ? { CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1" } : { ANTHROPIC_API_KEY: Deno.env.get("ANTHROPIC_API_KEY")! }), PATH: Deno.env.get("PATH") ?? "", HOME: Deno.env.get("HOME") ?? "",
+      ...(SUB ? { CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1", PHRASEBOOK_GH_TOKEN: token } : { ANTHROPIC_API_KEY: Deno.env.get("ANTHROPIC_API_KEY")! }), PATH: Deno.env.get("PATH") ?? "", HOME: Deno.env.get("HOME") ?? "",
       // native-defer: Claude Code's own deferred MCP tool loading (tool search), forced on.
       ...(arm === "native-defer" ? { ENABLE_TOOL_SEARCH: "true" } : {}),
     },
@@ -86,7 +99,7 @@ async function runOnce(model: string, arm: string, task: GhTask, rep: number) {
   const state = await mock("/__state", token);
   const gaps = await mock("/__unhandled", token) as string[];
   await mock("/__drop", token);
-  Deno.removeSync(dir, { recursive: true });
+  if (!SUB) Deno.removeSync(dir, { recursive: true });
   const finalText = String(res.result ?? "");
   const usage = (res.usage ?? {}) as Record<string, number>;
   return {

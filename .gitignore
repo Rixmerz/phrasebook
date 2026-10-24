@@ -7,3 +7,4 @@ vendor/github-mcp/README.md
 .env
 scratch/
 logs/
+clients/
