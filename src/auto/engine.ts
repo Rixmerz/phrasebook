@@ -16,6 +16,8 @@ export type Command = {
   positional?: string[];
   target?: { owner?: string; repo?: string; number?: string };
   needs?: "owner" | "repo" | "number";
+  // Keys the server's schema leaves out but its API takes, sent through as given (JSON parsed).
+  passthrough?: string[];
   usage: string;
   example: string;
 };
@@ -196,9 +198,13 @@ export function compile(table: Table, tools: McpTool[]) {
         const eq = t.text.indexOf("=");
         const key = t.text.slice(0, eq);
         const param = cmd.rename?.[key] ?? key;
+        if (cmd.passthrough?.includes(key) && !(param in props)) {
+          args[key] = coerce(t.text.slice(eq + 1), undefined, key);
+          continue;
+        }
         if (!(param in props) || internal.has(param)) {
-          const allowed = Object.keys(props).filter((p) => !internal.has(p))
-            .map((p) => Object.entries(cmd.rename ?? {}).find(([, v]) => v === p)?.[0] ?? p);
+          const allowed = [...Object.keys(props).filter((p) => !internal.has(p))
+            .map((p) => Object.entries(cmd.rename ?? {}).find(([, v]) => v === p)?.[0] ?? p), ...(cmd.passthrough ?? [])];
           throw new CommandError(`Unknown key "${key}". Valid keys: ${allowed.join(", ")}. Usage: ${cmd.usage}`);
         }
         args[param] = coerce(t.text.slice(eq + 1), props[param], key);
