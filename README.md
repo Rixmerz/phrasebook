@@ -528,6 +528,34 @@ glossary4 31/32, native 2.51x [1.72, 3.79].
 
 Not done: real GitHub (needs a token).
 
+## Glossary v4.3 (2026-10-24): clipped text, a partial refutation
+
+Preregistration: `docs/preregistration-v43.md`. Text over 40 lines shows its first 15 and a
+note; the full text stays in @n; `full` prints all; `contains` became smart-case.
+
+`filesystem-set5` (8 tasks over large logs and a CSV; NOT blind, author-written), 3 reps:
+
+| model | glossary4 | code | native |
+|---|---|---|---|
+| Haiku 5.5 | 22/24 | 24/24, 0.66x [0.42, 1.23] | 24/24, 3.24x [1.30, 6.53] |
+| Sonnet 5.5 | 24/24 | 24/24, 0.50x [0.34, 0.79] | 24/24, 3.09x [1.14, 5.94] |
+
+**Code mode is about 2x cheaper than the glossary on text-file data work** (significant on
+Sonnet). The glossary still costs about a third of native tools. Cause, from the logs: the
+glossary text said "add full to print it all", and models added `full` up front, reading every
+log in full before filtering, then needed one pipe per file and a `calc` to add them up; code
+mode does the loop over files in one script. Both Haiku failures read the CSV and summed it by hand.
+
+Regression (Sonnet 5.5): filesystem-blind 36/36, v4.2 costs 1.05x [0.85, 1.21] of v4.3;
+github-blind3 48/48, v4.2 costs 1.07x [0.99, 1.21] of v4.3. No regression.
+
+Scorecard: (1) accuracy within 2 runs: held (Haiku 22/24 vs 24/24 is the limit). (2) at most 1.2x
+code: refuted (code costs 0.50x to 0.66x). (3) cheaper than v4.2 on filesystem-blind: held, barely
+(5%). (4) no regression on GitHub: held.
+
+Next fixes this points to (not built): stop advertising `full`, fan a command out over a list of
+paths with one combined pipe, parse CSV into columns, and a group-and-sum step.
+
 ## Method
 
 ### Arms
