@@ -1,0 +1,249 @@
+{
+ "server": "filesystem-auto",
+ "glossary": "Filesystem. One command per line: <verb> <noun> [values] [key=value]. Word order is free; plurals are fine. Quote paths or text containing spaces or command words.\n  file   read <path> [head=N] [tail=N] | read legacy <path> (deprecated) | write <path> <content> | edit <path> edits='[{\"oldText\":..,\"newText\":..}]' [dry=true] | move <src> <dest> (also rename) | search <path> <glob> [exclude=a,b] | info <path>\n  media  read <path>  (image/audio/binary as base64)\n  multiple file  read <path1,path2,...>\n  dir    create <path> | list <path> | list size <path> [sort=name|size] | info <path> | move <src> <dest>\n  tree   <path> [exclude=a,b]  (recursive JSON tree)\n  allowed dir  (list allowed directories)\nExamples: read file notes/a.md head=20 | write file notes/todo.md \"Buy milk\" | search file src \"**/*.ts\" exclude=node_modules | list allowed dirs",
+ "targetStyle": "none",
+ "genericVerbs": [
+  "get",
+  "show",
+  "list",
+  "view"
+ ],
+ "fold": {
+  "files": "file",
+  "directory": "dir",
+  "directories": "dir",
+  "dirs": "dir",
+  "folder": "dir",
+  "folders": "dir",
+  "sizes": "size",
+  "image": "media",
+  "audio": "media",
+  "many": "multiple",
+  "find": "search",
+  "rename": "move",
+  "mv": "move",
+  "stat": "info",
+  "metadata": "info",
+  "make": "create",
+  "ls": "list",
+  "cat": "read",
+  "deprecated": "legacy"
+ },
+ "commands": [
+  {
+   "words": [
+    "read",
+    "file"
+   ],
+   "tool": "read_text_file",
+   "positional": [
+    "path"
+   ],
+   "usage": "read file <path> [head=N] [tail=N]",
+   "example": "read file notes/a.md head=20"
+  },
+  {
+   "words": [
+    "read",
+    "legacy",
+    "file"
+   ],
+   "tool": "read_file",
+   "positional": [
+    "path"
+   ],
+   "usage": "read legacy file <path> [head=N] [tail=N]",
+   "example": "read legacy file notes/a.md tail=10"
+  },
+  {
+   "words": [
+    "read",
+    "media"
+   ],
+   "tool": "read_media_file",
+   "positional": [
+    "path"
+   ],
+   "usage": "read media <path>",
+   "example": "read media images/logo.png"
+  },
+  {
+   "words": [
+    "read",
+    "multiple",
+    "file"
+   ],
+   "tool": "read_multiple_files",
+   "positional": [
+    "paths"
+   ],
+   "usage": "read multiple file <path1,path2,...>",
+   "example": "read multiple files src/a.ts,src/b.ts"
+  },
+  {
+   "words": [
+    "write",
+    "file"
+   ],
+   "tool": "write_file",
+   "positional": [
+    "path",
+    "content"
+   ],
+   "usage": "write file <path> <content>",
+   "example": "write file notes/todo.md \"Buy milk\""
+  },
+  {
+   "words": [
+    "edit",
+    "file"
+   ],
+   "tool": "edit_file",
+   "rename": {
+    "dry": "dryRun"
+   },
+   "positional": [
+    "path"
+   ],
+   "usage": "edit file <path> edits='[{\"oldText\":\"..\",\"newText\":\"..\"}]' [dry=true]",
+   "example": "edit file src/app.js edits='[{\"oldText\":\"foo\",\"newText\":\"bar\"}]' dry=true"
+  },
+  {
+   "words": [
+    "create",
+    "dir"
+   ],
+   "tool": "create_directory",
+   "positional": [
+    "path"
+   ],
+   "usage": "create dir <path>",
+   "example": "create dir src/components/ui"
+  },
+  {
+   "words": [
+    "list",
+    "dir"
+   ],
+   "tool": "list_directory",
+   "positional": [
+    "path"
+   ],
+   "usage": "list dir <path>",
+   "example": "list dir src"
+  },
+  {
+   "words": [
+    "list",
+    "dir",
+    "size"
+   ],
+   "tool": "list_directory_with_sizes",
+   "rename": {
+    "sort": "sortBy"
+   },
+   "positional": [
+    "path"
+   ],
+   "usage": "list dir size <path> [sort=name|size]",
+   "example": "list dir sizes src sort=size"
+  },
+  {
+   "words": [
+    "tree"
+   ],
+   "tool": "directory_tree",
+   "rename": {
+    "exclude": "excludePatterns"
+   },
+   "positional": [
+    "path"
+   ],
+   "usage": "tree <path> [exclude=pat1,pat2]",
+   "example": "tree src exclude=node_modules,dist"
+  },
+  {
+   "words": [
+    "move",
+    "file"
+   ],
+   "tool": "move_file",
+   "rename": {
+    "src": "source",
+    "dest": "destination"
+   },
+   "positional": [
+    "source",
+    "destination"
+   ],
+   "usage": "move file <source> <destination>",
+   "example": "move file notes/a.md archive/a.md"
+  },
+  {
+   "words": [
+    "move",
+    "dir"
+   ],
+   "tool": "move_file",
+   "rename": {
+    "src": "source",
+    "dest": "destination"
+   },
+   "positional": [
+    "source",
+    "destination"
+   ],
+   "usage": "move dir <source> <destination>",
+   "example": "move dir old_src new_src"
+  },
+  {
+   "words": [
+    "search",
+    "file"
+   ],
+   "tool": "search_files",
+   "rename": {
+    "exclude": "excludePatterns"
+   },
+   "positional": [
+    "path",
+    "pattern"
+   ],
+   "usage": "search file <path> <glob> [exclude=pat1,pat2]",
+   "example": "search files src \"**/*.ts\" exclude=node_modules"
+  },
+  {
+   "words": [
+    "info",
+    "file"
+   ],
+   "tool": "get_file_info",
+   "positional": [
+    "path"
+   ],
+   "usage": "info file <path>",
+   "example": "get file info notes/a.md"
+  },
+  {
+   "words": [
+    "info",
+    "dir"
+   ],
+   "tool": "get_file_info",
+   "positional": [
+    "path"
+   ],
+   "usage": "info dir <path>",
+   "example": "info dir src"
+  },
+  {
+   "words": [
+    "allowed",
+    "dir"
+   ],
+   "tool": "list_allowed_directories",
+   "usage": "allowed dir",
+   "example": "list allowed dirs"
+  }
+ ]
+}

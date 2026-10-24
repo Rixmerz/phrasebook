@@ -1,0 +1,11 @@
+7e4e4653c3badc0b56c9c873aa3782ec37c820eb8109a9779cd85f30909caba1  src/fs/tasks.ts
+bf7409aad5d5bdae63201a4e4b5e8f5c1b9aceea00198952568a12515343507e  src/fs/seed.ts
+857f5397dfd9e2463697f51419db1e2917960c0f38227ef2c25385756b383f44  src/git/tasks.ts
+84b5c699f8cbad401ae835839ee5dc2f41b726efb6b8f1e2fa56fa3b09baaa18  src/git/seed.ts
+d34fa03ace0ac559c25a2ea9ae7dcaf726781d00612310b6ab76a5149fb24cf3  docs/preregistration.md
+# frozen 2026-10-24T03:37:11-03:00, before glossary generation
+06020b1202b67d9fa3c382276902cddd8d971cb2dde9b13cbb284e1e16b88dd2  glossaries/filesystem-auto.json (DISCARDED: validator bug, see scratch/) # generated 2026-10-24T06:39:34.608Z, FAILED validation
+582386981d295b8cb09909d1ea1d595b99c603e73f08d2f7542532863344b1d7  glossaries/git-auto.json  # generated 2026-10-24T06:40:38.937Z, valid
+1140799f1a20dae0f387c7d3ca95f78517e7f6369d6d1e877aa8869ef8d0d0ad  glossaries/filesystem-auto.json  # generated 2026-10-24T06:40:39.009Z, valid
+137a8354b994ab442c45714561c84cfef35423cfe867ac749e0968ce81041916  glossaries/github-auto.json  # generated 2026-10-24T06:55:25.653Z, valid
+f34173839bf7c7f318e0d8e8f53653b41cc0f1bfd9fa1aea22814e205e47ab40  glossaries/github91-auto.json  # generated 2026-10-24T07:13:41.727Z, valid

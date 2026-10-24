@@ -1,0 +1,192 @@
+{
+ "server": "git-auto",
+ "glossary": "Git (mcp-server-git). One command per line: <words> [value] [key=value]. Word order is free; plurals are fine. Quote values that contain spaces.\nEvery command needs repo=<path to repository> (e.g. repo=/home/me/app).\n  status                 status repo=<path>\n  diff                   diff unstaged [context=N] | diff staged [context=N] | diff <branch|commit> [context=N]\n  add (stage)            add <file1,file2,...>\n  reset (unstage)        reset   (unstages all staged changes)\n  commit                 commit \"<message>\"\n  log                    log [max=N] [since=<date>] [until=<date>]   dates: 2024-01-15, '2 weeks ago', yesterday\n  show                   show <revision>  (commit sha, or <revision>:<path> for a file/dir)\n  branch                 branch <local|remote|all> [contains=<sha>] [not_contains=<sha>] | create branch <name> [base=<branch>]\n  checkout (switch)      checkout <branch>\nExamples:\n  diff staged repo=/home/me/app\n  add src/main.py,README.md repo=/home/me/app\n  commit \"Fix login bug\" repo=/home/me/app\n  log max=5 since=\"2 weeks ago\" repo=/home/me/app",
+ "targetStyle": "none",
+ "genericVerbs": [
+  "get",
+  "list"
+ ],
+ "fold": {
+  "branches": "branch",
+  "commits": "log",
+  "logs": "log",
+  "history": "log",
+  "switch": "checkout",
+  "stage": "add",
+  "unstage": "reset",
+  "cached": "staged",
+  "new": "create",
+  "make": "create",
+  "diffs": "diff"
+ },
+ "commands": [
+  {
+   "words": [
+    "status"
+   ],
+   "tool": "git_status",
+   "rename": {
+    "repo": "repo_path"
+   },
+   "usage": "status repo=<path>",
+   "example": "status repo=/home/me/app"
+  },
+  {
+   "words": [
+    "diff",
+    "unstaged"
+   ],
+   "tool": "git_diff_unstaged",
+   "rename": {
+    "repo": "repo_path",
+    "context": "context_lines"
+   },
+   "usage": "diff unstaged repo=<path> [context=N]",
+   "example": "diff unstaged repo=/home/me/app context=5"
+  },
+  {
+   "words": [
+    "diff",
+    "staged"
+   ],
+   "tool": "git_diff_staged",
+   "rename": {
+    "repo": "repo_path",
+    "context": "context_lines"
+   },
+   "usage": "diff staged repo=<path> [context=N]",
+   "example": "diff staged repo=/home/me/app"
+  },
+  {
+   "words": [
+    "diff"
+   ],
+   "tool": "git_diff",
+   "rename": {
+    "repo": "repo_path",
+    "context": "context_lines"
+   },
+   "positional": [
+    "target"
+   ],
+   "usage": "diff <branch|commit> repo=<path> [context=N]",
+   "example": "diff main repo=/home/me/app"
+  },
+  {
+   "words": [
+    "commit"
+   ],
+   "tool": "git_commit",
+   "rename": {
+    "repo": "repo_path",
+    "msg": "message"
+   },
+   "positional": [
+    "message"
+   ],
+   "usage": "commit \"<message>\" repo=<path>",
+   "example": "commit \"Fix login bug\" repo=/home/me/app"
+  },
+  {
+   "words": [
+    "add"
+   ],
+   "tool": "git_add",
+   "rename": {
+    "repo": "repo_path"
+   },
+   "positional": [
+    "files"
+   ],
+   "usage": "add <file1,file2,...> repo=<path>",
+   "example": "add src/main.py,README.md repo=/home/me/app"
+  },
+  {
+   "words": [
+    "reset"
+   ],
+   "tool": "git_reset",
+   "rename": {
+    "repo": "repo_path"
+   },
+   "usage": "reset repo=<path>",
+   "example": "reset repo=/home/me/app"
+  },
+  {
+   "words": [
+    "log"
+   ],
+   "tool": "git_log",
+   "rename": {
+    "repo": "repo_path",
+    "max": "max_count",
+    "since": "start_timestamp",
+    "until": "end_timestamp"
+   },
+   "usage": "log repo=<path> [max=N] [since=<date>] [until=<date>]",
+   "example": "log repo=/home/me/app max=5 since=2024-01-15"
+  },
+  {
+   "words": [
+    "create",
+    "branch"
+   ],
+   "tool": "git_create_branch",
+   "rename": {
+    "repo": "repo_path",
+    "base": "base_branch",
+    "name": "branch_name"
+   },
+   "positional": [
+    "branch_name"
+   ],
+   "usage": "create branch <name> repo=<path> [base=<branch>]",
+   "example": "create branch feature-login repo=/home/me/app base=main"
+  },
+  {
+   "words": [
+    "checkout"
+   ],
+   "tool": "git_checkout",
+   "rename": {
+    "repo": "repo_path",
+    "branch": "branch_name"
+   },
+   "positional": [
+    "branch_name"
+   ],
+   "usage": "checkout <branch> repo=<path>",
+   "example": "checkout feature-login repo=/home/me/app"
+  },
+  {
+   "words": [
+    "show"
+   ],
+   "tool": "git_show",
+   "rename": {
+    "repo": "repo_path",
+    "rev": "revision"
+   },
+   "positional": [
+    "revision"
+   ],
+   "usage": "show <revision|revision:path> repo=<path>",
+   "example": "show HEAD~1 repo=/home/me/app"
+  },
+  {
+   "words": [
+    "branch"
+   ],
+   "tool": "git_branch",
+   "rename": {
+    "repo": "repo_path",
+    "type": "branch_type"
+   },
+   "positional": [
+    "branch_type"
+   ],
+   "usage": "branch <local|remote|all> repo=<path> [contains=<sha>] [not_contains=<sha>]",
+   "example": "list branches local repo=/home/me/app"
+  }
+ ]
+}

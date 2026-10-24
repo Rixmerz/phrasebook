@@ -1,0 +1,11 @@
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+const toolsets = Deno.args[0] ?? "all";
+const t = new StdioClientTransport({ command: "~/glosa/vendor/github-mcp/github-mcp-server", args: ["stdio", `--toolsets=${toolsets}`], env: { PATH: Deno.env.get("PATH")!, GITHUB_PERSONAL_ACCESS_TOKEN: "dummy" }, stderr: "ignore" });
+const c = new Client({ name: "probe", version: "0" });
+await c.connect(t);
+const { tools } = await c.listTools();
+Deno.writeTextFileSync(`~/glosa/vendor/github-mcp/tools-${toolsets}.json`, JSON.stringify(tools, null, 1));
+console.log(toolsets, tools.length, JSON.stringify(tools).length, "chars");
+console.log(tools.map((x) => x.name).join(" "));
+await c.close();

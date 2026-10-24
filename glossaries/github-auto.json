@@ -1,0 +1,1355 @@
+{
+ "server": "github-auto",
+ "glossary": "GitHub. One command per line: <words> [owner/repo or owner/repo#N] [values] [key=value].\nWord order is free; plurals and synonyms are fine (prs, issues, show=get, edit=update, find=search, pull request=pr). #N is the issue/PR number.\nQuote text with spaces and any path containing '/'. Lists: a,b,c. Paging: page= perPage= (after=<cursor> where noted).\n  pr       get | list [state=open|closed|all base= head= sort=created|updated|popularity|long-running direction=asc|desc] | search <query> | create <title> head= base= [body= draft= reviewers=a,b modify=] | update [title= body= state=open|closed base= draft= reviewers=] | close | merge [method=merge|squash|rebase title= message= sha=] | approve [body=] | update pr branch | request copilot review\n  pr views #N: pr diff | status | files | commits | comments | reviews | review comments [after=] | checks\n  review   create #N [event=APPROVE|REQUEST_CHANGES|COMMENT body= commit=] (no event = pending) | submit #N [event= body=] | delete #N (pending)\n           add review comment #N <path> <body> subject=LINE|FILE [line= side=LEFT|RIGHT start= startside=]\n  thread   resolve|unresolve #N <threadId PRRT_...>\n  issue    get | list [state=open|closed labels= since= orderBy=CREATED_AT|UPDATED_AT|COMMENTS direction=ASC|DESC after=] | search <natural-language query> | create <title> [body= labels= assignees= milestone= type= parent=<number>] | update #N [title= body= state=open|closed reason=completed|not_planned|duplicate duplicate_of= labels= assignees=] | close #N [reason=]\n  issue views #N: issue comments | labels | parent ; subissues ; issue types | fields (owner/repo or owner=)\n  subissue add|remove #parent <sub_issue_id> [replace=true] | reorder #parent <sub_issue_id> after=|before=<id>\n  comment  add #N <body> | update <comment_id> <body> | reply #PR <commentId> [body] [reaction=] ; react #N <+1|-1|laugh|confused|heart|hooray|rocket|eyes> [comment=<id>]\n  copilot  assign copilot #issue [base= instructions=]\n  file     get|list [path] [ref= sha=] | create|update <path> <content> branch= message= [sha= needed to update] | delete <path> branch= message= | push branch= message= files='[{\"path\":\"a\",\"content\":\"x\"}]'\n  repo     create <name> [private= init= org= description=] (no target) | fork [org=] | search <query> [sort=stars|forks|updated]\n  branch   list | create <name> [from=]\n  commit   get <sha> [detail=none|stats|full_patch] | list [branch= author= path= since= until=] | search <query>\n  tag      list | get <tag>      release  list | get <tag> | get latest release\n  label    list | get <name>     milestone|assignee|reviewer list     collaborator list [affiliation=outside|direct|all]\n  other    search code <query> | search user <query> | get me | list team [user=] | team members <org>/<team-slug>\nExamples:\nget pr octo/app#12\npr files octo/app#12\ncreate issue octo/app \"Login fails\" labels=bug,auth\nmerge pr octo/app#12 method=squash",
+ "targetStyle": "github",
+ "genericVerbs": [
+  "get",
+  "list"
+ ],
+ "fold": {
+  "issues": "issue",
+  "prs": "pr",
+  "pull": "pr",
+  "pulls": "pr",
+  "request": "pr",
+  "requests": "pr",
+  "pullrequest": "pr",
+  "pullrequests": "pr",
+  "comments": "comment",
+  "files": "file",
+  "dir": "file",
+  "directory": "file",
+  "folder": "file",
+  "contents": "file",
+  "commits": "commit",
+  "branches": "branch",
+  "tags": "tag",
+  "releases": "release",
+  "labels": "label",
+  "repos": "repo",
+  "repository": "repo",
+  "repositories": "repo",
+  "users": "user",
+  "teams": "team",
+  "members": "member",
+  "reviews": "review",
+  "collaborators": "collaborator",
+  "types": "type",
+  "fields": "field",
+  "milestones": "milestone",
+  "assignees": "assignee",
+  "reviewers": "reviewer",
+  "threads": "thread",
+  "checks": "check",
+  "run": "check",
+  "runs": "check",
+  "ci": "check",
+  "diffs": "diff",
+  "subissues": "subissue",
+  "sub-issue": "subissue",
+  "sub-issues": "subissue",
+  "parents": "parent",
+  "statuses": "status",
+  "show": "get",
+  "view": "get",
+  "read": "get",
+  "fetch": "get",
+  "find": "search",
+  "edit": "update",
+  "write": "create",
+  "last": "latest",
+  "reprioritize": "reorder",
+  "prioritize": "reorder",
+  "myself": "me"
+ },
+ "commands": [
+  {
+   "words": [
+    "add",
+    "review",
+    "comment"
+   ],
+   "tool": "add_comment_to_pending_review",
+   "rename": {
+    "subject": "subjectType",
+    "start": "startLine",
+    "startside": "startSide"
+   },
+   "positional": [
+    "path",
+    "body"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "add review comment owner/repo#N <path> <body> subject=LINE|FILE [line=N] [side=LEFT|RIGHT] [start=N] [startside=LEFT|RIGHT]",
+   "example": "add review comment octo/app#10 \"src/main.go\" \"Handle this error\" subject=LINE line=42 side=RIGHT"
+  },
+  {
+   "words": [
+    "add",
+    "comment"
+   ],
+   "tool": "add_issue_comment",
+   "positional": [
+    "body"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "issue_number"
+   },
+   "needs": "number",
+   "usage": "add comment owner/repo#N <body>",
+   "example": "add comment octo/app#5 \"Thanks, fixed now\""
+  },
+  {
+   "words": [
+    "react"
+   ],
+   "tool": "add_issue_comment",
+   "rename": {
+    "comment": "comment_id"
+   },
+   "positional": [
+    "reaction"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "issue_number"
+   },
+   "needs": "number",
+   "usage": "react owner/repo#N <+1|-1|laugh|confused|heart|hooray|rocket|eyes> [comment=<id>]",
+   "example": "react octo/app#5 rocket"
+  },
+  {
+   "words": [
+    "reply",
+    "comment"
+   ],
+   "tool": "add_reply_to_pull_request_comment",
+   "positional": [
+    "commentId",
+    "body"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "repo",
+   "usage": "reply comment owner/repo#PR <commentId> [body] [reaction=+1|-1|laugh|confused|heart|hooray|rocket|eyes]",
+   "example": "reply comment octo/app#10 2233445566 \"Fixed in latest push\""
+  },
+  {
+   "words": [
+    "update",
+    "comment"
+   ],
+   "tool": "update_issue_comment",
+   "positional": [
+    "comment_id",
+    "body"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "update comment owner/repo <comment_id> <body>",
+   "example": "update comment octo/app 1234567 \"Updated text\""
+  },
+  {
+   "words": [
+    "assign",
+    "copilot"
+   ],
+   "tool": "assign_copilot_to_issue",
+   "rename": {
+    "base": "base_ref",
+    "instructions": "custom_instructions"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "issue_number"
+   },
+   "needs": "number",
+   "usage": "assign copilot owner/repo#N [base=<branch>] [instructions=<text>]",
+   "example": "assign copilot octo/app#7 instructions=\"Add unit tests\""
+  },
+  {
+   "words": [
+    "create",
+    "branch"
+   ],
+   "tool": "create_branch",
+   "rename": {
+    "from": "from_branch"
+   },
+   "positional": [
+    "branch"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "create branch owner/repo <name> [from=<branch>]",
+   "example": "create branch octo/app feature-x from=main"
+  },
+  {
+   "words": [
+    "list",
+    "branch"
+   ],
+   "tool": "list_branches",
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "list branch owner/repo [page=] [perPage=]",
+   "example": "list branches octo/app"
+  },
+  {
+   "words": [
+    "create",
+    "file"
+   ],
+   "tool": "create_or_update_file",
+   "positional": [
+    "path",
+    "content"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "create file owner/repo <path> <content> branch=<branch> message=<msg> [sha=<blob sha>]",
+   "example": "create file octo/app \"docs/notes.md\" \"# Notes\" branch=main message=\"Add notes\""
+  },
+  {
+   "words": [
+    "update",
+    "file"
+   ],
+   "tool": "create_or_update_file",
+   "positional": [
+    "path",
+    "content"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "update file owner/repo <path> <content> branch=<branch> message=<msg> sha=<blob sha>",
+   "example": "update file octo/app README.md \"# App v2\" branch=main message=\"Update readme\" sha=3d21ec53a331a6f037a91c368710b99387d012c1"
+  },
+  {
+   "words": [
+    "delete",
+    "file"
+   ],
+   "tool": "delete_file",
+   "positional": [
+    "path"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "delete file owner/repo <path> branch=<branch> message=<msg>",
+   "example": "delete file octo/app old.txt branch=main message=\"Remove old file\""
+  },
+  {
+   "words": [
+    "push",
+    "file"
+   ],
+   "tool": "push_files",
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "push file owner/repo branch=<branch> message=<msg> files='[{\"path\":..,\"content\":..}]'",
+   "example": "push files octo/app branch=main message=\"Add files\" files='[{\"path\":\"a.txt\",\"content\":\"A\"},{\"path\":\"b.txt\",\"content\":\"B\"}]'"
+  },
+  {
+   "words": [
+    "get",
+    "file"
+   ],
+   "tool": "get_file_contents",
+   "positional": [
+    "path"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "get file owner/repo [path] [ref=<ref>] [sha=<commit>]",
+   "example": "get file octo/app README.md ref=main"
+  },
+  {
+   "words": [
+    "list",
+    "file"
+   ],
+   "tool": "get_file_contents",
+   "positional": [
+    "path"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "list file owner/repo [path] [ref=] [sha=] [fields=name,type,...]",
+   "example": "list files octo/app \"src/cmd\" fields=name,type"
+  },
+  {
+   "words": [
+    "create",
+    "pr"
+   ],
+   "tool": "create_pull_request",
+   "rename": {
+    "modify": "maintainer_can_modify"
+   },
+   "positional": [
+    "title"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "create pr owner/repo <title> head=<branch> base=<branch> [body=] [draft=true] [reviewers=a,b] [modify=true]",
+   "example": "create pr octo/app \"Add login\" head=feature-x base=main reviewers=alice,bob"
+  },
+  {
+   "words": [
+    "update",
+    "pr"
+   ],
+   "tool": "update_pull_request",
+   "rename": {
+    "modify": "maintainer_can_modify"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "update pr owner/repo#N [title=] [body=] [state=open|closed] [base=] [draft=] [reviewers=a,b] [modify=]",
+   "example": "update pr octo/app#12 title=\"New title\" draft=false"
+  },
+  {
+   "words": [
+    "close",
+    "pr"
+   ],
+   "tool": "update_pull_request",
+   "fixed": {
+    "state": "closed"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "close pr owner/repo#N",
+   "example": "close pr octo/app#12"
+  },
+  {
+   "words": [
+    "merge",
+    "pr"
+   ],
+   "tool": "merge_pull_request",
+   "rename": {
+    "method": "merge_method",
+    "title": "commit_title",
+    "message": "commit_message",
+    "sha": "expectedHeadSha"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "merge pr owner/repo#N [method=merge|squash|rebase] [title=] [message=] [sha=<expected head>]",
+   "example": "merge pr octo/app#12 method=squash"
+  },
+  {
+   "words": [
+    "update",
+    "pr",
+    "branch"
+   ],
+   "tool": "update_pull_request_branch",
+   "rename": {
+    "sha": "expectedHeadSha"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "update pr branch owner/repo#N [sha=<expected head>]",
+   "example": "update pr branch octo/app#12"
+  },
+  {
+   "words": [
+    "request",
+    "copilot",
+    "review"
+   ],
+   "tool": "request_copilot_review",
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "request copilot review owner/repo#N",
+   "example": "request copilot review octo/app#12"
+  },
+  {
+   "words": [
+    "list",
+    "pr"
+   ],
+   "tool": "list_pull_requests",
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "list pr owner/repo [state=open|closed|all] [base=] [head=] [sort=created|updated|popularity|long-running] [direction=asc|desc] [fields=] [page=] [perPage=]",
+   "example": "list prs octo/app state=open base=main"
+  },
+  {
+   "words": [
+    "search",
+    "pr"
+   ],
+   "tool": "search_pull_requests",
+   "positional": [
+    "query"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "usage": "search pr <query> [owner/repo] [sort=] [order=asc|desc] [page=] [perPage=]",
+   "example": "search prs \"is:open author:alice\" octo/app"
+  },
+  {
+   "words": [
+    "get",
+    "pr"
+   ],
+   "tool": "pull_request_read",
+   "fixed": {
+    "method": "get"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "get pr owner/repo#N",
+   "example": "get pr octo/app#12"
+  },
+  {
+   "words": [
+    "pr",
+    "diff"
+   ],
+   "tool": "pull_request_read",
+   "fixed": {
+    "method": "get_diff"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "pr diff owner/repo#N",
+   "example": "pr diff octo/app#12"
+  },
+  {
+   "words": [
+    "pr",
+    "status"
+   ],
+   "tool": "pull_request_read",
+   "fixed": {
+    "method": "get_status"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "pr status owner/repo#N",
+   "example": "pr status octo/app#12"
+  },
+  {
+   "words": [
+    "pr",
+    "file"
+   ],
+   "tool": "pull_request_read",
+   "fixed": {
+    "method": "get_files"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "pr file owner/repo#N [page=] [perPage=]",
+   "example": "pr files octo/app#12 perPage=50"
+  },
+  {
+   "words": [
+    "pr",
+    "commit"
+   ],
+   "tool": "pull_request_read",
+   "fixed": {
+    "method": "get_commits"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "pr commit owner/repo#N [page=] [perPage=]",
+   "example": "pr commits octo/app#12"
+  },
+  {
+   "words": [
+    "pr",
+    "comment"
+   ],
+   "tool": "pull_request_read",
+   "fixed": {
+    "method": "get_comments"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "pr comment owner/repo#N [page=] [perPage=]",
+   "example": "pr comments octo/app#12"
+  },
+  {
+   "words": [
+    "pr",
+    "review"
+   ],
+   "tool": "pull_request_read",
+   "fixed": {
+    "method": "get_reviews"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "pr review owner/repo#N [page=] [perPage=]",
+   "example": "pr reviews octo/app#12"
+  },
+  {
+   "words": [
+    "pr",
+    "review",
+    "comment"
+   ],
+   "tool": "pull_request_read",
+   "fixed": {
+    "method": "get_review_comments"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "pr review comment owner/repo#N [perPage=] [after=<cursor>]",
+   "example": "pr review comments octo/app#12"
+  },
+  {
+   "words": [
+    "pr",
+    "check"
+   ],
+   "tool": "pull_request_read",
+   "fixed": {
+    "method": "get_check_runs"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "pr check owner/repo#N [page=] [perPage=]",
+   "example": "pr checks octo/app#12"
+  },
+  {
+   "words": [
+    "create",
+    "review"
+   ],
+   "tool": "pull_request_review_write",
+   "fixed": {
+    "method": "create"
+   },
+   "rename": {
+    "commit": "commitID"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "create review owner/repo#N [event=APPROVE|REQUEST_CHANGES|COMMENT] [body=] [commit=<sha>]",
+   "example": "create review octo/app#12 event=REQUEST_CHANGES body=\"Please add tests\""
+  },
+  {
+   "words": [
+    "submit",
+    "review"
+   ],
+   "tool": "pull_request_review_write",
+   "fixed": {
+    "method": "submit_pending"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "submit review owner/repo#N [event=APPROVE|REQUEST_CHANGES|COMMENT] [body=]",
+   "example": "submit review octo/app#12 event=APPROVE body=\"LGTM\""
+  },
+  {
+   "words": [
+    "delete",
+    "review"
+   ],
+   "tool": "pull_request_review_write",
+   "fixed": {
+    "method": "delete_pending"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "delete review owner/repo#N",
+   "example": "delete review octo/app#12"
+  },
+  {
+   "words": [
+    "approve",
+    "pr"
+   ],
+   "tool": "pull_request_review_write",
+   "fixed": {
+    "method": "create",
+    "event": "APPROVE"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "approve pr owner/repo#N [body=]",
+   "example": "approve pr octo/app#12 body=LGTM"
+  },
+  {
+   "words": [
+    "resolve",
+    "thread"
+   ],
+   "tool": "pull_request_review_write",
+   "fixed": {
+    "method": "resolve_thread"
+   },
+   "positional": [
+    "threadId"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "resolve thread owner/repo#N <threadId>",
+   "example": "resolve thread octo/app#12 PRRT_kwDOabc123"
+  },
+  {
+   "words": [
+    "unresolve",
+    "thread"
+   ],
+   "tool": "pull_request_review_write",
+   "fixed": {
+    "method": "unresolve_thread"
+   },
+   "positional": [
+    "threadId"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "pullNumber"
+   },
+   "needs": "number",
+   "usage": "unresolve thread owner/repo#N <threadId>",
+   "example": "unresolve thread octo/app#12 PRRT_kwDOabc123"
+  },
+  {
+   "words": [
+    "get",
+    "issue"
+   ],
+   "tool": "issue_read",
+   "fixed": {
+    "method": "get"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "issue_number"
+   },
+   "needs": "number",
+   "usage": "get issue owner/repo#N",
+   "example": "get issue octo/app#5"
+  },
+  {
+   "words": [
+    "issue",
+    "comment"
+   ],
+   "tool": "issue_read",
+   "fixed": {
+    "method": "get_comments"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "issue_number"
+   },
+   "needs": "number",
+   "usage": "issue comment owner/repo#N [page=] [perPage=]",
+   "example": "issue comments octo/app#5"
+  },
+  {
+   "words": [
+    "issue",
+    "label"
+   ],
+   "tool": "issue_read",
+   "fixed": {
+    "method": "get_labels"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "issue_number"
+   },
+   "needs": "number",
+   "usage": "issue label owner/repo#N",
+   "example": "issue labels octo/app#5"
+  },
+  {
+   "words": [
+    "issue",
+    "parent"
+   ],
+   "tool": "issue_read",
+   "fixed": {
+    "method": "get_parent"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "issue_number"
+   },
+   "needs": "number",
+   "usage": "issue parent owner/repo#N",
+   "example": "parent issue octo/app#5"
+  },
+  {
+   "words": [
+    "subissue"
+   ],
+   "tool": "issue_read",
+   "fixed": {
+    "method": "get_sub_issues"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "issue_number"
+   },
+   "needs": "number",
+   "usage": "subissue owner/repo#N [page=] [perPage=]",
+   "example": "subissues octo/app#5"
+  },
+  {
+   "words": [
+    "list",
+    "issue"
+   ],
+   "tool": "list_issues",
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "list issue owner/repo [state=open|closed] [labels=a,b] [since=] [orderBy=CREATED_AT|UPDATED_AT|COMMENTS] [direction=ASC|DESC] [fields=] [perPage=] [after=<cursor>]",
+   "example": "list issues octo/app state=open labels=bug"
+  },
+  {
+   "words": [
+    "search",
+    "issue"
+   ],
+   "tool": "search_issues",
+   "positional": [
+    "query"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "usage": "search issue <query> [owner/repo] [sort=] [order=asc|desc] [page=] [perPage=]",
+   "example": "search issues \"login fails after password reset\" octo/app"
+  },
+  {
+   "words": [
+    "create",
+    "issue"
+   ],
+   "tool": "issue_write",
+   "fixed": {
+    "method": "create"
+   },
+   "rename": {
+    "parent": "parent_issue_number",
+    "fields": "issue_fields"
+   },
+   "positional": [
+    "title"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "create issue owner/repo <title> [body=] [labels=a,b] [assignees=a,b] [milestone=N] [type=] [parent=N]",
+   "example": "create issue octo/app \"Login fails\" body=\"Steps to reproduce\" labels=bug assignees=alice"
+  },
+  {
+   "words": [
+    "update",
+    "issue"
+   ],
+   "tool": "issue_write",
+   "fixed": {
+    "method": "update"
+   },
+   "rename": {
+    "reason": "state_reason",
+    "fields": "issue_fields"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "issue_number"
+   },
+   "needs": "number",
+   "usage": "update issue owner/repo#N [title=] [body=] [state=open|closed] [reason=completed|not_planned|duplicate] [duplicate_of=N] [labels=] [assignees=] [milestone=] [type=]",
+   "example": "update issue octo/app#5 state=closed reason=completed"
+  },
+  {
+   "words": [
+    "close",
+    "issue"
+   ],
+   "tool": "issue_write",
+   "fixed": {
+    "method": "update",
+    "state": "closed"
+   },
+   "rename": {
+    "reason": "state_reason"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "issue_number"
+   },
+   "needs": "number",
+   "usage": "close issue owner/repo#N [reason=completed|not_planned|duplicate] [duplicate_of=N]",
+   "example": "close issue octo/app#5 reason=not_planned"
+  },
+  {
+   "words": [
+    "issue",
+    "type"
+   ],
+   "tool": "list_issue_types",
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "owner",
+   "usage": "issue type owner/repo (or owner=<org>)",
+   "example": "issue types octo/app"
+  },
+  {
+   "words": [
+    "issue",
+    "field"
+   ],
+   "tool": "list_issue_fields",
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "owner",
+   "usage": "issue field owner/repo (or owner=<org>)",
+   "example": "issue fields octo/app"
+  },
+  {
+   "words": [
+    "add",
+    "subissue"
+   ],
+   "tool": "sub_issue_write",
+   "fixed": {
+    "method": "add"
+   },
+   "rename": {
+    "replace": "replace_parent"
+   },
+   "positional": [
+    "sub_issue_id"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "issue_number"
+   },
+   "needs": "number",
+   "usage": "add subissue owner/repo#parent <sub_issue_id> [replace=true]",
+   "example": "add subissue octo/app#5 98765432"
+  },
+  {
+   "words": [
+    "remove",
+    "subissue"
+   ],
+   "tool": "sub_issue_write",
+   "fixed": {
+    "method": "remove"
+   },
+   "positional": [
+    "sub_issue_id"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "issue_number"
+   },
+   "needs": "number",
+   "usage": "remove subissue owner/repo#parent <sub_issue_id>",
+   "example": "remove subissue octo/app#5 98765432"
+  },
+  {
+   "words": [
+    "reorder",
+    "subissue"
+   ],
+   "tool": "sub_issue_write",
+   "fixed": {
+    "method": "reprioritize"
+   },
+   "rename": {
+    "after": "after_id",
+    "before": "before_id"
+   },
+   "positional": [
+    "sub_issue_id"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo",
+    "number": "issue_number"
+   },
+   "needs": "number",
+   "usage": "reorder subissue owner/repo#parent <sub_issue_id> [after=<id>] [before=<id>]",
+   "example": "reorder subissue octo/app#5 98765432 after=12345678"
+  },
+  {
+   "words": [
+    "create",
+    "repo"
+   ],
+   "tool": "create_repository",
+   "rename": {
+    "org": "organization",
+    "init": "autoInit"
+   },
+   "positional": [
+    "name"
+   ],
+   "usage": "create repo <name> [private=true|false] [init=true] [org=] [description=]",
+   "example": "create repo my-tool private=false init=true"
+  },
+  {
+   "words": [
+    "fork",
+    "repo"
+   ],
+   "tool": "fork_repository",
+   "rename": {
+    "org": "organization"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "fork repo owner/repo [org=]",
+   "example": "fork repo octo/app org=myorg"
+  },
+  {
+   "words": [
+    "search",
+    "repo"
+   ],
+   "tool": "search_repositories",
+   "rename": {
+    "minimal": "minimal_output"
+   },
+   "positional": [
+    "query"
+   ],
+   "usage": "search repo <query> [sort=stars|forks|help-wanted-issues|updated] [order=asc|desc] [minimal=false] [page=] [perPage=]",
+   "example": "search repos \"topic:react stars:>1000\" sort=stars"
+  },
+  {
+   "words": [
+    "get",
+    "commit"
+   ],
+   "tool": "get_commit",
+   "positional": [
+    "sha"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "get commit owner/repo <sha|branch|tag> [detail=none|stats|full_patch] [page=] [perPage=]",
+   "example": "get commit octo/app abc1234 detail=full_patch"
+  },
+  {
+   "words": [
+    "list",
+    "commit"
+   ],
+   "tool": "list_commits",
+   "rename": {
+    "branch": "sha"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "list commit owner/repo [branch=<sha|branch|tag>] [author=] [path=] [since=] [until=] [fields=] [page=] [perPage=]",
+   "example": "list commits octo/app branch=main author=alice since=2025-01-01"
+  },
+  {
+   "words": [
+    "search",
+    "commit"
+   ],
+   "tool": "search_commits",
+   "positional": [
+    "query"
+   ],
+   "usage": "search commit <query> [sort=author-date|committer-date] [order=asc|desc] [page=] [perPage=]",
+   "example": "search commits \"repo:octo/app fix panic\""
+  },
+  {
+   "words": [
+    "list",
+    "tag"
+   ],
+   "tool": "list_tags",
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "list tag owner/repo [page=] [perPage=]",
+   "example": "list tags octo/app"
+  },
+  {
+   "words": [
+    "get",
+    "tag"
+   ],
+   "tool": "get_tag",
+   "positional": [
+    "tag"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "get tag owner/repo <tag>",
+   "example": "get tag octo/app v1.0.0"
+  },
+  {
+   "words": [
+    "list",
+    "release"
+   ],
+   "tool": "list_releases",
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "list release owner/repo [fields=] [page=] [perPage=]",
+   "example": "list releases octo/app"
+  },
+  {
+   "words": [
+    "get",
+    "release"
+   ],
+   "tool": "get_release_by_tag",
+   "positional": [
+    "tag"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "get release owner/repo <tag>",
+   "example": "get release octo/app v1.0.0"
+  },
+  {
+   "words": [
+    "get",
+    "latest",
+    "release"
+   ],
+   "tool": "get_latest_release",
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "get latest release owner/repo",
+   "example": "get latest release octo/app"
+  },
+  {
+   "words": [
+    "get",
+    "label"
+   ],
+   "tool": "get_label",
+   "positional": [
+    "name"
+   ],
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "get label owner/repo <name>",
+   "example": "get label octo/app bug"
+  },
+  {
+   "words": [
+    "list",
+    "label"
+   ],
+   "tool": "ui_get",
+   "fixed": {
+    "method": "labels"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "list label owner/repo",
+   "example": "list labels octo/app"
+  },
+  {
+   "words": [
+    "list",
+    "milestone"
+   ],
+   "tool": "ui_get",
+   "fixed": {
+    "method": "milestones"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "list milestone owner/repo",
+   "example": "list milestones octo/app"
+  },
+  {
+   "words": [
+    "list",
+    "assignee"
+   ],
+   "tool": "ui_get",
+   "fixed": {
+    "method": "assignees"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "list assignee owner/repo",
+   "example": "list assignees octo/app"
+  },
+  {
+   "words": [
+    "list",
+    "reviewer"
+   ],
+   "tool": "ui_get",
+   "fixed": {
+    "method": "reviewers"
+   },
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "list reviewer owner/repo",
+   "example": "list reviewers octo/app"
+  },
+  {
+   "words": [
+    "list",
+    "collaborator"
+   ],
+   "tool": "list_repository_collaborators",
+   "target": {
+    "owner": "owner",
+    "repo": "repo"
+   },
+   "needs": "repo",
+   "usage": "list collaborator owner/repo [affiliation=outside|direct|all] [page=] [perPage=]",
+   "example": "list collaborators octo/app affiliation=outside"
+  },
+  {
+   "words": [
+    "search",
+    "code"
+   ],
+   "tool": "search_code",
+   "positional": [
+    "query"
+   ],
+   "usage": "search code <query> [order=asc|desc] [fields=] [page=] [perPage=]",
+   "example": "search code \"WithContext language:go org:github\""
+  },
+  {
+   "words": [
+    "search",
+    "user"
+   ],
+   "tool": "search_users",
+   "positional": [
+    "query"
+   ],
+   "usage": "search user <query> [sort=followers|repositories|joined] [order=asc|desc] [page=] [perPage=]",
+   "example": "search users \"location:seattle\" sort=followers"
+  },
+  {
+   "words": [
+    "get",
+    "me"
+   ],
+   "tool": "get_me",
+   "usage": "get me",
+   "example": "get me"
+  },
+  {
+   "words": [
+    "list",
+    "team"
+   ],
+   "tool": "get_teams",
+   "usage": "list team [user=<login>]",
+   "example": "list teams user=alice"
+  },
+  {
+   "words": [
+    "team",
+    "member"
+   ],
+   "tool": "get_team_members",
+   "target": {
+    "owner": "org",
+    "repo": "team_slug"
+   },
+   "needs": "repo",
+   "usage": "team member <org>/<team-slug>",
+   "example": "team members github/security"
+  }
+ ]
+}

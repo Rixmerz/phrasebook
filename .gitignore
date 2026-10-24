@@ -1,0 +1,7 @@
+results/*.jsonl
+results/auto-gen/
+node_modules/
+vendor/github-mcp/
+.env
+scratch/
+logs/
