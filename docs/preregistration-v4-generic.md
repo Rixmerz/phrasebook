@@ -34,3 +34,10 @@ Blind sets: `glossary4`, `code`, `native`, Haiku 5.5 and Sonnet 5.5, 3 reps.
 3. Cost vs code: no direction predicted. On GitHub the gain came from compact JSON tables;
    these servers return plain text, so a tie is plausible.
 4. `glossary4` fails no more runs than the v1 generated glossary on the phase-2 sets.
+
+## Inside Claude Code (added before any client run)
+
+`src/client_bench.ts` on `github-blind3` (frozen blind set), arms `native` and `glossary4`
+(the proxy with `--runtime=v4`), Haiku 5.5 and Sonnet 5.5, 2 reps. Claude Code 2.1.310, `--bare`.
+5. Accuracy: `glossary4` within 2 failed runs of `native` per model.
+6. Cost: `native` costs more than `glossary4` per model (point estimate above 1x).

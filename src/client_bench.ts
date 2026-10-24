@@ -9,6 +9,7 @@ import { loadEnv } from "./env.ts";
 import { startMock } from "./github/mock.ts";
 import { ghTasks, seed } from "./github/tasks.ts";
 import { hardSeed, hardTasks } from "./github/hard.ts";
+import { blind3Seed, blind3Tasks } from "./github/blind3tasks.ts";
 import type { GhTask } from "./github/tasks.ts";
 import type { State } from "./github/mock.ts";
 import { LEDGER, ledgerTotal } from "./cost.ts";
@@ -22,6 +23,7 @@ const flags = parseArgs(Deno.args, {
 const SUITES: Record<string, { tasks: GhTask[]; seed: () => State }> = {
   github: { tasks: ghTasks, seed },
   "github-hard": { tasks: hardTasks.filter((t) => t.id !== "x-least-loaded"), seed: hardSeed },
+  "github-blind3": { tasks: blind3Tasks, seed: blind3Seed },
 };
 const suite = SUITES[flags.suite];
 const GH = new URL("../vendor/github-mcp/github-mcp-server", import.meta.url).pathname;
@@ -38,7 +40,7 @@ function mcpConfig(arm: string, token: string) {
   const env = { GITHUB_PERSONAL_ACCESS_TOKEN: token, PATH: Deno.env.get("PATH") ?? "", HOME: Deno.env.get("HOME") ?? "" };
   const server = arm === "native" || arm === "native-defer"
     ? { command: GH, args: ghArgs, env }
-    : { command: "deno", args: ["run", "-A", PROXY, "--name=github", "--", GH, ...ghArgs], env };
+    : { command: "deno", args: ["run", "-A", PROXY, "--name=github", ...(arm === "glossary4" ? ["--runtime=v4"] : []), "--", GH, ...ghArgs], env };
   return { mcpServers: { gh: server } };
 }
 
