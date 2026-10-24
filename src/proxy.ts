@@ -15,10 +15,14 @@ import { makeParserV2 } from "./github/parser_v2.ts";
 import { CommandError } from "./github/parser.ts";
 import { runV3, type V3State } from "./v3/engine.ts";
 import { GITHUB_GLOSSARY_V4 } from "./v3/glossary.ts";
-import type { Session } from "./suites.ts";
+import type { Call, Session } from "./suites.ts";
+import { compile, CommandError as TableError, loadTable } from "./auto/engine.ts";
+import { stripDialect } from "./auto/validate.ts";
+import { GENERIC_V4_EXTRAS } from "./v3/glossary.ts";
 
+// --table=<glossary json> drives any server from a generated command table (needs --runtime=v4).
 // --runtime=v4 runs commands through the glossary v4 engine (references, pipelines, compact output).
-const flags = parseArgs(Deno.args, { string: ["name", "runtime"], default: { name: "github", runtime: "v2" }, "--": true });
+const flags = parseArgs(Deno.args, { string: ["name", "runtime", "table"], default: { name: "github", runtime: "v2" }, "--": true });
 const upstreamCmd = flags["--"] ?? [];
 if (!upstreamCmd.length) {
   console.error("Usage: deno run -A src/proxy.ts --name=github -- <upstream command> [args...]");
@@ -32,19 +36,31 @@ await upstream.connect(new StdioClientTransport({
   env: Deno.env.toObject(),
   stderr: "ignore",
 }));
-const { tools } = await upstream.listTools();
-const parse = makeParserV2(tools as McpTool[]);
+const tools = stripDialect((await upstream.listTools()).tools as McpTool[]);
+const table = flags.table ? loadTable(flags.table) : null;
+const engine = table ? compile(table, tools) : null;
+// The v4 runtime catches the GitHub parser's CommandError; a table's own errors are mapped onto it.
+const parse = engine
+  ? (c: string): Call[] => {
+    try {
+      return engine.parse(c);
+    } catch (e) {
+      if (e instanceof TableError) throw new CommandError(e.message);
+      throw e;
+    }
+  }
+  : makeParserV2(tools);
 
 const server = new Server({ name: `phrasebook-${flags.name}`, version: "0.1.0" }, { capabilities: { tools: {} } });
 
 // Claude Code shows the model only the first paragraph of an MCP tool description,
 // so the glossary is sent without blank lines.
 const v4 = flags.runtime === "v4";
-const description = (v4 ? GITHUB_GLOSSARY_V4 : githubGlossaryToolV2.description).replace(/\n\s*\n/g, "\n");
+const description = (table ? `${table.glossary}\n${GENERIC_V4_EXTRAS}` : v4 ? GITHUB_GLOSSARY_V4 : githubGlossaryToolV2.description).replace(/\n\s*\n/g, "\n");
 // One proxy process serves one client session, so one reference store.
 const v4State: V3State = { refs: [] };
 const session: Session = {
-  tools: tools as McpTool[],
+  tools,
   async call(name, args) {
     const res = await upstream.callTool({ name, arguments: args });
     const text = (res.content as { text?: string; resource?: { text?: string } }[]).map((x) => x.text ?? x.resource?.text ?? "").join("\n");
