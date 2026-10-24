@@ -51,7 +51,7 @@ const parse = engine
   }
   : makeParserV2(tools);
 
-const server = new Server({ name: `phrasebook-${flags.name}`, version: "0.1.0" }, { capabilities: { tools: {} } });
+const server = new Server({ name: `phrasebook-${flags.name}`, version: "0.1.0" }, { capabilities: { tools: {} }, ...(table?.instructions ? { instructions: table.instructions } : {}) });
 
 // Claude Code shows the model only the first paragraph of an MCP tool description,
 // so the glossary is sent without blank lines.

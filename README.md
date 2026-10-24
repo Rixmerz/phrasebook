@@ -976,3 +976,17 @@ Audit of the 72 saved traces: SendMessage/ListAgents appear only in the discarde
 Haiku 5.5 traces from blind2 called `Workflow`, which stopped at its approval prompt and did nothing.
 Untraced runs from earlier sets cannot be audited this way; no session reported answering one.
 
+
+## Small-model glossary (glossary4s, Haiku 4.5, tuned set)
+
+`glossaries/notion-small.json` is the Notion table plus server `instructions` (shown by Claude Code even while the tool is deferred), worked recipes (search, pipeline count/sum/group, to-do toggling through block commands, append, property update, comment) and one rule: let the pipeline do the arithmetic, and change single blocks with block commands, never by rewriting page markdown.
+
+Two harness fixes landed first, for every arm: Claude Code's own task tools (TaskList, TodoWrite, ...) are disallowed, because Haiku 4.5 read "Tareas" as its own task list, and claude.ai connectors are disabled (`ENABLE_CLAUDEAI_MCP_SERVERS=false`), because it wandered into Google Drive. Runs before these fixes (`client-notion-h45.jsonl`) are invalid.
+
+| Haiku 4.5, notion-blind, subscription | pass | USD |
+|---|---|---|
+| native MCP | 13/32 | 1.58 |
+| glossary4 | 20/32 | 1.31 |
+| glossary4s | 30/32 | 1.04 |
+
+This is the tuned set, so it is an upper bound; the blind check follows.

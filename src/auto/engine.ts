@@ -25,6 +25,8 @@ export type Command = {
 export type Table = {
   server: string;
   glossary: string;
+  // Server instructions: Claude Code shows them even while the tool itself is deferred.
+  instructions?: string;
   // "owner/repo#n" style targets (GitHub-like). Without it, only positional values.
   targetStyle: "github" | "none";
   fold: Record<string, string>;

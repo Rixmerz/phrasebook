@@ -34,6 +34,8 @@ const SUB = flags.auth === "subscription";
 const GH = new URL("../vendor/github-mcp/github-mcp-server", import.meta.url).pathname;
 const PROXY = new URL("./proxy.ts", import.meta.url).pathname;
 const NOTION_TABLE = new URL("../glossaries/notion-auto.json", import.meta.url).pathname;
+// glossary4s: the same runtime with the small-model table (recipes, server instructions).
+const NOTION_SMALL = new URL("../glossaries/notion-small.json", import.meta.url).pathname;
 const port = (startMock(0).addr as Deno.NetAddr).port;
 const host = `http://127.0.0.1:${port}`;
 const mock = (path: string, token: string, init: RequestInit = {}) =>
@@ -52,7 +54,7 @@ const baseEnv = () => ({ PATH: Deno.env.get("PATH") ?? "", HOME: Deno.env.get("H
 // A proxy arm wraps the native server: glossary (v2), glossary4 (v4 runtime), with a table for non-GitHub servers.
 const proxied = (arm: string, name: string, native: Server, table?: string): Server => ({
   command: "deno",
-  args: ["run", "-A", PROXY, `--name=${name}`, ...(arm === "glossary4" ? ["--runtime=v4"] : []), ...(table ? [`--table=${table}`] : []),
+  args: ["run", "-A", PROXY, `--name=${name}`, ...(arm.startsWith("glossary4") ? ["--runtime=v4"] : []), ...(table ? [`--table=${table}`] : []),
     "--", native.command, ...native.args],
   env: native.env,
 });
@@ -85,7 +87,7 @@ function notionSuite(tasks: Task[]): ClientSuite {
     server(arm, token) {
       const native = { command: "npx", args: NOTION_SERVER, env: { NOTION_TOKEN: token, BASE_URL: mockUrl(), ...baseEnv() } };
       if (arm === "glossary") throw new Error("notion has no v2 glossary; use glossary4");
-      return arm === "native" ? native : proxied(arm, "notion", native, NOTION_TABLE);
+      return arm === "native" ? native : proxied(arm, "notion", native, arm === "glossary4s" ? NOTION_SMALL : NOTION_TABLE);
     },
   };
 }
@@ -102,7 +104,9 @@ const suite = SUITES[flags.suite];
 
 const DISALLOWED = ["Bash", "Edit", "Write", "NotebookEdit", "WebFetch", "WebSearch", "Task", "Agent", "Read", "Glob", "Grep",
   // Runs must not reach other sessions or start workflows: a peer could hand them the answer.
-  "SendMessage", "ListAgents", "Workflow", "Skill"];
+  "SendMessage", "ListAgents", "Workflow", "Skill",
+  // Claude Code's own task list: small models take "Tareas" (tasks) for it and never open the server.
+  "TaskList", "TaskCreate", "TaskGet", "TaskUpdate", "TaskStop", "TodoWrite"];
 
 const mcpConfig = (arm: string, token: string) => ({ mcpServers: { [flags.suite.startsWith("notion") ? "notion" : "gh"]: suite.server(arm, token) } });
 
@@ -136,7 +140,7 @@ async function runOnce(model: string, arm: string, task: Task, rep: number) {
     ],
     cwd: dir,
     env: {
-      ...(SUB ? { CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1", PHRASEBOOK_TOKEN: token } : { ANTHROPIC_API_KEY: Deno.env.get("ANTHROPIC_API_KEY")! }), PATH: Deno.env.get("PATH") ?? "", HOME: Deno.env.get("HOME") ?? "",
+      ...(SUB ? { CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1", PHRASEBOOK_TOKEN: token, ENABLE_CLAUDEAI_MCP_SERVERS: "false" } : { ANTHROPIC_API_KEY: Deno.env.get("ANTHROPIC_API_KEY")! }), PATH: Deno.env.get("PATH") ?? "", HOME: Deno.env.get("HOME") ?? "",
       // native-defer: Claude Code's own deferred MCP tool loading (tool search), forced on.
       ...(arm === "native-defer" ? { ENABLE_TOOL_SEARCH: "true" } : {}),
     },
