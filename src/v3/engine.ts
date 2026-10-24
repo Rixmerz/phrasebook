@@ -28,7 +28,12 @@ function quote(s: string): string {
   if (s !== "" && !/[\s"'\\|]/.test(s)) return s;
   return '"' + s.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\n").replace(/\t/g, "\\t") + '"';
 }
-const join = (tokens: string[]) => tokens.map(quote).join(" ");
+// key=value tokens quote only the value (key="a b"): both the GitHub and the generic tokenizers read that form.
+const join = (tokens: string[]) =>
+  tokens.map((t) => {
+    const m = t.match(/^([a-z_][\w.]*)=([\s\S]*)$/i);
+    return m ? `${m[1]}=${quote(m[2])}` : quote(t);
+  }).join(" ");
 
 // key<<TAG on a line, then lines up to a line that is exactly TAG: the value keeps every byte plus a final newline.
 export function expandLiterals(text: string): string {
@@ -244,6 +249,9 @@ function footerV4(st: V3State, call: Call, line: string, raw: Json, n: number, d
 // v4: an issue or PR (top-level number) is one record even when it holds an empty list like assignees: [].
 const isRecord = (v: Json) => !!v && typeof v === "object" && !Array.isArray(v) && typeof (v as Record<string, Json>).number === "number";
 const listOf = (mode: Mode, v: Json) => (mode === "v4" && isRecord(v) ? null : rowsOf(v));
+// v4: plain text (file contents, logs, command output) pipes as one row per line: | where line contains ERROR
+const textRows = (v: Json | string | undefined): Json[] | null =>
+  typeof v === "string" ? v.replace(/\n$/, "").split("\n").map((line) => ({ line })) : null;
 // Stages that keep whole records (filters, sorts) still print compactly; select and the like print what was asked.
 const keepsRecords = (stages: string[][]) => stages.every((s) => ["where", "sort", "top", "first", "limit"].includes((s[0] ?? "").toLowerCase()));
 
@@ -443,7 +451,7 @@ export async function runV3(
         log({ tool: "form", input: join(cmd), outcome: "ok" });
         continue;
       }
-      if (mode === "v4" && cmd[0]?.toLowerCase() === "edit" && fold(cmd[1] ?? "") === "file") {
+      if (mode === "v4" && cmd[0]?.toLowerCase() === "edit" && fold(cmd[1] ?? "") === "file" && session.tools.some((t) => t.name === "get_file_contents")) {
         const msg = await editFile(session, targetFromKeys(cmd), parse, log);
         st.refs.push({ line: join(cmd), data: msg });
         outputs.push(`@${st.refs.length}\n${msg}`);
@@ -462,7 +470,7 @@ export async function runV3(
         const src = st.refs[Number(cmd[0].slice(1)) - 1];
         if (!src) throw new CommandError(`No result ${cmd[0]} yet.`);
         const rows = listOf(mode, src.data)?.rows ?? (Array.isArray(src.data) ? src.data
-          : mode === "v4" && src.data && typeof src.data === "object" ? [src.data] : null);
+          : mode === "v4" && src.data && typeof src.data === "object" ? [src.data] : mode === "v4" ? textRows(src.content ?? src.data) : null);
         if (!rows) throw new PipelineError(`${cmd[0]} has no list to pipe into.`);
         const out = runPipeline(rows, stages, (x) => refValue(st, x) as Json);
         st.refs.push({ line: join(rawTokens), data: Array.isArray(out) ? { items: out } : out });
@@ -584,7 +592,8 @@ export async function runV3(
         let body: string;
         if (stages.length) {
           // v4: a single object pipes as a one-row list (get issue ... | select title,user).
-          const rows = listOf(mode, res.data)?.rows ?? (mode === "v4" && res.data && typeof res.data === "object" ? [res.data] : null);
+          const rows = listOf(mode, res.data)?.rows ?? (mode === "v4" && res.data && typeof res.data === "object" ? [res.data] : null) ??
+            (mode === "v4" ? textRows(res.content ?? res.data) : null);
           if (!rows) throw new PipelineError("This result has no list to pipe into.");
           if (mode === "v4") {
             const note = await hydrate(session, res.call, rows, stages, log);
@@ -596,6 +605,8 @@ export async function runV3(
             : mode === "v4" && keepsRecords(stages) ? compactTable("items", out as Json[]) : table("items", out as Json[]);
         } else if (mode === "v4" && res.content === undefined && listOf(mode, res.data)) {
           body = renderV4(res.data);
+        } else if (mode === "v4" && typeof res.data === "string") {
+          body = res.data; // plain text as is, not JSON-escaped
         } else body = res.content !== undefined ? res.content : render(res.data);
         const sha = res.content !== undefined ? (res.data as Record<string, Json>)?.sha : null;
         const head = res.content !== undefined

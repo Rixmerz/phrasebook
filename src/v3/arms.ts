@@ -5,7 +5,9 @@ import type { CallLog, ExtraArm } from "../arms_extra.ts";
 import type { Session, Suite } from "../suites.ts";
 import { githubGlossaryToolV2 } from "../github/glossary.ts";
 import { type Mode, runV3, type V3State } from "./engine.ts";
-import { GITHUB_GLOSSARY_V3_FEEDBACK, GITHUB_GLOSSARY_V3_LEGEND, GITHUB_GLOSSARY_V4 } from "./glossary.ts";
+import { GENERIC_V4_EXTRAS, GITHUB_GLOSSARY_V3_FEEDBACK, GITHUB_GLOSSARY_V3_LEGEND, GITHUB_GLOSSARY_V4 } from "./glossary.ts";
+import { CommandError } from "../github/parser.ts";
+import type { Call } from "../suites.ts";
 
 function v3Arm(mode: Mode): ExtraArm {
   let suite: Suite | null = null;
@@ -13,8 +15,12 @@ function v3Arm(mode: Mode): ExtraArm {
   const states = new WeakMap<Session, V3State>();
   return {
     tools(_mcp, s) {
-      if (!s.parse2) throw new Error(`glossary v3 needs a GitHub suite with the v2 parser; ${s.name} has none`);
       suite = s;
+      // v4 runs over any server: a suite without the GitHub v2 parser uses its generated table.
+      if (!s.parse2) {
+        if (mode !== "v4") throw new Error(`glossary v3 needs a GitHub suite with the v2 parser; ${s.name} has none`);
+        return [{ ...s.glossaryTool, description: `${s.glossaryTool.description}\n\n${GENERIC_V4_EXTRAS}` }];
+      }
       const description = mode === "legend" ? GITHUB_GLOSSARY_V3_LEGEND : mode === "v4" ? GITHUB_GLOSSARY_V4 : GITHUB_GLOSSARY_V3_FEEDBACK;
       return [{ ...githubGlossaryToolV2, description }];
     },
@@ -26,7 +32,17 @@ function v3Arm(mode: Mode): ExtraArm {
       }
       let st = states.get(session);
       if (!st) states.set(session, st = { refs: [] });
-      return await runV3(mode, input.command, session, st, (c) => suite!.parse2!(c, session.tools), (e) => calls.push(e));
+      // The runtime catches the GitHub parser's CommandError; a table's own errors are mapped onto it.
+      const parse = (c: string): Call[] => {
+        if (suite!.parse2) return suite!.parse2(c, session.tools);
+        try {
+          return suite!.parse(c, session.tools);
+        } catch (e) {
+          if (suite!.isCommandError(e)) throw new CommandError(e.message);
+          throw e;
+        }
+      };
+      return await runV3(mode, input.command, session, st, parse, (e) => calls.push(e));
     },
   };
 }

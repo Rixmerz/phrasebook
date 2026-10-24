@@ -45,3 +45,16 @@ const V4_EXTRAS = `v4:
   Send dependent steps in one call, one per line (create branch, write file, create pr): they run in order and stop at the first error.`;
 
 export const GITHUB_GLOSSARY_V4 = `${GITHUB_GLOSSARY_V3_FEEDBACK}\n\n${V4_EXTRAS}`;
+
+// v4 over any server: the generated table's glossary plus the runtime, with neutral examples.
+export const GENERIC_V4_EXTRAS = `Runtime:
+  Every result is numbered @1, @2, ... Reuse it instead of retyping: content=@3 passes the exact text of result 3; @3.field, @3[*].field.
+  key<<EOF at the end of a line starts a literal block; every byte up to a line with only EOF is kept, plus a final newline
+  (key<<EOF! leaves the final newline out).
+  Pipeline after a command or after @n: | where <field> <op> <value> | select a,b | sort <field> [desc] | top <n> | group <field> | count
+    | sum <field> | avg <field> | min <field> | max <field> | distinct <field>
+    ops: = != > >= < <= has contains starts empty notempty, in / notin @n[*].field
+  Text results (files, logs, command output) pipe as one row per line, field "line": @2 | where line contains ERROR | count
+  calc does arithmetic over numbers and results: calc @4 / @5 * 100
+  Send dependent steps in one call, one per line: they run in order and stop at the first error.
+  Lists come back as tables: name[count]{fields}: one row per record.`;
