@@ -442,6 +442,32 @@ held and significant on both models. (4) no regression on calc and blind: held.
 
 The v4 round cost 2.32 USD.
 
+## Glossary v4.1 (2026-10-24): a third blind set, with Opus
+
+Preregistration: `docs/preregistration-v41.md`; set frozen in `results/blind3-freeze.sha256`.
+v4.1 adds four engine fixes for errors seen in v4 runs (`repo=o/r` keys, `state=all` on issue
+lists, `add comment`, `#@n` on a single record). Arm name stays `glossary4`.
+
+Also amended (see `docs/preregistration-amendments.md`): the two exact-comment prompts whose final
+period read as punctuation. Rerun of only those tasks: 33/33 in every arm (`results/*-amended.jsonl`).
+
+`github-blind3`: 16 tasks on a new repo (octo/trailmap) by an agent that saw no interface,
+no earlier task set beyond the format reference, and no result. 3 reps (Opus: 2).
+
+| model | glossary4 | code | native | glossary3-feedback |
+|---|---|---|---|---|
+| Haiku 5.5 | 46/48, 1x | 45/48, 1.67x [1.42, 2.07] | 44/48, 2.40x [1.85, 3.03] | 47/48, 2.23x [1.39, 3.43] |
+| Sonnet 5.5 | 48/48, 1x | 48/48, 1.94x [1.56, 2.48] | 48/48, 3.22x [2.29, 4.98] | 48/48, 1.72x [1.27, 2.14] |
+| Opus 5.5 | 30/32, 1x | 31/32, 3.10x [1.95, 5.11] | not run | not run |
+
+Costs are relative to glossary4, with 95% bootstrap intervals over tasks.
+Both Opus glossary4 failures on `t3-pct-unassigned-v42` gave the right value (14.3%) after
+showing their count; the check reads the first number, and the task asks for the percentage only.
+code and native on Haiku failed `t3-author-features` 3/3 by not filtering on the author.
+Parse errors per run on Haiku 5.5: 0.02 for glossary4, 0.06 for v3; zero on Sonnet and Opus.
+
+Scorecard: all five predictions held. The round cost 5.8 USD (ledger 52.72 to 57.72 including pilots).
+
 ## Method
 
 ### Arms
