@@ -19,6 +19,8 @@ import { heldoutSeed, heldoutTasks } from "./github/heldout.ts";
 import { bulkSeed, bulkTasks } from "./github/bulk.ts";
 import { makeRealSuite } from "./github/real/suite.ts";
 import { realBlindTasks } from "./github/real/blindtasks.ts";
+import { makeNotionSuite } from "./notion/suite.ts";
+import { notionBlindTasks } from "./notion/blindtasks.ts";
 
 const root = new URL("../", import.meta.url).pathname;
 const tableAt = (name: string): Table | null => {
@@ -185,6 +187,8 @@ const candidates: Record<string, Suite | null> = {
   // Real api.github.com, sandbox repo only; needs the token in ~/.config/glosa/env.
   "github-real": Deno.env.get("PHRASEBOOK_REAL") ? makeRealSuite() : null,
   "github-real-blind": Deno.env.get("PHRASEBOOK_REAL") ? makeRealSuite("github-real-blind", realBlindTasks) : null,
+  // Notion: the official server against an in-process mock of the REST API.
+  "notion-blind": makeNotionSuite("notion-blind", notionBlindTasks, tableAt("notion-auto")),
   github91: githubWithTable("github91", "github91-auto", "all"),
   "github91-heldout": githubWithTable("github91-heldout", "github91-auto", "all", heldoutTasks, heldoutSeed),
 };
