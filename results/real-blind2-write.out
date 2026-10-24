@@ -1,0 +1,59 @@
+definition tokens  claude-sonnet-5-5: native=19436 glossary=1719 code=14532 glossary2=1765
+definition tokens  claude-haiku-5-5: native=19436 glossary=1719 code=14532 glossary2=1765
+PASS  claude-sonnet-5-5            native    rb-w-assign-infra-p1-bugs turns=3 in=8 out=894 invalid=0 41381ms
+PASS  claude-sonnet-5-5            native    rb-w-assign-infra-p1-bugs turns=5 in=12 out=1320 invalid=0 45337ms
+PASS  claude-sonnet-5-5            native    rb-w-assign-infra-p1-bugs turns=3 in=8 out=891 invalid=0 41208ms
+PASS  claude-sonnet-5-5            native    rb-w-label-docs-p2     turns=3 in=8 out=1315 invalid=0 43908ms
+PASS  claude-sonnet-5-5            native    rb-w-label-docs-p2     turns=3 in=8 out=1287 invalid=0 46117ms
+PASS  claude-sonnet-5-5            native    rb-w-label-docs-p2     turns=3 in=8 out=1221 invalid=0 45438ms
+PASS  claude-sonnet-5-5            native    rb-w-reopen            turns=2 in=6 out=353 invalid=0 33617ms
+PASS  claude-sonnet-5-5            native    rb-w-reopen            turns=2 in=6 out=353 invalid=0 28297ms
+PASS  claude-sonnet-5-5            native    rb-w-reopen            turns=2 in=6 out=355 invalid=0 31355ms
+PASS  claude-sonnet-5-5            code      rb-w-assign-infra-p1-bugs turns=4 in=10 out=740 invalid=1 40857ms
+PASS  claude-sonnet-5-5            code      rb-w-assign-infra-p1-bugs turns=3 in=8 out=448 invalid=0 37070ms
+PASS  claude-sonnet-5-5            code      rb-w-assign-infra-p1-bugs turns=3 in=8 out=411 invalid=0 35824ms
+PASS  claude-sonnet-5-5            code      rb-w-label-docs-p2     turns=4 in=10 out=1103 invalid=0 62271ms
+PASS  claude-sonnet-5-5            code      rb-w-label-docs-p2     turns=3 in=8 out=608 invalid=0 40775ms
+PASS  claude-sonnet-5-5            code      rb-w-label-docs-p2     turns=4 in=10 out=847 invalid=0 43208ms
+PASS  claude-sonnet-5-5            code      rb-w-reopen            turns=2 in=6 out=264 invalid=0 33517ms
+PASS  claude-sonnet-5-5            code      rb-w-reopen            turns=2 in=6 out=268 invalid=0 32518ms
+PASS  claude-sonnet-5-5            code      rb-w-reopen            turns=2 in=6 out=268 invalid=0 31488ms
+PASS  claude-sonnet-5-5            glossary4 rb-w-assign-infra-p1-bugs turns=3 in=8 out=372 invalid=0 40799ms
+PASS  claude-sonnet-5-5            glossary4 rb-w-assign-infra-p1-bugs turns=3 in=8 out=408 invalid=0 38464ms
+PASS  claude-sonnet-5-5            glossary4 rb-w-assign-infra-p1-bugs turns=3 in=8 out=382 invalid=0 39239ms
+PASS  claude-sonnet-5-5            glossary4 rb-w-label-docs-p2     turns=3 in=8 out=563 invalid=0 47120ms
+PASS  claude-sonnet-5-5            glossary4 rb-w-label-docs-p2     turns=3 in=8 out=601 invalid=0 47391ms
+PASS  claude-sonnet-5-5            glossary4 rb-w-label-docs-p2     turns=3 in=8 out=586 invalid=0 50534ms
+PASS  claude-sonnet-5-5            glossary4 rb-w-reopen            turns=2 in=6 out=224 invalid=0 29931ms
+PASS  claude-sonnet-5-5            glossary4 rb-w-reopen            turns=2 in=6 out=206 invalid=0 40465ms
+PASS  claude-sonnet-5-5            glossary4 rb-w-reopen            turns=2 in=6 out=214 invalid=0 30133ms
+PASS  claude-haiku-5-5             native    rb-w-assign-infra-p1-bugs turns=6 in=14 out=3284 invalid=0 55476ms
+PASS  claude-haiku-5-5             native    rb-w-assign-infra-p1-bugs turns=5 in=12 out=1961 invalid=0 40437ms
+PASS  claude-haiku-5-5             native    rb-w-assign-infra-p1-bugs turns=5 in=12 out=2532 invalid=0 43314ms
+PASS  claude-haiku-5-5             native    rb-w-label-docs-p2     turns=4 in=10 out=2490 invalid=0 50917ms
+PASS  claude-haiku-5-5             native    rb-w-label-docs-p2     turns=4 in=10 out=2409 invalid=0 44444ms
+PASS  claude-haiku-5-5             native    rb-w-label-docs-p2     turns=3 in=8 out=2326 invalid=0 42692ms
+PASS  claude-haiku-5-5             native    rb-w-reopen            turns=2 in=6 out=461 invalid=0 30269ms
+PASS  claude-haiku-5-5             native    rb-w-reopen            turns=2 in=6 out=373 invalid=0 29192ms
+PASS  claude-haiku-5-5             native    rb-w-reopen            turns=2 in=6 out=461 invalid=0 29986ms
+PASS  claude-haiku-5-5             code      rb-w-assign-infra-p1-bugs turns=3 in=8 out=1055 invalid=0 34334ms
+PASS  claude-haiku-5-5             code      rb-w-assign-infra-p1-bugs turns=3 in=8 out=979 invalid=0 33460ms
+PASS  claude-haiku-5-5             code      rb-w-assign-infra-p1-bugs turns=4 in=10 out=1520 invalid=0 37743ms
+PASS  claude-haiku-5-5             code      rb-w-label-docs-p2     turns=4 in=10 out=1565 invalid=0 40377ms
+PASS  claude-haiku-5-5             code      rb-w-label-docs-p2     turns=4 in=10 out=1469 invalid=0 41845ms
+PASS  claude-haiku-5-5             code      rb-w-label-docs-p2     turns=3 in=8 out=1034 invalid=0 41590ms
+PASS  claude-haiku-5-5             code      rb-w-reopen            turns=2 in=6 out=374 invalid=0 31111ms
+PASS  claude-haiku-5-5             code      rb-w-reopen            turns=3 in=8 out=590 invalid=0 34095ms
+PASS  claude-haiku-5-5             code      rb-w-reopen            turns=2 in=6 out=381 invalid=0 32252ms
+PASS  claude-haiku-5-5             glossary4 rb-w-assign-infra-p1-bugs turns=4 in=10 out=670 invalid=0 42730ms
+PASS  claude-haiku-5-5             glossary4 rb-w-assign-infra-p1-bugs turns=4 in=10 out=820 invalid=0 39203ms
+PASS  claude-haiku-5-5             glossary4 rb-w-assign-infra-p1-bugs turns=4 in=10 out=706 invalid=0 40870ms
+PASS  claude-haiku-5-5             glossary4 rb-w-label-docs-p2     turns=3 in=8 out=536 invalid=1 42794ms
+PASS  claude-haiku-5-5             glossary4 rb-w-label-docs-p2     turns=3 in=8 out=589 invalid=0 43026ms
+PASS  claude-haiku-5-5             glossary4 rb-w-label-docs-p2     turns=3 in=8 out=501 invalid=0 41769ms
+PASS  claude-haiku-5-5             glossary4 rb-w-reopen            turns=2 in=6 out=186 invalid=0 28977ms
+PASS  claude-haiku-5-5             glossary4 rb-w-reopen            turns=2 in=6 out=186 invalid=0 29020ms
+PASS  claude-haiku-5-5             glossary4 rb-w-reopen            turns=2 in=6 out=275 invalid=0 31861ms
+total tokens spent: 2466314
+ledger total (this phase): 75.69 USD
+log: results/real-blind2-w.jsonl

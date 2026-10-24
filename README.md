@@ -807,3 +807,18 @@ Rerun the validation round: `scripts/setup.sh`, then `scripts/rerun-validation.s
 The GitHub server binary goes in `vendor/github-mcp/` (release v2.0.3), and
 `vendor/github-mcp/tools-default.json` / `tools-all.json` hold its tool lists
 (`deno run -A src/gh_list.ts default`).
+
+## Real GitHub, blind set (2026-10-24)
+
+Twelve tasks written by a separate agent and frozen before any run (`docs/preregistration-real-blind.md`, hashes in `results/real-blind-freeze.sha256`), run against the live sandbox repo, 3 reps each. The first attempt was voided (token cap, grading bug); this is the rerun. The sandbox was verified pristine afterwards.
+
+| model | arm | pass | cost vs glossary4 |
+|---|---|---|---|
+| haiku-5-5 | glossary4 | 36/36 | 1x |
+| haiku-5-5 | code | 30/36 | 1.99x [1.18, 3.17] |
+| haiku-5-5 | native | 31/36 | 3.29x [2.43, 4.70] |
+| sonnet-5-5 | glossary4 | 33/36 | 1x |
+| sonnet-5-5 | code | 30/36 | 2.97x [2.04, 4.21] |
+| sonnet-5-5 | native | 29/36 | 4.20x [3.31, 5.44] |
+
+All write tasks passed in every arm. Most failures are one read task, `rb-prs-plus-cli-bugs` (15 of 18 sonnet+haiku runs across arms failed it, glossary4 3 of 6); pass-rate differences have CIs touching zero, cost differences do not. Raw logs: `results/real-blind2*.jsonl`, `*.out`.
