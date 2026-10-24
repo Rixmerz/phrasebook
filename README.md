@@ -468,6 +468,29 @@ Parse errors per run on Haiku 5.5: 0.02 for glossary4, 0.06 for v3; zero on Sonn
 
 Scorecard: all five predictions held. The round cost 5.8 USD (ledger 52.72 to 57.72 including pilots).
 
+## Glossary v4.2 (2026-10-24): fewer turns
+
+Preregistration: `docs/preregistration-v42.md`. Three changes from the v4.1 logs: a field that
+lists leave out (`state_reason`) is fetched per record when a pipeline step names it;
+`edit file ... old="..." new="..."` replaces one exact occurrence without the model reading or
+retyping the file; lines in one call stop at the first error, and the glossary says to send
+dependent steps together.
+
+`github-set4` (15 tasks, octo/billing) is NOT blind: the glossary's author wrote it after
+reading the v4.1 logs, frozen before v4.2 was built. 3 reps:
+
+| model | glossary4 (v4.2) | code |
+|---|---|---|
+| Haiku 5.5 | 45/45 | 44/45, 2.36x [1.85, 3.13] |
+| Sonnet 5.5 | 45/45 | 44/45, 4.41x [3.20, 6.50] |
+
+Regression on blind set 3 (unbiased), v4.2 vs the v4.1 rows: same accuracy (Haiku 46/48 both,
+Sonnet 48/48 both); turns per run 3.02 to 2.62 on Sonnet and 3.00 to 2.69 on Haiku; v4.1 costs
+1.02x [0.73, 1.46] (Sonnet) and 1.17x [0.94, 1.54] (Haiku) of v4.2, so cost is level to slightly
+lower, not significantly. The set4 cost gap is larger than on the blind sets, as the bias warned.
+
+Scorecard: all five predictions held. The round cost 1.6 USD.
+
 ## Method
 
 ### Arms
