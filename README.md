@@ -869,3 +869,17 @@ both answers:
 | Sonnet 5.5 | 36/36 | 32/36 | 32/36 |
 
 glossary4 stays first, by a smaller margin. The cost ratios do not change.
+
+**Notion re-run after the fix (Sonnet 5.5, glossary4 only, 2 reps, 1.57 USD).** Merged
+with the original code and native rows in `results/notion-fixed.jsonl`. 3 runs hit the
+per-process token budget and are left out.
+
+| Arm | Pass | Cost vs glossary4 [95% CI] |
+|---|---|---|
+| glossary4 | 28/29 | 1x |
+| code | 31/32 | 0.60x [0.39, 1.17] |
+| native | 27/32 | 1.76x [1.28, 2.93] |
+
+glossary4 now averages 4.3 turns (was 7.0). It beats native on Notion. It ties code on
+passes and costs about the same or more: the code interval crosses 1. On a server whose
+calls take nested JSON, code mode keeps an edge that GitHub does not show.
