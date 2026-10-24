@@ -822,3 +822,15 @@ Twelve tasks written by a separate agent and frozen before any run (`docs/prereg
 | sonnet-5-5 | native | 29/36 | 4.20x [3.31, 5.44] |
 
 All write tasks passed in every arm. Most failures are one read task, `rb-prs-plus-cli-bugs` (15 of 18 sonnet+haiku runs across arms failed it, glossary4 3 of 6); pass-rate differences have CIs touching zero, cost differences do not. Raw logs: `results/real-blind2*.jsonl`, `*.out`.
+
+## Notion, blind set (2026-10-24): glossary4 loses
+
+Official `@notionhq/notion-mcp-server@2.5.2` against an in-process mock, 16 blind tasks, glossary generated automatically (`glossaries/notion-auto.json`), 2 reps (`docs/preregistration-notion.md`). The ledger hit the 83 USD cap partway through: Sonnet 5.5 finished all three arms; Haiku 5.5 got only 6 native runs and is not reported (90 runs aborted by the cap, logged as failures with 0 turns).
+
+| model | arm | pass | cost vs glossary4 |
+|---|---|---|---|
+| sonnet-5-5 | glossary4 | 28/32 | 1x (4.10 USD) |
+| sonnet-5-5 | code | 31/32 | 0.18x [0.14, 0.27] |
+| sonnet-5-5 | native | 27/32 | 0.60x [0.43, 0.83] |
+
+On a second large server, with an auto-generated glossary, code mode is about 5x cheaper than glossary4 and native is cheaper too. The GitHub advantage did not transfer. Likely causes to study, not yet tested: the auto glossary was never hand-tuned, Notion's nested JSON arguments (filters, rich text) fit code better than a word table, and the pilot showed models writing unquoted JSON into glossary commands. Raw log: `results/notion-main.jsonl`, `results/notion-main.out`.
