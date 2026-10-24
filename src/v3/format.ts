@@ -6,10 +6,45 @@ type Json = null | boolean | number | string | Json[] | { [k: string]: Json };
 const NOISE = /(^|_)url$|^node_id$|^html_url$|^avatar|gravatar|^_links$|^permissions$/;
 
 // Collapse what an agent rarely needs: link fields, {login} users, {name} labels.
+// A Notion property value ({id, type: T, [T]: ...}) collapses to what it says: a select or
+// status to its name, text to its plain text, people to names, a relation to page ids.
+// Without this one query of 90 rows came back as 131 KB.
+function notionValue(t: string, x: Json): Json {
+  const text = (a: Json) => (Array.isArray(a) ? a.map((r) => (r as Record<string, Json>)?.plain_text ?? "").join("") : a);
+  if (t === "title" || t === "rich_text") return text(x);
+  if (t === "people") return Array.isArray(x) ? x.map((p) => (p as Record<string, Json>)?.name ?? (p as Record<string, Json>)?.id) : x;
+  if (t === "relation") return Array.isArray(x) ? x.map((p) => (p as Record<string, Json>)?.id) : x;
+  if (t === "date" && x && typeof x === "object") {
+    const d = x as Record<string, Json>;
+    return d.end ? `${d.start}/${d.end}` : d.start;
+  }
+  if ((t === "formula" || t === "rollup") && x && typeof x === "object") {
+    const f = x as Record<string, Json>;
+    return typeof f.type === "string" ? simplify(f[f.type]) : simplify(x);
+  }
+  return simplify(x);
+}
+
 export function simplify(v: Json): Json {
+  // Notion rich text: an array of runs reads as its plain text.
+  if (Array.isArray(v) && v.length && v.every((r) => r && typeof r === "object" && typeof (r as Record<string, Json>).plain_text === "string")) {
+    return v.map((r) => (r as Record<string, Json>).plain_text).join("");
+  }
   if (Array.isArray(v)) return v.map(simplify);
   if (v && typeof v === "object") {
     const keys = Object.keys(v);
+    // A Notion user reference ({object: "user", id}) is its id.
+    if (v.object === "user" && typeof v.id === "string" && keys.every((k) => k === "object" || k === "id")) return v.id;
+    // A Notion page's properties become its own columns, so a query reads as a table.
+    if (v.object === "page" && v.properties && typeof v.properties === "object" && !Array.isArray(v.properties)) {
+      const { properties, ...rest } = v as Record<string, Json>;
+      const out = simplify(rest) as Record<string, Json>;
+      for (const [k, x] of Object.entries(simplify(properties) as Record<string, Json>)) out[k in out ? `prop:${k}` : k] = x;
+      return out;
+    }
+    if (typeof v.type === "string" && v.type in v && keys.every((k) => ["id", "type", "has_more", v.type as string].includes(k))) {
+      return notionValue(v.type, v[v.type]);
+    }
     if (typeof v.login === "string" && keys.every((k) => ["login", "id", "type", "html_url", "url", "site_admin", "profile_url", "avatar_url"].includes(k))) {
       return v.login;
     }

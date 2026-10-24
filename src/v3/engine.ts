@@ -488,7 +488,8 @@ export async function runV3(
         log({ tool: "pipeline", input: join(rawTokens), outcome: "ok" });
         continue;
       }
-      cmd = macro(cmd);
+      // The close/reopen/comment shorthands are GitHub's: on other servers "comment list X" means comments.
+      if (session.tools.some((t) => t.name === "add_issue_comment")) cmd = macro(cmd);
       if (mode === "v4") cmd = targetFromKeys(cmd);
       const wantAll = cmd.some((t) => t.toLowerCase() === "all");
       const wantFull = mode === "v4" && cmd.some((t) => t.toLowerCase() === "full");
