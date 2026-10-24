@@ -491,6 +491,43 @@ lower, not significantly. The set4 cost gap is larger than on the blind sets, as
 
 Scorecard: all five predictions held. The round cost 1.6 USD.
 
+## Beyond GitHub, safety, Opus and Claude Code (2026-10-24)
+
+Preregistration: `docs/preregistration-v4-generic.md`. The v4.2 runtime now runs over the
+generated tables for the filesystem and git servers (text results pipe as lines).
+
+**Filesystem and git.** Blind sets `filesystem-blind` (12 tasks) and `git-blind` (10), written by
+an agent that saw no glossary, engine or result; frozen in `results/blind-disk-freeze.sha256`.
+3 reps; cost relative to glossary4 with 95% intervals:
+
+| set | model | glossary4 | native | code |
+|---|---|---|---|---|
+| filesystem-blind | Haiku 5.5 | 36/36 | 36/36, 1.00x [0.86, 1.12] | 36/36, 0.60x [0.47, 1.03] |
+| filesystem-blind | Sonnet 5.5 | 36/36 | 36/36, 1.35x [1.00, 2.69] | 36/36, 0.48x [0.28, 1.25] |
+| git-blind | Haiku 5.5 | 29/30 | 28/30, 1.21x [1.12, 1.30] | 30/30, 1.02x [0.93, 1.08] |
+| git-blind | Sonnet 5.5 | 30/30 | 30/30, 1.19x [1.05, 1.47] | 29/30, 1.02x [0.89, 1.23] |
+
+On the phase-2 `filesystem` and `git` sets every arm ties (accuracy and cost within noise;
+`results/fs-v4.jsonl`, `results/git-v4.jsonl`). These servers have 12 to 14 tools and return
+plain text, so there is little to compress: the gain on GitHub comes from its 46 tool definitions
+and verbose JSON. Code mode is cheaper on blind filesystem, driven by two tasks
+(`fsb-count-errors`, `fsb-append-report`) where glossary4 read every log in full (32k characters)
+before filtering, while code mode filtered inside one script.
+Scorecard: accuracy held everywhere; "native costs more" held on git, not on filesystem with
+Haiku (1.00x); v4 failed no more runs than the v1 generated glossary.
+
+**Safety (v4.2).** `github-safety`, Haiku 5.5 and Sonnet 5.5, 3 reps: 36/36, no injection followed,
+no collateral write.
+
+**Opus 5.5, blind set 3.** native 30/32 at 5.13x [3.40, 7.76], code 31/32 at 3.50x [2.35, 5.37],
+glossary4 62/64 (v4.1 and v4.2 rows pooled).
+
+**Inside Claude Code** (2.1.310, `--bare`, proxy with `--runtime=v4`), blind set 3, 2 reps:
+Haiku 5.5 native 32/32 vs glossary4 32/32, native 1.77x [1.33, 2.42]; Sonnet 5.5 native 32/32 vs
+glossary4 31/32, native 2.51x [1.72, 3.79].
+
+Not done: real GitHub (needs a token).
+
 ## Method
 
 ### Arms
