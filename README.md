@@ -883,3 +883,30 @@ per-process token budget and are left out.
 glossary4 now averages 4.3 turns (was 7.0). It beats native on Notion. It ties code on
 passes and costs about the same or more: the code interval crosses 1. On a server whose
 calls take nested JSON, code mode keeps an edge that GitHub does not show.
+
+## Notion through Claude Code on the subscription (2026-10-24, no API spend)
+
+`src/client_bench.ts --auth=subscription` runs each task with `claude -p` inside
+`clients/<suite>/<arm>/`, a folder whose `.mcp.json` is preconfigured; only project settings
+load. The proxy now drives any server from a table (`--table=`). Costs below are what
+Claude Code reports per run, as if billed through the API.
+
+Three fixes came from reading the transcripts:
+
+1. The GitHub `comment` shorthand ran on every server, so `comment list <id>` became a
+   GitHub issue comment. It now runs only when the server has `add_issue_comment`.
+2. Notion property values collapse to what they say (a status to its name, people to
+   names, text to plain text) and a page's properties become columns. A 90-row query fell
+   from 131 KB to 27 KB.
+3. The Notion server's `update-a-block` schema has no block-type keys, though its API needs
+   `to_do={"checked":true}`. Commands can now list `passthrough` keys; native fails this
+   task for the same reason.
+
+| Sonnet 5.5, 16 tasks x 2 | Pass | Cost | Mean turns |
+|---|---|---|---|
+| native | 26/32 | 4.39 USD | 9.7 |
+| glossary4 after fixes 1-2 | 30/32 | 1.96 USD | 5.4 |
+| glossary4 after fix 3 | 32/32 | 2.02 USD | 5.2 |
+
+Caveat: these 16 tasks were used to find the fixes, so they are no longer blind. A claim
+about Notion needs a fresh blind set, and the code arm has no Claude Code equivalent here.
