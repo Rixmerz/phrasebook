@@ -1,0 +1,2703 @@
+{
+ "repos": [
+  {
+   "owner": "Rixmerz",
+   "name": "phrasebook-sandbox",
+   "default_branch": "main",
+   "branches": {},
+   "files": {
+    "main": {
+     "config/settings.yaml": "server:\n  port: 8080\n  workers: 4\nlimits:\n  max_upload_mb: 25\n  request_timeout_s: 30\nfeatures:\n  beta_dashboard: false\n  audit_log: true\n",
+     "CHANGELOG.md": "# Changelog\n\n## 1.0.0\n\n- First release.\n"
+    }
+   },
+   "issues": [
+    {
+     "number": 120,
+     "title": "log volume fills the disk (infra)",
+     "body": "### Steps\n1. Use the infra part\n2. Hit: log volume fills the disk (infra)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "infra",
+      "p1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:41:27Z",
+     "updated_at": "2026-10-24T17:41:27Z",
+     "comments": []
+    },
+    {
+     "number": 119,
+     "title": "log volume fills the disk (infra)",
+     "body": "Request for infra: log volume fills the disk (infra).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "infra",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:41:25Z",
+     "updated_at": "2026-10-24T17:41:25Z",
+     "comments": []
+    },
+    {
+     "number": 118,
+     "title": "table header overlaps on mobile (ui)",
+     "body": "### Steps\n1. Use the ui part\n2. Hit: table header overlaps on mobile (ui)\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "bug",
+      "p2",
+      "ui"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:41:16Z",
+     "updated_at": "2026-10-24T17:41:23Z",
+     "comments": [
+      {
+       "id": 6387444117,
+       "body": "Fixed in my local branch, PR soon.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:41:18Z"
+      },
+      {
+       "id": 6387444426,
+       "body": "Looking into it this week.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:41:20Z"
+      },
+      {
+       "id": 6387444740,
+       "body": "Is there a workaround?",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:41:21Z"
+      }
+     ]
+    },
+    {
+     "number": 117,
+     "title": "exit code 0 on failure (cli)",
+     "body": "### Steps\n1. Use the cli part\n2. Hit: exit code 0 on failure (cli)\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "bug",
+      "cli",
+      "p0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:41:13Z",
+     "updated_at": "2026-10-24T17:41:14Z",
+     "comments": []
+    },
+    {
+     "number": 116,
+     "title": "nightly backup job times out",
+     "body": "Request for infra: nightly backup job times out.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "docs",
+      "infra",
+      "p0",
+      "v1.1"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:41:11Z",
+     "updated_at": "2026-10-24T17:41:11Z",
+     "comments": []
+    },
+    {
+     "number": 115,
+     "title": "webhook retries never stop (api)",
+     "body": "Request for api: webhook retries never stop (api).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "feature",
+      "p0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:41:09Z",
+     "updated_at": "2026-10-24T17:41:09Z",
+     "comments": []
+    },
+    {
+     "number": 114,
+     "title": "toast hides the save button",
+     "body": "Request for ui: toast hides the save button.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "feature",
+      "p1",
+      "ui",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:41:03Z",
+     "updated_at": "2026-10-24T17:41:07Z",
+     "comments": [
+      {
+       "id": 6387441986,
+       "body": "Looking into it this week.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:41:05Z"
+      },
+      {
+       "id": 6387442320,
+       "body": "Fixed in my local branch, PR soon.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:41:07Z"
+      }
+     ]
+    },
+    {
+     "number": 113,
+     "title": "exit code 0 on failure",
+     "body": "Request for cli: exit code 0 on failure.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "cli",
+      "p1",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:41:01Z",
+     "updated_at": "2026-10-24T17:41:01Z",
+     "comments": []
+    },
+    {
+     "number": 112,
+     "title": "rate limit headers missing (api)",
+     "body": "Request for api: rate limit headers missing (api).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "feature",
+      "p1",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:59Z",
+     "updated_at": "2026-10-24T17:40:59Z",
+     "comments": []
+    },
+    {
+     "number": 111,
+     "title": "config path ignored on Windows (cli)",
+     "body": "### Steps\n1. Use the cli part\n2. Hit: config path ignored on Windows (cli)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "cli",
+      "p1",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:57Z",
+     "updated_at": "2026-10-24T17:40:57Z",
+     "comments": []
+    },
+    {
+     "number": 110,
+     "title": "token refresh race",
+     "body": "Request for api: token refresh race.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "feature",
+      "p1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:55Z",
+     "updated_at": "2026-10-24T17:40:55Z",
+     "comments": []
+    },
+    {
+     "number": 109,
+     "title": "deploy lock never released",
+     "body": "### Steps\n1. Use the infra part\n2. Hit: deploy lock never released\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "infra",
+      "p2"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:53Z",
+     "updated_at": "2026-10-24T17:40:53Z",
+     "comments": []
+    },
+    {
+     "number": 108,
+     "title": "focus lost after modal close (ui)",
+     "body": "### Steps\n1. Use the ui part\n2. Hit: focus lost after modal close (ui)\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "bug",
+      "p1",
+      "ui"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:49Z",
+     "updated_at": "2026-10-24T17:40:51Z",
+     "comments": []
+    },
+    {
+     "number": 107,
+     "title": "--json flag prints colors",
+     "body": "### Steps\n1. Use the cli part\n2. Hit: --json flag prints colors\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "cli",
+      "p0",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:47Z",
+     "updated_at": "2026-10-24T17:40:47Z",
+     "comments": []
+    },
+    {
+     "number": 106,
+     "title": "pagination cursor resets",
+     "body": "Request for api: pagination cursor resets.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "docs",
+      "p1",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:45Z",
+     "updated_at": "2026-10-24T17:40:45Z",
+     "comments": []
+    },
+    {
+     "number": 105,
+     "title": "progress bar flickers in tmux (cli)",
+     "body": "Request for cli: progress bar flickers in tmux (cli).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "cli",
+      "docs",
+      "p2"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:43Z",
+     "updated_at": "2026-10-24T17:40:43Z",
+     "comments": []
+    },
+    {
+     "number": 104,
+     "title": "nightly backup job times out",
+     "body": "Request for infra: nightly backup job times out.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "infra"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:36Z",
+     "updated_at": "2026-10-24T17:40:41Z",
+     "comments": [
+      {
+       "id": 6387437265,
+       "body": "Looking into it this week.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:40:38Z"
+      },
+      {
+       "id": 6387437585,
+       "body": "Can reproduce on the latest build.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:40:39Z"
+      },
+      {
+       "id": 6387437866,
+       "body": "Same here.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:40:41Z"
+      }
+     ]
+    },
+    {
+     "number": 103,
+     "title": "toast hides the save button",
+     "body": "Request for ui: toast hides the save button.",
+     "state": "closed",
+     "state_reason": "not_planned",
+     "labels": [
+      "docs",
+      "p2",
+      "ui",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:33Z",
+     "updated_at": "2026-10-24T17:40:34Z",
+     "comments": []
+    },
+    {
+     "number": 102,
+     "title": "log volume fills the disk",
+     "body": "### Steps\n1. Use the infra part\n2. Hit: log volume fills the disk\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "infra",
+      "p2"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:31Z",
+     "updated_at": "2026-10-24T17:40:31Z",
+     "comments": []
+    },
+    {
+     "number": 101,
+     "title": "table header overlaps on mobile",
+     "body": "### Steps\n1. Use the ui part\n2. Hit: table header overlaps on mobile\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "ui",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:29Z",
+     "updated_at": "2026-10-24T17:40:29Z",
+     "comments": []
+    },
+    {
+     "number": 100,
+     "title": "completion script breaks zsh",
+     "body": "Request for cli: completion script breaks zsh.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "cli",
+      "docs",
+      "p0",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:28Z",
+     "updated_at": "2026-10-24T17:40:28Z",
+     "comments": []
+    },
+    {
+     "number": 99,
+     "title": "progress bar flickers in tmux",
+     "body": "### Steps\n1. Use the cli part\n2. Hit: progress bar flickers in tmux\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "bug",
+      "cli"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:24Z",
+     "updated_at": "2026-10-24T17:40:26Z",
+     "comments": []
+    },
+    {
+     "number": 98,
+     "title": "pagination cursor resets",
+     "body": "Request for api: pagination cursor resets.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "docs",
+      "p2"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:22Z",
+     "updated_at": "2026-10-24T17:40:22Z",
+     "comments": []
+    },
+    {
+     "number": 97,
+     "title": "metrics scrape misses pods (infra)",
+     "body": "Request for infra: metrics scrape misses pods (infra).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "docs",
+      "infra",
+      "p2",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:20Z",
+     "updated_at": "2026-10-24T17:40:20Z",
+     "comments": []
+    },
+    {
+     "number": 96,
+     "title": "rate limit headers missing",
+     "body": "### Steps\n1. Use the api part\n2. Hit: rate limit headers missing\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "api",
+      "bug"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:16Z",
+     "updated_at": "2026-10-24T17:40:18Z",
+     "comments": []
+    },
+    {
+     "number": 95,
+     "title": "progress bar flickers in tmux (cli)",
+     "body": "### Steps\n1. Use the cli part\n2. Hit: progress bar flickers in tmux (cli)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "cli",
+      "p1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:15Z",
+     "updated_at": "2026-10-24T17:40:15Z",
+     "comments": []
+    },
+    {
+     "number": 94,
+     "title": "dark mode contrast too low",
+     "body": "Request for ui: dark mode contrast too low.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "p2",
+      "ui",
+      "v1.1"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:12Z",
+     "updated_at": "2026-10-24T17:40:12Z",
+     "comments": []
+    },
+    {
+     "number": 93,
+     "title": "metrics scrape misses pods (infra)",
+     "body": "### Steps\n1. Use the infra part\n2. Hit: metrics scrape misses pods (infra)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "infra",
+      "p2"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:10Z",
+     "updated_at": "2026-10-24T17:40:10Z",
+     "comments": []
+    },
+    {
+     "number": 92,
+     "title": "rate limit headers missing (api)",
+     "body": "Request for api: rate limit headers missing (api).",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "api",
+      "docs",
+      "p1",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:05Z",
+     "updated_at": "2026-10-24T17:40:07Z",
+     "comments": []
+    },
+    {
+     "number": 91,
+     "title": "toast hides the save button (ui)",
+     "body": "Request for ui: toast hides the save button (ui).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "docs",
+      "p1",
+      "ui",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:03Z",
+     "updated_at": "2026-10-24T17:40:03Z",
+     "comments": []
+    },
+    {
+     "number": 90,
+     "title": "staging certs expire early",
+     "body": "### Steps\n1. Use the infra part\n2. Hit: staging certs expire early\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "infra"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:40:01Z",
+     "updated_at": "2026-10-24T17:40:01Z",
+     "comments": []
+    },
+    {
+     "number": 89,
+     "title": "token refresh race",
+     "body": "Request for api: token refresh race.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "chore",
+      "v1.1"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:59Z",
+     "updated_at": "2026-10-24T17:39:59Z",
+     "comments": []
+    },
+    {
+     "number": 88,
+     "title": "webhook retries never stop (api)",
+     "body": "### Steps\n1. Use the api part\n2. Hit: webhook retries never stop (api)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "bug",
+      "v1.1"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:57Z",
+     "updated_at": "2026-10-24T17:39:57Z",
+     "comments": []
+    },
+    {
+     "number": 87,
+     "title": "focus lost after modal close",
+     "body": "Request for ui: focus lost after modal close.",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "docs",
+      "p0",
+      "ui"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:53Z",
+     "updated_at": "2026-10-24T17:39:54Z",
+     "comments": []
+    },
+    {
+     "number": 86,
+     "title": "progress bar flickers in tmux",
+     "body": "### Steps\n1. Use the cli part\n2. Hit: progress bar flickers in tmux\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "cli",
+      "p1",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:51Z",
+     "updated_at": "2026-10-24T17:39:51Z",
+     "comments": []
+    },
+    {
+     "number": 85,
+     "title": "progress bar flickers in tmux (cli)",
+     "body": "Request for cli: progress bar flickers in tmux (cli).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "cli",
+      "p0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:49Z",
+     "updated_at": "2026-10-24T17:39:49Z",
+     "comments": []
+    },
+    {
+     "number": 84,
+     "title": "metrics scrape misses pods",
+     "body": "### Steps\n1. Use the infra part\n2. Hit: metrics scrape misses pods\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "infra",
+      "p1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:47Z",
+     "updated_at": "2026-10-24T17:39:47Z",
+     "comments": []
+    },
+    {
+     "number": 83,
+     "title": "nightly backup job times out (infra)",
+     "body": "Request for infra: nightly backup job times out (infra).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "feature",
+      "infra",
+      "p2",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:45Z",
+     "updated_at": "2026-10-24T17:39:45Z",
+     "comments": []
+    },
+    {
+     "number": 82,
+     "title": "table header overlaps on mobile (ui)",
+     "body": "### Steps\n1. Use the ui part\n2. Hit: table header overlaps on mobile (ui)\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "bug",
+      "p2",
+      "ui",
+      "v1.1"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:41Z",
+     "updated_at": "2026-10-24T17:39:43Z",
+     "comments": []
+    },
+    {
+     "number": 81,
+     "title": "nightly backup job times out",
+     "body": "Request for infra: nightly backup job times out.",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "docs",
+      "infra",
+      "p1",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:37Z",
+     "updated_at": "2026-10-24T17:39:39Z",
+     "comments": []
+    },
+    {
+     "number": 80,
+     "title": "focus lost after modal close",
+     "body": "Request for ui: focus lost after modal close.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "docs",
+      "p1",
+      "ui"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:35Z",
+     "updated_at": "2026-10-24T17:39:35Z",
+     "comments": []
+    },
+    {
+     "number": 79,
+     "title": "token refresh race (api)",
+     "body": "### Steps\n1. Use the api part\n2. Hit: token refresh race (api)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "bug",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:32Z",
+     "updated_at": "2026-10-24T17:39:32Z",
+     "comments": []
+    },
+    {
+     "number": 78,
+     "title": "toast hides the save button",
+     "body": "Request for ui: toast hides the save button.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "docs",
+      "p2",
+      "ui",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:30Z",
+     "updated_at": "2026-10-24T17:39:30Z",
+     "comments": []
+    },
+    {
+     "number": 77,
+     "title": "500 on empty filter",
+     "body": "### Steps\n1. Use the api part\n2. Hit: 500 on empty filter\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "bug",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:28Z",
+     "updated_at": "2026-10-24T17:39:28Z",
+     "comments": []
+    },
+    {
+     "number": 76,
+     "title": "webhook retries never stop",
+     "body": "### Steps\n1. Use the api part\n2. Hit: webhook retries never stop\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "api",
+      "bug",
+      "p1",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:25Z",
+     "updated_at": "2026-10-24T17:39:26Z",
+     "comments": []
+    },
+    {
+     "number": 75,
+     "title": "token refresh race (api)",
+     "body": "### Steps\n1. Use the api part\n2. Hit: token refresh race (api)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "bug",
+      "p1",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:19Z",
+     "updated_at": "2026-10-24T17:39:23Z",
+     "comments": [
+      {
+       "id": 6387423678,
+       "body": "Is there a workaround?",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:39:21Z"
+      },
+      {
+       "id": 6387423992,
+       "body": "Same here.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:39:23Z"
+      }
+     ]
+    },
+    {
+     "number": 74,
+     "title": "toast hides the save button (ui)",
+     "body": "Request for ui: toast hides the save button (ui).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "p1",
+      "ui",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:17Z",
+     "updated_at": "2026-10-24T17:39:17Z",
+     "comments": []
+    },
+    {
+     "number": 73,
+     "title": "focus lost after modal close (ui)",
+     "body": "Request for ui: focus lost after modal close (ui).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "ui"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:15Z",
+     "updated_at": "2026-10-24T17:39:15Z",
+     "comments": []
+    },
+    {
+     "number": 72,
+     "title": "token refresh race (api)",
+     "body": "### Steps\n1. Use the api part\n2. Hit: token refresh race (api)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "bug",
+      "p1",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:13Z",
+     "updated_at": "2026-10-24T17:39:13Z",
+     "comments": []
+    },
+    {
+     "number": 71,
+     "title": "pagination cursor resets",
+     "body": "Request for api: pagination cursor resets.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "docs",
+      "p2"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:11Z",
+     "updated_at": "2026-10-24T17:39:11Z",
+     "comments": []
+    },
+    {
+     "number": 70,
+     "title": "--json flag prints colors",
+     "body": "### Steps\n1. Use the cli part\n2. Hit: --json flag prints colors\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "cli",
+      "p1",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:06Z",
+     "updated_at": "2026-10-24T17:39:09Z",
+     "comments": [
+      {
+       "id": 6387421369,
+       "body": "Fixed in my local branch, PR soon.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:39:08Z"
+      },
+      {
+       "id": 6387421662,
+       "body": "Same here.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:39:09Z"
+      }
+     ]
+    },
+    {
+     "number": 69,
+     "title": "staging certs expire early",
+     "body": "Request for infra: staging certs expire early.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "infra",
+      "p2"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:04Z",
+     "updated_at": "2026-10-24T17:39:04Z",
+     "comments": []
+    },
+    {
+     "number": 68,
+     "title": "metrics scrape misses pods",
+     "body": "Request for infra: metrics scrape misses pods.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "infra",
+      "p1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:02Z",
+     "updated_at": "2026-10-24T17:39:02Z",
+     "comments": []
+    },
+    {
+     "number": 67,
+     "title": "progress bar flickers in tmux",
+     "body": "Request for cli: progress bar flickers in tmux.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "cli",
+      "feature",
+      "p1",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:39:01Z",
+     "updated_at": "2026-10-24T17:39:01Z",
+     "comments": []
+    },
+    {
+     "number": 66,
+     "title": "rate limit headers missing",
+     "body": "### Steps\n1. Use the api part\n2. Hit: rate limit headers missing\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "bug",
+      "p2",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:59Z",
+     "updated_at": "2026-10-24T17:38:59Z",
+     "comments": []
+    },
+    {
+     "number": 65,
+     "title": "500 on empty filter (api)",
+     "body": "### Steps\n1. Use the api part\n2. Hit: 500 on empty filter (api)\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "not_planned",
+     "labels": [
+      "api",
+      "bug",
+      "v1.1"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:53Z",
+     "updated_at": "2026-10-24T17:38:57Z",
+     "comments": []
+    },
+    {
+     "number": 64,
+     "title": "dark mode contrast too low (ui)",
+     "body": "Request for ui: dark mode contrast too low (ui).",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "docs",
+      "p1",
+      "ui",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:47Z",
+     "updated_at": "2026-10-24T17:38:51Z",
+     "comments": [
+      {
+       "id": 6387418248,
+       "body": "Looking into it this week.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:38:49Z"
+      }
+     ]
+    },
+    {
+     "number": 63,
+     "title": "date picker ignores locale (ui)",
+     "body": "Request for ui: date picker ignores locale (ui).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "feature",
+      "p1",
+      "ui",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:45Z",
+     "updated_at": "2026-10-24T17:38:45Z",
+     "comments": []
+    },
+    {
+     "number": 62,
+     "title": "500 on empty filter (api)",
+     "body": "### Steps\n1. Use the api part\n2. Hit: 500 on empty filter (api)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "bug",
+      "p2",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:39Z",
+     "updated_at": "2026-10-24T17:38:43Z",
+     "comments": [
+      {
+       "id": 6387416915,
+       "body": "Looking into it this week.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:38:41Z"
+      },
+      {
+       "id": 6387417243,
+       "body": "Is there a workaround?",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:38:43Z"
+      }
+     ]
+    },
+    {
+     "number": 61,
+     "title": "token refresh race",
+     "body": "Request for api: token refresh race.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "chore",
+      "p1",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:37Z",
+     "updated_at": "2026-10-24T17:38:37Z",
+     "comments": []
+    },
+    {
+     "number": 60,
+     "title": "toast hides the save button (ui)",
+     "body": "### Steps\n1. Use the ui part\n2. Hit: toast hides the save button (ui)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "ui",
+      "v1.1"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:35Z",
+     "updated_at": "2026-10-24T17:38:35Z",
+     "comments": []
+    },
+    {
+     "number": 59,
+     "title": "config path ignored on Windows",
+     "body": "Request for cli: config path ignored on Windows.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "cli",
+      "docs",
+      "p2",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:31Z",
+     "updated_at": "2026-10-24T17:38:33Z",
+     "comments": [
+      {
+       "id": 6387415672,
+       "body": "Same here.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:38:33Z"
+      }
+     ]
+    },
+    {
+     "number": 58,
+     "title": "date picker ignores locale",
+     "body": "Request for ui: date picker ignores locale.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "docs",
+      "p0",
+      "ui",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:29Z",
+     "updated_at": "2026-10-24T17:38:29Z",
+     "comments": []
+    },
+    {
+     "number": 57,
+     "title": "rate limit headers missing (api)",
+     "body": "Request for api: rate limit headers missing (api).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "chore",
+      "p1",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:27Z",
+     "updated_at": "2026-10-24T17:38:27Z",
+     "comments": []
+    },
+    {
+     "number": 56,
+     "title": "toast hides the save button",
+     "body": "Request for ui: toast hides the save button.",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "chore",
+      "p1",
+      "ui"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:22Z",
+     "updated_at": "2026-10-24T17:38:25Z",
+     "comments": [
+      {
+       "id": 6387414032,
+       "body": "Can reproduce on the latest build.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:38:23Z"
+      }
+     ]
+    },
+    {
+     "number": 55,
+     "title": "focus lost after modal close (ui)",
+     "body": "### Steps\n1. Use the ui part\n2. Hit: focus lost after modal close (ui)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "ui"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:20Z",
+     "updated_at": "2026-10-24T17:38:20Z",
+     "comments": []
+    },
+    {
+     "number": 54,
+     "title": "rate limit headers missing (api)",
+     "body": "Request for api: rate limit headers missing (api).",
+     "state": "closed",
+     "state_reason": "not_planned",
+     "labels": [
+      "api",
+      "docs",
+      "p2",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:16Z",
+     "updated_at": "2026-10-24T17:38:18Z",
+     "comments": []
+    },
+    {
+     "number": 53,
+     "title": "date picker ignores locale (ui)",
+     "body": "Request for ui: date picker ignores locale (ui).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "docs",
+      "p1",
+      "ui"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:14Z",
+     "updated_at": "2026-10-24T17:38:14Z",
+     "comments": []
+    },
+    {
+     "number": 52,
+     "title": "metrics scrape misses pods (infra)",
+     "body": "### Steps\n1. Use the infra part\n2. Hit: metrics scrape misses pods (infra)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "infra",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:13Z",
+     "updated_at": "2026-10-24T17:38:13Z",
+     "comments": []
+    },
+    {
+     "number": 51,
+     "title": "exit code 0 on failure (cli)",
+     "body": "### Steps\n1. Use the cli part\n2. Hit: exit code 0 on failure (cli)\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "bug",
+      "cli",
+      "p1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:09Z",
+     "updated_at": "2026-10-24T17:38:11Z",
+     "comments": []
+    },
+    {
+     "number": 50,
+     "title": "config path ignored on Windows (cli)",
+     "body": "### Steps\n1. Use the cli part\n2. Hit: config path ignored on Windows (cli)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "cli",
+      "p1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:07Z",
+     "updated_at": "2026-10-24T17:38:07Z",
+     "comments": []
+    },
+    {
+     "number": 49,
+     "title": "completion script breaks zsh",
+     "body": "Request for cli: completion script breaks zsh.",
+     "state": "closed",
+     "state_reason": "not_planned",
+     "labels": [
+      "chore",
+      "cli"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:04Z",
+     "updated_at": "2026-10-24T17:38:05Z",
+     "comments": []
+    },
+    {
+     "number": 48,
+     "title": "log volume fills the disk (infra)",
+     "body": "Request for infra: log volume fills the disk (infra).",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "feature",
+      "infra",
+      "p0",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:38:00Z",
+     "updated_at": "2026-10-24T17:38:02Z",
+     "comments": []
+    },
+    {
+     "number": 47,
+     "title": "staging certs expire early (infra)",
+     "body": "Request for infra: staging certs expire early (infra).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "infra",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:52Z",
+     "updated_at": "2026-10-24T17:37:58Z",
+     "comments": [
+      {
+       "id": 6387408866,
+       "body": "Same here.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:37:54Z"
+      },
+      {
+       "id": 6387409166,
+       "body": "Fixed in my local branch, PR soon.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:37:56Z"
+      },
+      {
+       "id": 6387409455,
+       "body": "Same here.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:37:57Z"
+      }
+     ]
+    },
+    {
+     "number": 46,
+     "title": "staging certs expire early (infra)",
+     "body": "### Steps\n1. Use the infra part\n2. Hit: staging certs expire early (infra)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "infra",
+      "p2",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:51Z",
+     "updated_at": "2026-10-24T17:37:51Z",
+     "comments": []
+    },
+    {
+     "number": 45,
+     "title": "config path ignored on Windows (cli)",
+     "body": "### Steps\n1. Use the cli part\n2. Hit: config path ignored on Windows (cli)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "cli",
+      "p1",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:49Z",
+     "updated_at": "2026-10-24T17:37:49Z",
+     "comments": []
+    },
+    {
+     "number": 44,
+     "title": "--json flag prints colors",
+     "body": "### Steps\n1. Use the cli part\n2. Hit: --json flag prints colors\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "cli",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:45Z",
+     "updated_at": "2026-10-24T17:37:47Z",
+     "comments": [
+      {
+       "id": 6387407637,
+       "body": "Is there a workaround?",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:37:47Z"
+      }
+     ]
+    },
+    {
+     "number": 43,
+     "title": "date picker ignores locale (ui)",
+     "body": "### Steps\n1. Use the ui part\n2. Hit: date picker ignores locale (ui)\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "bug",
+      "p1",
+      "ui",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:42Z",
+     "updated_at": "2026-10-24T17:37:43Z",
+     "comments": []
+    },
+    {
+     "number": 42,
+     "title": "webhook retries never stop",
+     "body": "### Steps\n1. Use the api part\n2. Hit: webhook retries never stop\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "bug",
+      "p0",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:40Z",
+     "updated_at": "2026-10-24T17:37:40Z",
+     "comments": []
+    },
+    {
+     "number": 41,
+     "title": "dark mode contrast too low (ui)",
+     "body": "### Steps\n1. Use the ui part\n2. Hit: dark mode contrast too low (ui)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "p1",
+      "ui",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:38Z",
+     "updated_at": "2026-10-24T17:37:38Z",
+     "comments": []
+    },
+    {
+     "number": 40,
+     "title": "nightly backup job times out",
+     "body": "Request for infra: nightly backup job times out.",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "chore",
+      "infra",
+      "p1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:35Z",
+     "updated_at": "2026-10-24T17:37:36Z",
+     "comments": []
+    },
+    {
+     "number": 39,
+     "title": "pagination cursor resets (api)",
+     "body": "### Steps\n1. Use the api part\n2. Hit: pagination cursor resets (api)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "bug",
+      "p2",
+      "v1.1"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:33Z",
+     "updated_at": "2026-10-24T17:37:33Z",
+     "comments": []
+    },
+    {
+     "number": 38,
+     "title": "--json flag prints colors (cli)",
+     "body": "### Steps\n1. Use the cli part\n2. Hit: --json flag prints colors (cli)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "cli"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:29Z",
+     "updated_at": "2026-10-24T17:37:31Z",
+     "comments": [
+      {
+       "id": 6387404948,
+       "body": "Is there a workaround?",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:37:31Z"
+      }
+     ]
+    },
+    {
+     "number": 37,
+     "title": "deploy lock never released (infra)",
+     "body": "Request for infra: deploy lock never released (infra).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "feature",
+      "infra",
+      "p2"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:28Z",
+     "updated_at": "2026-10-24T17:37:28Z",
+     "comments": []
+    },
+    {
+     "number": 36,
+     "title": "dark mode contrast too low (ui)",
+     "body": "Request for ui: dark mode contrast too low (ui).",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "feature",
+      "p1",
+      "ui",
+      "v1.1"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:24Z",
+     "updated_at": "2026-10-24T17:37:26Z",
+     "comments": []
+    },
+    {
+     "number": 35,
+     "title": "deploy lock never released",
+     "body": "Request for infra: deploy lock never released.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "infra",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:22Z",
+     "updated_at": "2026-10-24T17:37:22Z",
+     "comments": []
+    },
+    {
+     "number": 34,
+     "title": "staging certs expire early",
+     "body": "### Steps\n1. Use the infra part\n2. Hit: staging certs expire early\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "infra",
+      "p1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:20Z",
+     "updated_at": "2026-10-24T17:37:20Z",
+     "comments": []
+    },
+    {
+     "number": 33,
+     "title": "token refresh race (api)",
+     "body": "### Steps\n1. Use the api part\n2. Hit: token refresh race (api)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "bug",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:13Z",
+     "updated_at": "2026-10-24T17:37:18Z",
+     "comments": [
+      {
+       "id": 6387402266,
+       "body": "Same here.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:37:15Z"
+      },
+      {
+       "id": 6387402541,
+       "body": "Looking into it this week.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:37:16Z"
+      },
+      {
+       "id": 6387402813,
+       "body": "Can reproduce on the latest build.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:37:18Z"
+      }
+     ]
+    },
+    {
+     "number": 32,
+     "title": "config path ignored on Windows",
+     "body": "Request for cli: config path ignored on Windows.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "cli",
+      "docs"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:11Z",
+     "updated_at": "2026-10-24T17:37:11Z",
+     "comments": []
+    },
+    {
+     "number": 31,
+     "title": "webhook retries never stop",
+     "body": "### Steps\n1. Use the api part\n2. Hit: webhook retries never stop\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "bug",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:06Z",
+     "updated_at": "2026-10-24T17:37:10Z",
+     "comments": [
+      {
+       "id": 6387401090,
+       "body": "Same here.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:37:08Z"
+      },
+      {
+       "id": 6387401384,
+       "body": "Can reproduce on the latest build.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:37:09Z"
+      }
+     ]
+    },
+    {
+     "number": 30,
+     "title": "dark mode contrast too low (ui)",
+     "body": "Request for ui: dark mode contrast too low (ui).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "docs",
+      "p2",
+      "ui"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:04Z",
+     "updated_at": "2026-10-24T17:37:04Z",
+     "comments": []
+    },
+    {
+     "number": 29,
+     "title": "table header overlaps on mobile",
+     "body": "### Steps\n1. Use the ui part\n2. Hit: table header overlaps on mobile\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "not_planned",
+     "labels": [
+      "bug",
+      "p0",
+      "ui",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:37:01Z",
+     "updated_at": "2026-10-24T17:37:03Z",
+     "comments": []
+    },
+    {
+     "number": 28,
+     "title": "nightly backup job times out (infra)",
+     "body": "Request for infra: nightly backup job times out (infra).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "infra",
+      "p1"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:59Z",
+     "updated_at": "2026-10-24T17:36:59Z",
+     "comments": []
+    },
+    {
+     "number": 27,
+     "title": "rate limit headers missing",
+     "body": "Request for api: rate limit headers missing.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "feature",
+      "p1",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:54Z",
+     "updated_at": "2026-10-24T17:36:57Z",
+     "comments": [
+      {
+       "id": 6387399087,
+       "body": "Fixed in my local branch, PR soon.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:36:55Z"
+      },
+      {
+       "id": 6387399371,
+       "body": "Fixed in my local branch, PR soon.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:36:57Z"
+      }
+     ]
+    },
+    {
+     "number": 26,
+     "title": "log volume fills the disk (infra)",
+     "body": "Request for infra: log volume fills the disk (infra).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "infra",
+      "p2",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:50Z",
+     "updated_at": "2026-10-24T17:36:52Z",
+     "comments": [
+      {
+       "id": 6387398445,
+       "body": "Can reproduce on the latest build.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:36:52Z"
+      }
+     ]
+    },
+    {
+     "number": 25,
+     "title": "staging certs expire early",
+     "body": "Request for infra: staging certs expire early.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "docs",
+      "infra",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:44Z",
+     "updated_at": "2026-10-24T17:36:48Z",
+     "comments": [
+      {
+       "id": 6387397556,
+       "body": "Fixed in my local branch, PR soon.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:36:46Z"
+      },
+      {
+       "id": 6387397832,
+       "body": "Is there a workaround?",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:36:48Z"
+      }
+     ]
+    },
+    {
+     "number": 24,
+     "title": "dark mode contrast too low",
+     "body": "### Steps\n1. Use the ui part\n2. Hit: dark mode contrast too low\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "bug",
+      "ui"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:41Z",
+     "updated_at": "2026-10-24T17:36:42Z",
+     "comments": []
+    },
+    {
+     "number": 23,
+     "title": "date picker ignores locale (ui)",
+     "body": "### Steps\n1. Use the ui part\n2. Hit: date picker ignores locale (ui)\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "not_planned",
+     "labels": [
+      "bug",
+      "p1",
+      "ui",
+      "v1.1"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:37Z",
+     "updated_at": "2026-10-24T17:36:39Z",
+     "comments": []
+    },
+    {
+     "number": 22,
+     "title": "500 on empty filter",
+     "body": "Request for api: 500 on empty filter.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "docs",
+      "p1",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:33Z",
+     "updated_at": "2026-10-24T17:36:35Z",
+     "comments": [
+      {
+       "id": 6387395625,
+       "body": "Fixed in my local branch, PR soon.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:36:35Z"
+      }
+     ]
+    },
+    {
+     "number": 21,
+     "title": "completion script breaks zsh (cli)",
+     "body": "Request for cli: completion script breaks zsh (cli).",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "cli",
+      "feature",
+      "p2"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:29Z",
+     "updated_at": "2026-10-24T17:36:31Z",
+     "comments": []
+    },
+    {
+     "number": 20,
+     "title": "500 on empty filter (api)",
+     "body": "Request for api: 500 on empty filter (api).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "feature",
+      "p1",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:28Z",
+     "updated_at": "2026-10-24T17:36:28Z",
+     "comments": []
+    },
+    {
+     "number": 19,
+     "title": "deploy lock never released (infra)",
+     "body": "Request for infra: deploy lock never released (infra).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "infra",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:26Z",
+     "updated_at": "2026-10-24T17:36:26Z",
+     "comments": []
+    },
+    {
+     "number": 18,
+     "title": "webhook retries never stop (api)",
+     "body": "Request for api: webhook retries never stop (api).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "feature",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:19Z",
+     "updated_at": "2026-10-24T17:36:24Z",
+     "comments": [
+      {
+       "id": 6387393149,
+       "body": "Looking into it this week.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:36:21Z"
+      },
+      {
+       "id": 6387393433,
+       "body": "Looking into it this week.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:36:23Z"
+      },
+      {
+       "id": 6387393729,
+       "body": "Fixed in my local branch, PR soon.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:36:24Z"
+      }
+     ]
+    },
+    {
+     "number": 17,
+     "title": "webhook retries never stop (api)",
+     "body": "### Steps\n1. Use the api part\n2. Hit: webhook retries never stop (api)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "bug",
+      "p0",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:17Z",
+     "updated_at": "2026-10-24T17:36:17Z",
+     "comments": []
+    },
+    {
+     "number": 16,
+     "title": "focus lost after modal close (ui)",
+     "body": "Request for ui: focus lost after modal close (ui).",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "docs",
+      "p1",
+      "ui"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:13Z",
+     "updated_at": "2026-10-24T17:36:15Z",
+     "comments": []
+    },
+    {
+     "number": 15,
+     "title": "rate limit headers missing (api)",
+     "body": "Request for api: rate limit headers missing (api).",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "api",
+      "docs",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:09Z",
+     "updated_at": "2026-10-24T17:36:11Z",
+     "comments": []
+    },
+    {
+     "number": 14,
+     "title": "dark mode contrast too low (ui)",
+     "body": "Request for ui: dark mode contrast too low (ui).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "ui",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:07Z",
+     "updated_at": "2026-10-24T17:36:07Z",
+     "comments": []
+    },
+    {
+     "number": 13,
+     "title": "config path ignored on Windows",
+     "body": "### Steps\n1. Use the cli part\n2. Hit: config path ignored on Windows\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "cli",
+      "p1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:06Z",
+     "updated_at": "2026-10-24T17:36:06Z",
+     "comments": []
+    },
+    {
+     "number": 12,
+     "title": "webhook retries never stop (api)",
+     "body": "Request for api: webhook retries never stop (api).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "api",
+      "docs",
+      "p2"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:04Z",
+     "updated_at": "2026-10-24T17:36:04Z",
+     "comments": []
+    },
+    {
+     "number": 11,
+     "title": "deploy lock never released (infra)",
+     "body": "### Steps\n1. Use the infra part\n2. Hit: deploy lock never released (infra)\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "not_planned",
+     "labels": [
+      "bug",
+      "infra",
+      "v1.1"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:36:00Z",
+     "updated_at": "2026-10-24T17:36:02Z",
+     "comments": []
+    },
+    {
+     "number": 10,
+     "title": "deploy lock never released (infra)",
+     "body": "### Steps\n1. Use the infra part\n2. Hit: deploy lock never released (infra)\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "bug",
+      "infra",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:35:56Z",
+     "updated_at": "2026-10-24T17:35:58Z",
+     "comments": []
+    },
+    {
+     "number": 9,
+     "title": "focus lost after modal close (ui)",
+     "body": "Request for ui: focus lost after modal close (ui).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "docs",
+      "ui"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:35:49Z",
+     "updated_at": "2026-10-24T17:35:55Z",
+     "comments": [
+      {
+       "id": 6387388084,
+       "body": "Fixed in my local branch, PR soon.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:35:51Z"
+      },
+      {
+       "id": 6387388382,
+       "body": "Can reproduce on the latest build.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:35:53Z"
+      },
+      {
+       "id": 6387388716,
+       "body": "Can reproduce on the latest build.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:35:55Z"
+      }
+     ]
+    },
+    {
+     "number": 8,
+     "title": "dark mode contrast too low (ui)",
+     "body": "### Steps\n1. Use the ui part\n2. Hit: dark mode contrast too low (ui)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "p1",
+      "ui",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:35:44Z",
+     "updated_at": "2026-10-24T17:35:47Z",
+     "comments": [
+      {
+       "id": 6387387160,
+       "body": "Fixed in my local branch, PR soon.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:35:46Z"
+      },
+      {
+       "id": 6387387488,
+       "body": "Is there a workaround?",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:35:47Z"
+      }
+     ]
+    },
+    {
+     "number": 7,
+     "title": "focus lost after modal close (ui)",
+     "body": "Request for ui: focus lost after modal close (ui).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "p0",
+      "ui",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:35:37Z",
+     "updated_at": "2026-10-24T17:35:42Z",
+     "comments": [
+      {
+       "id": 6387385900,
+       "body": "Is there a workaround?",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:35:39Z"
+      },
+      {
+       "id": 6387386396,
+       "body": "Same here.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:35:41Z"
+      }
+     ]
+    },
+    {
+     "number": 6,
+     "title": "progress bar flickers in tmux (cli)",
+     "body": "### Steps\n1. Use the cli part\n2. Hit: progress bar flickers in tmux (cli)\n\n### Expected\nIt works.\n",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "bug",
+      "cli",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:35:35Z",
+     "updated_at": "2026-10-24T17:35:35Z",
+     "comments": []
+    },
+    {
+     "number": 5,
+     "title": "log volume fills the disk (infra)",
+     "body": "Request for infra: log volume fills the disk (infra).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "docs",
+      "infra",
+      "p2"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:35:34Z",
+     "updated_at": "2026-10-24T17:35:34Z",
+     "comments": []
+    },
+    {
+     "number": 4,
+     "title": "completion script breaks zsh (cli)",
+     "body": "Request for cli: completion script breaks zsh (cli).",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "cli",
+      "docs",
+      "p0",
+      "v1.1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:35:32Z",
+     "updated_at": "2026-10-24T17:35:32Z",
+     "comments": []
+    },
+    {
+     "number": 3,
+     "title": "staging certs expire early",
+     "body": "### Steps\n1. Use the infra part\n2. Hit: staging certs expire early\n\n### Expected\nIt works.\n",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "bug",
+      "infra",
+      "v1.0"
+     ],
+     "assignees": [
+      "Rixmerz"
+     ],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:35:28Z",
+     "updated_at": "2026-10-24T17:35:30Z",
+     "comments": []
+    },
+    {
+     "number": 2,
+     "title": "date picker ignores locale (ui)",
+     "body": "Request for ui: date picker ignores locale (ui).",
+     "state": "closed",
+     "state_reason": "completed",
+     "labels": [
+      "feature",
+      "p1",
+      "ui",
+      "v1.0"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:35:20Z",
+     "updated_at": "2026-10-24T17:35:26Z",
+     "comments": [
+      {
+       "id": 6387383032,
+       "body": "Is there a workaround?",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:35:22Z"
+      },
+      {
+       "id": 6387383311,
+       "body": "Looking into it this week.",
+       "user": {
+        "login": "Rixmerz"
+       },
+       "created_at": "2026-10-24T17:35:24Z"
+      }
+     ]
+    },
+    {
+     "number": 1,
+     "title": "metrics scrape misses pods",
+     "body": "Request for infra: metrics scrape misses pods.",
+     "state": "open",
+     "state_reason": null,
+     "labels": [
+      "chore",
+      "infra",
+      "p1"
+     ],
+     "assignees": [],
+     "author": "Rixmerz",
+     "created_at": "2026-10-24T17:35:19Z",
+     "updated_at": "2026-10-24T17:35:19Z",
+     "comments": []
+    }
+   ],
+   "pulls": [
+    {
+     "number": 128,
+     "title": "Serialize token refresh",
+     "body": "Changes docs/token-refresh.md.",
+     "state": "open",
+     "merged": false,
+     "merge_method": null,
+     "head": "hotfix/token-refresh",
+     "base": "release/1.0",
+     "author": "Rixmerz",
+     "draft": false,
+     "files": [],
+     "comments": [],
+     "created_at": "2026-10-24T17:42:27Z",
+     "updated_at": "2026-10-24T17:42:27Z"
+    },
+    {
+     "number": 127,
+     "title": "Release the deploy lock on crash",
+     "body": "Changes docs/deploy-lock.md.",
+     "state": "open",
+     "merged": false,
+     "merge_method": null,
+     "head": "hotfix/deploy-lock",
+     "base": "release/1.0",
+     "author": "Rixmerz",
+     "draft": false,
+     "files": [],
+     "comments": [],
+     "created_at": "2026-10-24T17:42:19Z",
+     "updated_at": "2026-10-24T17:42:19Z"
+    },
+    {
+     "number": 126,
+     "title": "Renew staging certs 30 days early",
+     "body": "Changes docs/certs.md.",
+     "state": "open",
+     "merged": false,
+     "merge_method": null,
+     "head": "hotfix/cert-renewal",
+     "base": "release/1.0",
+     "author": "Rixmerz",
+     "draft": false,
+     "files": [],
+     "comments": [],
+     "created_at": "2026-10-24T17:42:11Z",
+     "updated_at": "2026-10-24T17:42:11Z"
+    },
+    {
+     "number": 125,
+     "title": "Document webhook retry policy",
+     "body": "Changes docs/webhooks.md.",
+     "state": "open",
+     "merged": false,
+     "merge_method": null,
+     "head": "docs/webhooks",
+     "base": "main",
+     "author": "Rixmerz",
+     "draft": false,
+     "files": [],
+     "comments": [],
+     "created_at": "2026-10-24T17:42:03Z",
+     "updated_at": "2026-10-24T17:42:03Z"
+    },
+    {
+     "number": 124,
+     "title": "Give the nightly backup job 2h",
+     "body": "Changes docs/backups.md.",
+     "state": "open",
+     "merged": false,
+     "merge_method": null,
+     "head": "chore/backup-timeout",
+     "base": "main",
+     "author": "Rixmerz",
+     "draft": false,
+     "files": [],
+     "comments": [],
+     "created_at": "2026-10-24T17:41:56Z",
+     "updated_at": "2026-10-24T17:41:56Z"
+    },
+    {
+     "number": 123,
+     "title": "Return a non-zero exit code on failure",
+     "body": "Changes docs/cli-exit-codes.md.",
+     "state": "open",
+     "merged": false,
+     "merge_method": null,
+     "head": "fix/cli-exit-code",
+     "base": "main",
+     "author": "Rixmerz",
+     "draft": true,
+     "files": [],
+     "comments": [],
+     "created_at": "2026-10-24T17:41:49Z",
+     "updated_at": "2026-10-24T17:41:49Z"
+    },
+    {
+     "number": 122,
+     "title": "Raise dark mode contrast to AA",
+     "body": "Changes docs/theme.md.",
+     "state": "open",
+     "merged": false,
+     "merge_method": null,
+     "head": "feat/dark-mode-contrast",
+     "base": "main",
+     "author": "Rixmerz",
+     "draft": true,
+     "files": [],
+     "comments": [],
+     "created_at": "2026-10-24T17:41:41Z",
+     "updated_at": "2026-10-24T17:41:42Z"
+    },
+    {
+     "number": 121,
+     "title": "Send rate limit headers on every response",
+     "body": "Changes docs/rate-limits.md.",
+     "state": "open",
+     "merged": false,
+     "merge_method": null,
+     "head": "fix/rate-limit-headers",
+     "base": "main",
+     "author": "Rixmerz",
+     "draft": false,
+     "files": [],
+     "comments": [],
+     "created_at": "2026-10-24T17:41:34Z",
+     "updated_at": "2026-10-24T17:41:34Z"
+    }
+   ],
+   "commits": [],
+   "labels": []
+  }
+ ],
+ "users": [
+  "Rixmerz"
+ ],
+ "me": "Rixmerz",
+ "nextId": 0
+}

@@ -558,8 +558,15 @@ export async function runV3(
         });
         const calls = parse(join(variant));
         for (const call of calls) {
-          const paging = wantAll || forceAll ? pagingOf(session.tools.find((t) => t.name === call.tool)) : null;
-          const r = mode === "v4" && call.tool === "list_issues" && /^all$/i.test(String(call.args.state ?? ""))
+          // The glossary promises open items by default; the real server returns both states
+          // when state is left out (the mock returned open only).
+          if (mode === "v4" && call.tool === "list_issues" && call.args.state === undefined) call.args = { ...call.args, state: "OPEN" };
+          // Several labels mean "has all of them" in the glossary; the real server matches any, so
+          // every page is fetched and filtered here, or the first page would hide matches.
+          const want = Array.isArray(call.args.labels) ? (call.args.labels as string[]).map((l) => l.toLowerCase()) : [];
+          const multiLabel = mode === "v4" && call.tool === "list_issues" && want.length > 1;
+          const paging = wantAll || forceAll || multiLabel ? pagingOf(session.tools.find((t) => t.name === call.tool)) : null;
+          let r = mode === "v4" && call.tool === "list_issues" && /^all$/i.test(String(call.args.state ?? ""))
             ? await bothStates(session, call, paging, log)
             : paging ? await fetchAll(session, call, paging, log) : await session.call(call.tool, call.args);
           if (!paging) log({ tool: call.tool, input: call.args, outcome: r.isError ? "backend_error" : "ok", detail: r.isError ? r.text : undefined });
@@ -568,6 +575,7 @@ export async function runV3(
             outputs.push(r.text);
             continue;
           }
+          if (multiLabel) r = allLabels(r, want);
           let raw: Json;
           try {
             raw = JSON.parse(r.text);
@@ -718,4 +726,20 @@ function renderV4(v: Json): string {
     else if (k !== "pageInfo" && (x === null || typeof x !== "object")) lines.push(`${k}: ${x}`);
   }
   return lines.join("\n");
+}
+
+function allLabels(r: { text: string; isError: boolean }, want: string[]): { text: string; isError: boolean } {
+  let data: Json;
+  try {
+    data = JSON.parse(r.text);
+  } catch {
+    return r;
+  }
+  const found = rowsOf(data);
+  if (!found) return r;
+  const names = (row: Json) =>
+    ((row as Record<string, Json>)?.labels as Json[] ?? []).map((l) => String((l as Record<string, Json>)?.name ?? l).toLowerCase());
+  const kept = found.rows.filter((row) => want.every((w) => names(row).includes(w)));
+  const out = Array.isArray(data) ? kept : { ...(data as Record<string, Json>), [found.key]: kept };
+  return { ...r, text: JSON.stringify(out) };
 }

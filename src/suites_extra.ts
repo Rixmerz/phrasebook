@@ -17,6 +17,7 @@ import { seedSet5, set5Tasks } from "./fs/set5tasks.ts";
 import { ghTasks, seed as githubSeed } from "./github/tasks.ts";
 import { heldoutSeed, heldoutTasks } from "./github/heldout.ts";
 import { bulkSeed, bulkTasks } from "./github/bulk.ts";
+import { makeRealSuite } from "./github/real/suite.ts";
 
 const root = new URL("../", import.meta.url).pathname;
 const tableAt = (name: string): Table | null => {
@@ -180,6 +181,8 @@ const candidates: Record<string, Suite | null> = {
   "github-auto-heldout": githubWithTable("github-auto-heldout", "github-auto", "default", heldoutTasks, heldoutSeed),
   // Data-heavy tasks with the generated glossary, to separate the hand glossary's omissions from the format.
   "github-auto-bulk": githubWithTable("github-auto-bulk", "github-auto", "default", bulkTasks, bulkSeed),
+  // Real api.github.com, sandbox repo only; needs the token in ~/.config/glosa/env.
+  "github-real": Deno.env.get("PHRASEBOOK_REAL") ? makeRealSuite() : null,
   github91: githubWithTable("github91", "github91-auto", "all"),
   "github91-heldout": githubWithTable("github91-heldout", "github91-auto", "all", heldoutTasks, heldoutSeed),
 };
