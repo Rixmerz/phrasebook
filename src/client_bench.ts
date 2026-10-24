@@ -20,6 +20,7 @@ import type { State } from "./github/mock.ts";
 import { LEDGER, ledgerTotal } from "./cost.ts";
 import { notionBlindTasks } from "./notion/blindtasks.ts";
 import { notionBlind2Tasks } from "./notion/blind2tasks.ts";
+import { notionBlind3Tasks } from "./notion/blind3tasks.ts";
 import { NOTION_SERVER } from "./notion/suite.ts";
 import { endRun, mockUrl, newRun } from "./notion/mock.ts";
 
@@ -95,6 +96,7 @@ const SUITES: Record<string, ClientSuite> = {
   "github-blind3": githubSuite(blind3Tasks, blind3Seed),
   "notion-blind": notionSuite(notionBlindTasks as Task[]),
   "notion-blind2": notionSuite(notionBlind2Tasks as Task[]),
+  "notion-blind3": notionSuite(notionBlind3Tasks as Task[]),
 };
 const suite = SUITES[flags.suite];
 
