@@ -1014,3 +1014,17 @@ After blind set 4, glossary4s gained one recipe line: filter people in the pipel
 | glossary4s | 32/36 | 0.69 |
 
 Across blind sets 4 and 5, Haiku 4.5 passes 61/72 with glossary4s, 55/72 with glossary4 and 40/72 with native MCP, at about half the native cost.
+
+## Sixth blind set (2026-10-25)
+
+Before the set: the pipeline errors on a field no row has (it used to answer 0 for a typo like
+`Responsables`), and glossary4s now says to filter with `| where` instead of `filter={..}` and to
+add blocks with `append block` (a markdown edit rewrites every block). Tuned set with Haiku 4.5:
+13/16 before the `where` rule, 30/32 after. `src/notion/blind6tasks.ts` was frozen in b9bc9ef
+(sha256 `97b1098f`) before any run. Haiku 4.5, 3 reps, 12 tasks:
+
+| arm | pass | cost |
+|---|---|---|
+| glossary4s | 36/36 | 0.65 USD |
+| glossary4 | 31/36 | 0.70 USD |
+| native | 23/36 | 1.11 USD |
