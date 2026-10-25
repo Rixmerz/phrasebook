@@ -995,7 +995,7 @@ This is the tuned set, so it is an upper bound; the blind check follows.
 
 ## Notion, fourth blind set through Claude Code (Haiku 4.5)
 
-`src/notion/blind4tasks.ts`, frozen in 2aa8ff1 (sha256 `3c68205e…`) before any run; nothing was tuned on it. Haiku 4.5, 3 reps, subscription (`results/client-blind4-h45.jsonl`).
+`src/notion/blind4tasks.ts`, frozen in f123f0c (sha256 `3c68205e…`) before any run; nothing was tuned on it. Haiku 4.5, 3 reps, subscription (`results/client-blind4-h45.jsonl`).
 
 | arm | pass | USD |
 |---|---|---|
@@ -1007,7 +1007,7 @@ glossary4s lost three of its seven failures on one task: it passed `{"people":{"
 
 ## Notion, fifth blind set through Claude Code (Haiku 4.5)
 
-After blind set 4, glossary4s gained one recipe line: filter people in the pipeline (`where Responsable contains <name>`), because the server filter takes user ids. It held on the tuned set (Haiku 4.5, 15/16) and did not hurt Haiku 5.5 on blind set 3 (35/36 at 0.08 USD, glossary4 35/36 at 0.15 USD). Then `src/notion/blind5tasks.ts` was frozen in c9dc320 (sha256 `ae1cdd8a…`) and run once, 3 reps (`results/client-blind5-h45.jsonl`).
+After blind set 4, glossary4s gained one recipe line: filter people in the pipeline (`where Responsable contains <name>`), because the server filter takes user ids. It held on the tuned set (Haiku 4.5, 15/16) and did not hurt Haiku 5.5 on blind set 3 (35/36 at 0.08 USD, glossary4 35/36 at 0.15 USD). Then `src/notion/blind5tasks.ts` was frozen in 253d534 (sha256 `ae1cdd8a…`) and run once, 3 reps (`results/client-blind5-h45.jsonl`).
 
 | arm | pass | USD |
 |---|---|---|
