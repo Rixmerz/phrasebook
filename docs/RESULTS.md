@@ -1022,7 +1022,7 @@ Across blind sets 4 and 5, Haiku 4.5 passes 61/72 with glossary4s, 55/72 with gl
 Before the set: the pipeline errors on a field no row has (it used to answer 0 for a typo like
 `Responsables`), and glossary4s now says to filter with `| where` instead of `filter={..}` and to
 add blocks with `append block` (a markdown edit rewrites every block). Tuned set with Haiku 4.5:
-13/16 before the `where` rule, 30/32 after. `src/notion/blind6tasks.ts` was frozen in b9bc9ef
+13/16 before the `where` rule, 30/32 after. `src/notion/blind6tasks.ts` was frozen in be7ebc8
 (sha256 `97b1098f`) before any run. Haiku 4.5, 3 reps, 12 tasks:
 
 | arm | pass | cost |
@@ -1035,5 +1035,5 @@ add blocks with `append block` (a markdown edit rewrites every block). Tuned set
 
 - Haiku 5.5 on notion-blind6, 3 reps: glossary4s 36/36 (0.062 USD), glossary4 36/36 (0.064 USD). The small notes cost nothing on the stronger model.
 - GitHub small notes (`glossaries/github-small.json`, passed with the proxy's `--notes=`): tuned on github-hard with Haiku 4.5, 22/22 against 7/11 for glossary4 and native.
-- Blind, `github-blind4` (frozen in df22286, sha256 c82e6ba3), Haiku 4.5, 3 reps: glossary4s 27/30 (0.61 USD), native 23/30 (0.59 USD), glossary4 13/30 (0.41 USD). The `b4-missing-branch` grader misses "No encontré"-style replies, so it undercounts every arm on that task. It is left as frozen.
+- Blind, `github-blind4` (frozen in 41446e6, sha256 c82e6ba3), Haiku 4.5, 3 reps: glossary4s 27/30 (0.61 USD), native 23/30 (0.59 USD), glossary4 13/30 (0.41 USD). The `b4-missing-branch` grader misses "No encontré"-style replies, so it undercounts every arm on that task. It is left as frozen.
 
