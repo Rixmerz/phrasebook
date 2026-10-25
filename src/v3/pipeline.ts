@@ -52,11 +52,29 @@ export type Stage = string[];
 const nums = (rows: Json[], field: string) =>
   rows.map((r) => Number(getPath(r, field) ?? 0)).filter((n) => !Number.isNaN(n));
 
+// A field no row has is a typo, not an empty match: say so instead of answering 0.
+function hasField(row: Json, path: string): boolean {
+  let cur: Json = row;
+  for (const part of path.split(".").filter(Boolean)) {
+    if (!cur || typeof cur !== "object" || Array.isArray(cur) || !(part in cur)) return false;
+    cur = (cur as Record<string, Json>)[part];
+  }
+  return true;
+}
+function checkField(rows: Json[], field: string | undefined, seen: Json[]) {
+  if (!field || !rows.length || rows.some((r) => hasField(r, field)) || seen.some((r) => hasField(r, field))) return;
+  const first = rows[0];
+  const keys = first && typeof first === "object" && !Array.isArray(first) ? Object.keys(first) : [];
+  throw new PipelineError(`No row has a field "${field}". Fields: ${keys.join(", ")}`);
+}
+const FIELD_STEPS = new Set(["where", "sort", "group", "sum", "avg", "min", "max", "distinct"]);
+
 export function runPipeline(rows: Json[], stages: Stage[], resolve?: Resolve): Json {
   let cur: Json = rows;
   for (const st of stages) {
     const [op, ...args] = st;
     if (!Array.isArray(cur)) throw new PipelineError(`"${op}" needs a list, but the previous step gave a single value.`);
+    if (FIELD_STEPS.has((op ?? "").toLowerCase())) checkField(cur, args[0], rows);
     switch ((op ?? "").toLowerCase()) {
       case "where": {
         const [field, o, ...rest] = args;

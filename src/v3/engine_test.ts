@@ -26,6 +26,7 @@ Deno.test("pipeline where, group, count", () => {
   assertEquals(runPipeline(rows, [["where", "assignees", "empty"], ["select", "number"]]), [{ number: 2 }]);
   assertEquals(runPipeline(rows, [["where", "title", "starts", "billing"], ["count"]]), 2);
   assertEquals(runPipeline(rows, [["group", "labels"]]), [{ labels: "bug", count: 2 }, { labels: "ui", count: 1 }, { labels: "chore", count: 1 }]);
+  assertThrows(() => runPipeline(rows, [["where", "label", "has", "bug"], ["count"]]), Error, 'No row has a field "label"');
 });
 
 Deno.test("tables are compact and simplify users and labels", () => {
