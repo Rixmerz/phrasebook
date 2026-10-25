@@ -23,6 +23,7 @@ import { notionBlind2Tasks } from "./notion/blind2tasks.ts";
 import { notionBlind3Tasks } from "./notion/blind3tasks.ts";
 import { notionBlind4Tasks } from "./notion/blind4tasks.ts";
 import { notionBlind5Tasks } from "./notion/blind5tasks.ts";
+import { notionBlind6Tasks } from "./notion/blind6tasks.ts";
 import { NOTION_SERVER } from "./notion/suite.ts";
 import { endRun, mockUrl, newRun } from "./notion/mock.ts";
 
@@ -103,6 +104,7 @@ const SUITES: Record<string, ClientSuite> = {
   "notion-blind3": notionSuite(notionBlind3Tasks as Task[]),
   "notion-blind4": notionSuite(notionBlind4Tasks as Task[]),
   "notion-blind5": notionSuite(notionBlind5Tasks as Task[]),
+  "notion-blind6": notionSuite(notionBlind6Tasks as Task[]),
 };
 const suite = SUITES[flags.suite];
 
