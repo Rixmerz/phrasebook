@@ -21,8 +21,9 @@ import { stripDialect } from "./auto/validate.ts";
 import { GENERIC_V4_EXTRAS } from "./v3/glossary.ts";
 
 // --table=<glossary json> drives any server from a generated command table (needs --runtime=v4).
+// --notes=<json {instructions, extra}> adds server instructions and extra glossary lines (small-model variants).
 // --runtime=v4 runs commands through the glossary v4 engine (references, pipelines, compact output).
-const flags = parseArgs(Deno.args, { string: ["name", "runtime", "table"], default: { name: "github", runtime: "v2" }, "--": true });
+const flags = parseArgs(Deno.args, { string: ["name", "runtime", "table", "notes"], default: { name: "github", runtime: "v2" }, "--": true });
 const upstreamCmd = flags["--"] ?? [];
 if (!upstreamCmd.length) {
   console.error("Usage: deno run -A src/proxy.ts --name=github -- <upstream command> [args...]");
@@ -38,6 +39,7 @@ await upstream.connect(new StdioClientTransport({
 }));
 const tools = stripDialect((await upstream.listTools()).tools as McpTool[]);
 const table = flags.table ? loadTable(flags.table) : null;
+const notes: { instructions?: string; extra?: string } = flags.notes ? JSON.parse(Deno.readTextFileSync(flags.notes)) : {};
 const engine = table ? compile(table, tools) : null;
 // The v4 runtime catches the GitHub parser's CommandError; a table's own errors are mapped onto it.
 const parse = engine
@@ -51,12 +53,12 @@ const parse = engine
   }
   : makeParserV2(tools);
 
-const server = new Server({ name: `phrasebook-${flags.name}`, version: "0.1.0" }, { capabilities: { tools: {} }, ...(table?.instructions ? { instructions: table.instructions } : {}) });
+const server = new Server({ name: `phrasebook-${flags.name}`, version: "0.1.0" }, { capabilities: { tools: {} }, ...((notes.instructions ?? table?.instructions) ? { instructions: notes.instructions ?? table?.instructions } : {}) });
 
 // Claude Code shows the model only the first paragraph of an MCP tool description,
 // so the glossary is sent without blank lines.
 const v4 = flags.runtime === "v4";
-const description = (table ? `${table.glossary}\n${GENERIC_V4_EXTRAS}` : v4 ? GITHUB_GLOSSARY_V4 : githubGlossaryToolV2.description).replace(/\n\s*\n/g, "\n");
+const description = ((table ? `${table.glossary}\n${GENERIC_V4_EXTRAS}` : v4 ? GITHUB_GLOSSARY_V4 : githubGlossaryToolV2.description) + (notes.extra ? `\n${notes.extra}` : "")).replace(/\n\s*\n/g, "\n");
 // One proxy process serves one client session, so one reference store.
 const v4State: V3State = { refs: [] };
 const session: Session = {
