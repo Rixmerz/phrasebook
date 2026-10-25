@@ -1002,3 +1002,15 @@ This is the tuned set, so it is an upper bound; the blind check follows.
 | glossary4s | 29/36 | 0.66 |
 
 glossary4s lost three of its seven failures on one task: it passed `{"people":{"contains":"Diego"}}` to the server filter, which takes a user id, got an empty list and answered 0. The pipeline's `| where Responsable contains Diego` would have worked. Native failures were mostly the model trying to write a local script instead of answering.
+
+## Notion, fifth blind set through Claude Code (Haiku 4.5)
+
+After blind set 4, glossary4s gained one recipe line: filter people in the pipeline (`where Responsable contains <name>`), because the server filter takes user ids. It held on the tuned set (Haiku 4.5, 15/16) and did not hurt Haiku 5.5 on blind set 3 (35/36 at 0.08 USD, glossary4 35/36 at 0.15 USD). Then `src/notion/blind5tasks.ts` was frozen in c9dc320 (sha256 `ae1cdd8a…`) and run once, 3 reps (`results/client-blind5-h45.jsonl`).
+
+| arm | pass | USD |
+|---|---|---|
+| native MCP | 21/36 | 0.99 |
+| glossary4 | 30/36 | 0.74 |
+| glossary4s | 32/36 | 0.69 |
+
+Across blind sets 4 and 5, Haiku 4.5 passes 61/72 with glossary4s, 55/72 with glossary4 and 40/72 with native MCP, at about half the native cost.
