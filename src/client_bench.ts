@@ -14,6 +14,7 @@ import { loadEnv } from "./env.ts";
 import { startMock } from "./github/mock.ts";
 import { ghTasks, seed } from "./github/tasks.ts";
 import { hardSeed, hardTasks } from "./github/hard.ts";
+import { blind4Seed, blind4Tasks } from "./github/blind4tasks.ts";
 import { blind3Seed, blind3Tasks } from "./github/blind3tasks.ts";
 import type { GhTask } from "./github/tasks.ts";
 import type { State } from "./github/mock.ts";
@@ -39,6 +40,7 @@ const PROXY = new URL("./proxy.ts", import.meta.url).pathname;
 const NOTION_TABLE = new URL("../glossaries/notion-auto.json", import.meta.url).pathname;
 // glossary4s: the same runtime with the small-model table (recipes, server instructions).
 const NOTION_SMALL = new URL("../glossaries/notion-small.json", import.meta.url).pathname;
+const GITHUB_SMALL = new URL("../glossaries/github-small.json", import.meta.url).pathname;
 const port = (startMock(0).addr as Deno.NetAddr).port;
 const host = `http://127.0.0.1:${port}`;
 const mock = (path: string, token: string, init: RequestInit = {}) =>
@@ -55,9 +57,9 @@ type ClientSuite = {
 };
 const baseEnv = () => ({ PATH: Deno.env.get("PATH") ?? "", HOME: Deno.env.get("HOME") ?? "" });
 // A proxy arm wraps the native server: glossary (v2), glossary4 (v4 runtime), with a table for non-GitHub servers.
-const proxied = (arm: string, name: string, native: Server, table?: string): Server => ({
+const proxied = (arm: string, name: string, native: Server, table?: string, notes?: string): Server => ({
   command: "deno",
-  args: ["run", "-A", PROXY, `--name=${name}`, ...(arm.startsWith("glossary4") ? ["--runtime=v4"] : []), ...(table ? [`--table=${table}`] : []),
+  args: ["run", "-A", PROXY, `--name=${name}`, ...(arm.startsWith("glossary4") ? ["--runtime=v4"] : []), ...(table ? [`--table=${table}`] : []), ...(notes ? [`--notes=${notes}`] : []),
     "--", native.command, ...native.args],
   env: native.env,
 });
@@ -74,7 +76,7 @@ function githubSuite(tasks: GhTask[], seedFn: () => State): ClientSuite {
     },
     server(arm, token) {
       const native = { command: GH, args: ["stdio", "--toolsets=default", `--gh-host=${host}`], env: { GITHUB_PERSONAL_ACCESS_TOKEN: token, ...baseEnv() } };
-      return arm === "native" || arm === "native-defer" ? native : proxied(arm, "github", native);
+      return arm === "native" || arm === "native-defer" ? native : proxied(arm, "github", native, undefined, arm === "glossary4s" ? GITHUB_SMALL : undefined);
     },
   };
 }
@@ -99,6 +101,7 @@ const SUITES: Record<string, ClientSuite> = {
   github: githubSuite(ghTasks, seed),
   "github-hard": githubSuite(hardTasks.filter((t) => t.id !== "x-least-loaded"), hardSeed),
   "github-blind3": githubSuite(blind3Tasks, blind3Seed),
+  "github-blind4": githubSuite(blind4Tasks, blind4Seed),
   "notion-blind": notionSuite(notionBlindTasks as Task[]),
   "notion-blind2": notionSuite(notionBlind2Tasks as Task[]),
   "notion-blind3": notionSuite(notionBlind3Tasks as Task[]),
