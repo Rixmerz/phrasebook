@@ -13,7 +13,7 @@ It did not see the glossary text, the engine, the arms or any result.
 
 Same as the first real set: same sandbox repo, snapshot, allowlist, restore and pristine check.
 The suite `github-real-blind` is `makeRealSuite` with the new tasks. No engine change since
-the blind3 regression check (commit bcecbdb). The sandbox is checked against the snapshot
+the blind3 regression check (commit df052cc). The sandbox is checked against the snapshot
 with `src/github/real/pristine.ts` before the first run.
 
 ## Tasks

@@ -949,7 +949,7 @@ Log: `results/client-notion-v41.jsonl`.
 
 ## Notion, third blind set through Claude Code (glossary 4.1)
 
-Twelve new tasks (8 read, 4 write), frozen before any run (`results/notion-blind3-freeze.sha256`, commit 1bfe726).
+Twelve new tasks (8 read, 4 write), frozen before any run (`results/notion-blind3-freeze.sha256`, commit c3129d3).
 3 reps per task, Claude Code subscription runs.
 
 | model | arm | pass (strict) | pass (last line) | USD total | turns |
