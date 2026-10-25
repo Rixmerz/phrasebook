@@ -1,0 +1,18 @@
+PASS  claude-haiku-4-5           glossary4s nb-mas-cargado         turns=4 in=36 cr=34495 cw=5417 out=768 usd=0.0182 12.7s
+PASS  claude-haiku-4-5           glossary4s nb-puntos-s1           turns=5 in=44 cr=45029 cw=5656 out=890 usd=0.0203 14.6s
+PASS  claude-haiku-4-5           glossary4s nb-vencidas            turns=5 in=44 cr=45246 cw=5874 out=1133 usd=0.0220 15.2s
+PASS  claude-haiku-4-5           glossary4s nb-ana-media-alta      turns=13 in=108 cr=146991 cw=8751 out=2751 usd=0.0461 31.7s
+PASS  claude-haiku-4-5           glossary4s nb-postgres-abiertas   turns=6 in=52 cr=55283 cw=5381 out=1116 usd=0.0219 18.0s
+PASS  claude-haiku-4-5           glossary4s nb-onboarding-staging  turns=4 in=36 cr=34022 cw=4925 out=694 usd=0.0168 10.9s
+PASS  claude-haiku-4-5           glossary4s nb-demo-acuerdos       turns=5 in=44 cr=44562 cw=6447 out=2013 usd=0.0275 20.9s
+PASS  claude-haiku-4-5           glossary4s nb-proyecto-pendiente  turns=12 in=100 cr=149738 cw=12235 out=3809 usd=0.0586 39.4s
+PASS  claude-haiku-4-5           glossary4s nb-backend-bug         turns=5 in=44 cr=45343 cw=5980 out=981 usd=0.0214 14.9s
+PASS  claude-haiku-4-5           glossary4s nb-lider-presupuesto   turns=4 in=36 cr=34251 cw=5516 out=775 usd=0.0184 13.8s
+PASS  claude-haiku-4-5           glossary4s nb-cerrar-tarea        turns=5 in=44 cr=44927 cw=5503 out=828 usd=0.0197 14.0s
+PASS  claude-haiku-4-5           glossary4s nb-mas-comentada       turns=13 in=108 cr=295232 cw=28789 out=4296 usd=0.1087 43.5s
+PASS  claude-haiku-4-5           glossary4s nb-agregar-todo        turns=6 in=52 cr=56535 cw=6437 out=1291 usd=0.0250 17.3s
+FAIL  claude-haiku-4-5           glossary4s nb-marcar-acuerdo      turns=6 in=52 cr=55829 cw=5696 out=1077 usd=0.0224 13.8s
+PASS  claude-haiku-4-5           glossary4s nb-reasignar-diego     turns=8 in=68 cr=79498 cw=8832 out=2294 usd=0.0372 25.1s
+PASS  claude-haiku-4-5           glossary4s nb-comentar-bloqueada  turns=6 in=52 cr=57164 cw=6514 out=1113 usd=0.0244 15.5s
+ledger total (this phase): 84.62 USD
+log: results/client-notion-h45s2.jsonl

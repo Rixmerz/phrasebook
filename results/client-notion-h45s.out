@@ -1,0 +1,34 @@
+PASS  claude-haiku-4-5           glossary4s nb-puntos-s1           turns=6 in=52 cr=55426 cw=5824 out=1067 usd=0.0226 15.3s
+PASS  claude-haiku-4-5           glossary4s nb-ana-media-alta      turns=6 in=52 cr=57146 cw=5944 out=1184 usd=0.0236 15.6s
+PASS  claude-haiku-4-5           glossary4s nb-ana-media-alta      turns=6 in=52 cr=57265 cw=6048 out=1269 usd=0.0242 17.2s
+PASS  claude-haiku-4-5           glossary4s nb-puntos-s1           turns=7 in=60 cr=73996 cw=8854 out=1373 usd=0.0320 19.5s
+PASS  claude-haiku-4-5           glossary4s nb-mas-cargado         turns=5 in=44 cr=45482 cw=5616 out=940 usd=0.0205 13.0s
+PASS  claude-haiku-4-5           glossary4s nb-vencidas            turns=4 in=36 cr=33715 cw=4621 out=708 usd=0.0162 11.6s
+PASS  claude-haiku-4-5           glossary4s nb-vencidas            turns=4 in=36 cr=36672 cw=3220 out=778 usd=0.0140 11.7s
+PASS  claude-haiku-4-5           glossary4s nb-mas-cargado         turns=6 in=52 cr=65136 cw=14311 out=1293 usd=0.0417 16.6s
+PASS  claude-haiku-4-5           glossary4s nb-postgres-abiertas   turns=6 in=52 cr=55362 cw=5514 out=1161 usd=0.0224 15.2s
+PASS  claude-haiku-4-5           glossary4s nb-postgres-abiertas   turns=8 in=68 cr=84082 cw=4911 out=1814 usd=0.0274 22.8s
+PASS  claude-haiku-4-5           glossary4s nb-demo-acuerdos       turns=4 in=36 cr=33951 cw=4898 out=1238 usd=0.0194 14.8s
+PASS  claude-haiku-4-5           glossary4s nb-demo-acuerdos       turns=4 in=36 cr=35893 cw=2551 out=709 usd=0.0123 11.2s
+PASS  claude-haiku-4-5           glossary4s nb-onboarding-staging  turns=4 in=36 cr=33778 cw=4715 out=626 usd=0.0160 11.6s
+PASS  claude-haiku-4-5           glossary4s nb-proyecto-pendiente  turns=13 in=108 cr=154982 cw=9676 out=4211 usd=0.0560 41.2s
+PASS  claude-haiku-4-5           glossary4s nb-onboarding-staging  turns=6 in=52 cr=53737 cw=3270 out=1054 usd=0.0172 17.3s
+FAIL  claude-haiku-4-5           glossary4s nb-proyecto-pendiente  turns=14 in=116 cr=183451 cw=14532 out=6173 usd=0.0784 55.4s
+PASS  claude-haiku-4-5           glossary4s nb-backend-bug         turns=5 in=44 cr=63724 cw=24773 out=884 usd=0.0604 14.9s
+PASS  claude-haiku-4-5           glossary4s nb-backend-bug         turns=6 in=52 cr=56790 cw=2922 out=991 usd=0.0165 14.2s
+PASS  claude-haiku-4-5           glossary4s nb-lider-presupuesto   turns=4 in=36 cr=34128 cw=5317 out=829 usd=0.0182 11.3s
+PASS  claude-haiku-4-5           glossary4s nb-lider-presupuesto   turns=4 in=36 cr=36366 cw=3313 out=969 usd=0.0151 14.4s
+PASS  claude-haiku-4-5           glossary4s nb-mas-comentada       turns=5 in=44 cr=60792 cw=25274 out=6223 usd=0.0878 43.5s
+PASS  claude-haiku-4-5           glossary4s nb-cerrar-tarea        turns=5 in=44 cr=44721 cw=5445 out=843 usd=0.0196 12.6s
+PASS  claude-haiku-4-5           glossary4s nb-mas-comentada       turns=14 in=116 cr=348354 cw=32260 out=5744 usd=0.1282 55.5s
+PASS  claude-haiku-4-5           glossary4s nb-cerrar-tarea        turns=5 in=44 cr=46790 cw=3229 out=811 usd=0.0152 12.8s
+PASS  claude-haiku-4-5           glossary4s nb-agregar-todo        turns=4 in=36 cr=36111 cw=2875 out=759 usd=0.0132 12.1s
+PASS  claude-haiku-4-5           glossary4s nb-agregar-todo        turns=6 in=52 cr=56098 cw=6303 out=1235 usd=0.0244 17.1s
+PASS  claude-haiku-4-5           glossary4s nb-reasignar-diego     turns=10 in=84 cr=107034 cw=7454 out=3355 usd=0.0425 34.9s
+FAIL  claude-haiku-4-5           glossary4s nb-marcar-acuerdo      turns=6 in=52 cr=55509 cw=5680 out=1131 usd=0.0226 15.7s
+PASS  claude-haiku-4-5           glossary4s nb-marcar-acuerdo      turns=6 in=52 cr=57958 cw=3800 out=901 usd=0.0180 13.5s
+PASS  claude-haiku-4-5           glossary4s nb-reasignar-diego     turns=10 in=84 cr=123988 cw=14646 out=4384 usd=0.0637 44.1s
+PASS  claude-haiku-4-5           glossary4s nb-comentar-bloqueada  turns=6 in=52 cr=57091 cw=6918 out=1430 usd=0.0267 17.1s
+PASS  claude-haiku-4-5           glossary4s nb-comentar-bloqueada  turns=6 in=52 cr=59983 cw=4585 out=1280 usd=0.0216 16.0s
+ledger total (this phase): 84.62 USD
+log: results/client-notion-h45s.jsonl

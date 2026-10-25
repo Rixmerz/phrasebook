@@ -1,0 +1,34 @@
+definition tokens  claude-haiku-5-5: native=2409 glossary=815 code=1450
+PASS  claude-haiku-5-5             native    gitb-worktree-timeout  turns=2 in=6 out=60 invalid=0 2593ms
+PASS  claude-haiku-5-5             native    gitb-staged            turns=2 in=6 out=72 invalid=0 3422ms
+PASS  claude-haiku-5-5             native    gitb-author-ranking    turns=2 in=6 out=762 invalid=0 4076ms
+PASS  claude-haiku-5-5             native    gitb-last-db-change    turns=3 in=8 out=1154 invalid=0 7478ms
+PASS  claude-haiku-5-5             native    gitb-docs-window       turns=3 in=8 out=1568 invalid=0 7891ms
+PASS  claude-haiku-5-5             native    gitb-commit-staged-plus-api turns=4 in=10 out=582 invalid=0 5273ms
+PASS  claude-haiku-5-5             code      gitb-staged            turns=2 in=6 out=121 invalid=0 1916ms
+PASS  claude-haiku-5-5             native    gitb-new-branch        turns=4 in=10 out=598 invalid=0 6285ms
+PASS  claude-haiku-5-5             native    gitb-hotfix-only       turns=5 in=12 out=1573 invalid=2 11943ms
+PASS  claude-haiku-5-5             code      gitb-worktree-timeout  turns=2 in=6 out=90 invalid=0 2209ms
+FAIL  claude-haiku-5-5             native    gitb-pagos-ahead       turns=5 in=12 out=1571 invalid=2 10475ms
+PASS  claude-haiku-5-5             native    gitb-unstage-changelog turns=5 in=12 out=628 invalid=0 6912ms
+PASS  claude-haiku-5-5             code      gitb-last-db-change    turns=3 in=8 out=735 invalid=0 5917ms
+PASS  claude-haiku-5-5             code      gitb-author-ranking    turns=2 in=6 out=949 invalid=0 5728ms
+PASS  claude-haiku-5-5             code      gitb-hotfix-only       turns=4 in=10 out=1237 invalid=0 8956ms
+PASS  claude-haiku-5-5             code      gitb-commit-staged-plus-api turns=3 in=8 out=592 invalid=0 5745ms
+PASS  claude-haiku-5-5             code      gitb-new-branch        turns=2 in=6 out=501 invalid=0 3309ms
+PASS  claude-haiku-5-5             code      gitb-unstage-changelog turns=3 in=8 out=732 invalid=0 4960ms
+PASS  claude-haiku-5-5             glossary4 gitb-staged            turns=2 in=6 out=70 invalid=0 2048ms
+PASS  claude-haiku-5-5             glossary4 gitb-worktree-timeout  turns=2 in=6 out=61 invalid=0 2288ms
+PASS  claude-haiku-5-5             code      gitb-docs-window       turns=5 in=12 out=1596 invalid=0 12605ms
+PASS  claude-haiku-5-5             code      gitb-pagos-ahead       turns=5 in=12 out=1870 invalid=1 12994ms
+PASS  claude-haiku-5-5             glossary4 gitb-author-ranking    turns=2 in=6 out=822 invalid=0 6338ms
+PASS  claude-haiku-5-5             glossary4 gitb-docs-window       turns=3 in=8 out=1044 invalid=0 6983ms
+PASS  claude-haiku-5-5             glossary4 gitb-commit-staged-plus-api turns=3 in=8 out=442 invalid=0 5403ms
+PASS  claude-haiku-5-5             glossary4 gitb-last-db-change    turns=5 in=12 out=960 invalid=1 10652ms
+PASS  claude-haiku-5-5             glossary4 gitb-new-branch        turns=3 in=8 out=504 invalid=0 4215ms
+PASS  claude-haiku-5-5             glossary4 gitb-unstage-changelog turns=3 in=8 out=537 invalid=0 4343ms
+PASS  claude-haiku-5-5             glossary4 gitb-pagos-ahead       turns=8 in=18 out=1412 invalid=2 12078ms
+FAIL  claude-haiku-5-5             glossary4 gitb-hotfix-only       turns=6 in=14 out=2181 invalid=2 15276ms
+total tokens spent: 374932
+ledger total (this phase): 63.53 USD
+log: results/gitb-pilot.jsonl

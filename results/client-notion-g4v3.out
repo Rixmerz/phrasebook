@@ -1,0 +1,34 @@
+PASS  claude-sonnet-5-5          glossary4 nb-ana-media-alta      turns=4 in=8 cr=76729 cw=10551 out=491 usd=0.0548 9.7s
+PASS  claude-sonnet-5-5          glossary4 nb-ana-media-alta      turns=4 in=8 cr=76726 cw=16188 out=662 usd=0.0791 11.0s
+PASS  claude-sonnet-5-5          glossary4 nb-mas-cargado         turns=5 in=8 cr=76741 cw=18659 out=838 usd=0.0907 11.4s
+PASS  claude-sonnet-5-5          glossary4 nb-mas-cargado         turns=5 in=10 cr=108867 cw=18792 out=1028 usd=0.0964 13.8s
+PASS  claude-sonnet-5-5          glossary4 nb-puntos-s1           turns=5 in=10 cr=102639 cw=14705 out=513 usd=0.0742 14.5s
+PASS  claude-sonnet-5-5          glossary4 nb-vencidas            turns=4 in=8 cr=76686 cw=8879 out=301 usd=0.0462 7.5s
+PASS  claude-sonnet-5-5          glossary4 nb-puntos-s1           turns=6 in=12 cr=131693 cw=18359 out=892 usd=0.0955 18.2s
+PASS  claude-sonnet-5-5          glossary4 nb-vencidas            turns=4 in=8 cr=78202 cw=7378 out=307 usd=0.0404 7.7s
+PASS  claude-sonnet-5-5          glossary4 nb-postgres-abiertas   turns=5 in=10 cr=98803 cw=9457 out=482 usd=0.0525 9.6s
+PASS  claude-sonnet-5-5          glossary4 nb-postgres-abiertas   turns=5 in=10 cr=100311 cw=7939 out=482 usd=0.0466 10.3s
+PASS  claude-sonnet-5-5          glossary4 nb-demo-acuerdos       turns=5 in=10 cr=97899 cw=8821 out=358 usd=0.0487 8.5s
+PASS  claude-sonnet-5-5          glossary4 nb-demo-acuerdos       turns=6 in=10 cr=99426 cw=7439 out=393 usd=0.0436 9.8s
+PASS  claude-sonnet-5-5          glossary4 nb-proyecto-pendiente  turns=4 in=8 cr=78861 cw=17699 out=1184 usd=0.0905 12.4s
+PASS  claude-sonnet-5-5          glossary4 nb-onboarding-staging  turns=6 in=10 cr=105161 cw=11359 out=542 usd=0.0614 10.6s
+PASS  claude-sonnet-5-5          glossary4 nb-proyecto-pendiente  turns=6 in=12 cr=143331 cw=19844 out=2313 usd=0.1169 21.0s
+PASS  claude-sonnet-5-5          glossary4 nb-onboarding-staging  turns=7 in=10 cr=106736 cw=10004 out=619 usd=0.0569 12.6s
+PASS  claude-sonnet-5-5          glossary4 nb-backend-bug         turns=4 in=8 cr=76753 cw=8952 out=381 usd=0.0473 8.1s
+PASS  claude-sonnet-5-5          glossary4 nb-backend-bug         turns=4 in=8 cr=78234 cw=7437 out=369 usd=0.0413 10.9s
+PASS  claude-sonnet-5-5          glossary4 nb-lider-presupuesto   turns=4 in=8 cr=76262 cw=8802 out=334 usd=0.0462 8.2s
+PASS  claude-sonnet-5-5          glossary4 nb-lider-presupuesto   turns=4 in=8 cr=77758 cw=7305 out=335 usd=0.0404 8.0s
+PASS  claude-sonnet-5-5          glossary4 nb-cerrar-tarea        turns=5 in=10 cr=98268 cw=9053 out=433 usd=0.0504 9.7s
+PASS  claude-sonnet-5-5          glossary4 nb-mas-comentada       turns=7 in=14 cr=154110 cw=15027 out=3136 usd=0.1069 23.8s
+PASS  claude-sonnet-5-5          glossary4 nb-reasignar-diego     turns=5 in=10 cr=101913 cw=10455 out=1000 usd=0.0620 11.7s
+PASS  claude-sonnet-5-5          glossary4 nb-agregar-todo        turns=5 in=10 cr=98456 cw=9232 out=398 usd=0.0508 9.0s
+PASS  claude-sonnet-5-5          glossary4 nb-cerrar-tarea        turns=6 in=12 cr=122315 cw=8057 out=749 usd=0.0520 14.8s
+PASS  claude-sonnet-5-5          glossary4 nb-mas-comentada       turns=7 in=14 cr=157886 cw=13336 out=3034 usd=0.0995 29.0s
+PASS  claude-sonnet-5-5          glossary4 nb-reasignar-diego     turns=8 in=16 cr=177297 cw=12758 out=1210 usd=0.0809 15.2s
+PASS  claude-sonnet-5-5          glossary4 nb-agregar-todo        turns=5 in=10 cr=99989 cw=7687 out=397 usd=0.0447 8.8s
+PASS  claude-sonnet-5-5          glossary4 nb-marcar-acuerdo      turns=5 in=10 cr=98327 cw=9088 out=310 usd=0.0493 10.2s
+PASS  claude-sonnet-5-5          glossary4 nb-comentar-bloqueada  turns=5 in=10 cr=99959 cw=9894 out=447 usd=0.0541 9.2s
+PASS  claude-sonnet-5-5          glossary4 nb-marcar-acuerdo      turns=5 in=10 cr=98324 cw=9088 out=311 usd=0.0493 10.6s
+PASS  claude-sonnet-5-5          glossary4 nb-comentar-bloqueada  turns=5 in=10 cr=99957 cw=9893 out=446 usd=0.0540 12.0s
+ledger total (this phase): 84.62 USD
+log: results/client-notion-g4v3.jsonl

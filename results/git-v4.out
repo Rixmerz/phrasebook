@@ -1,0 +1,65 @@
+definition tokens  claude-sonnet-5-5: native=2409 glossary=815 code=1450
+definition tokens  claude-haiku-5-5: native=2409 glossary=815 code=1450
+PASS  claude-sonnet-5-5            glossary4 git-untracked          turns=2 in=6 out=66 invalid=0 2125ms
+PASS  claude-sonnet-5-5            glossary4 git-untracked          turns=2 in=6 out=66 invalid=0 2226ms
+PASS  claude-sonnet-5-5            glossary4 git-untracked          turns=2 in=6 out=66 invalid=0 2282ms
+PASS  claude-sonnet-5-5            glossary4 git-commit-one         turns=4 in=10 out=375 invalid=0 6268ms
+PASS  claude-sonnet-5-5            glossary4 git-commit-one         turns=4 in=10 out=378 invalid=0 6301ms
+PASS  claude-sonnet-5-5            glossary4 git-last-author        turns=3 in=8 out=157 invalid=1 3862ms
+PASS  claude-sonnet-5-5            glossary4 git-commit-one         turns=4 in=10 out=395 invalid=0 6905ms
+PASS  claude-sonnet-5-5            glossary4 git-last-author        turns=3 in=8 out=156 invalid=1 4087ms
+PASS  claude-sonnet-5-5            glossary4 git-last-author        turns=3 in=8 out=156 invalid=1 4100ms
+PASS  claude-sonnet-5-5            glossary4 git-count-main         turns=3 in=8 out=221 invalid=1 4034ms
+PASS  claude-sonnet-5-5            glossary4 git-count-main         turns=3 in=8 out=177 invalid=0 3887ms
+FAIL  claude-sonnet-5-5            glossary4 git-count-main         turns=3 in=8 out=190 invalid=1 4355ms
+PASS  claude-sonnet-5-5            glossary4 git-unstaged           turns=2 in=6 out=57 invalid=0 2766ms
+PASS  claude-sonnet-5-5            glossary4 git-unstaged           turns=2 in=6 out=57 invalid=0 2854ms
+PASS  claude-sonnet-5-5            glossary4 git-unstaged           turns=2 in=6 out=57 invalid=0 2437ms
+PASS  claude-sonnet-5-5            glossary4 git-new-branch         turns=2 in=6 out=108 invalid=0 9773ms
+PASS  claude-sonnet-5-5            glossary4 git-new-branch         turns=2 in=6 out=108 invalid=0 9944ms
+PASS  claude-sonnet-5-5            glossary4 git-new-branch         turns=3 in=8 out=187 invalid=1 11293ms
+PASS  claude-sonnet-5-5            glossary4 git-who-added-login    turns=3 in=8 out=230 invalid=0 4432ms
+PASS  claude-sonnet-5-5            glossary4 git-who-added-login    turns=3 in=8 out=231 invalid=0 4785ms
+PASS  claude-sonnet-5-5            glossary4 git-who-added-login    turns=3 in=8 out=233 invalid=0 6237ms
+PASS  claude-sonnet-5-5            glossary4 git-stage-readme       turns=2 in=6 out=74 invalid=0 2253ms
+PASS  claude-sonnet-5-5            glossary4 git-stage-readme       turns=2 in=6 out=76 invalid=0 2171ms
+PASS  claude-sonnet-5-5            glossary4 git-stage-readme       turns=2 in=6 out=76 invalid=0 2338ms
+PASS  claude-sonnet-5-5            glossary4 git-unstage-all        turns=2 in=6 out=92 invalid=0 2653ms
+PASS  claude-sonnet-5-5            glossary4 git-branches-contain   turns=5 in=12 out=466 invalid=2 8123ms
+PASS  claude-sonnet-5-5            glossary4 git-unstage-all        turns=2 in=6 out=83 invalid=0 2614ms
+PASS  claude-sonnet-5-5            glossary4 git-branches-contain   turns=5 in=12 out=519 invalid=2 8858ms
+PASS  claude-haiku-5-5             glossary4 git-untracked          turns=2 in=6 out=66 invalid=0 2145ms
+PASS  claude-haiku-5-5             glossary4 git-untracked          turns=2 in=6 out=66 invalid=0 2103ms
+PASS  claude-haiku-5-5             glossary4 git-untracked          turns=2 in=6 out=66 invalid=0 2201ms
+PASS  claude-sonnet-5-5            glossary4 git-unstage-all        turns=2 in=6 out=87 invalid=0 4677ms
+PASS  claude-haiku-5-5             glossary4 git-last-author        turns=2 in=6 out=95 invalid=0 1953ms
+PASS  claude-haiku-5-5             glossary4 git-last-author        turns=2 in=6 out=121 invalid=0 2133ms
+PASS  claude-haiku-5-5             glossary4 git-commit-one         turns=3 in=8 out=547 invalid=0 4756ms
+PASS  claude-sonnet-5-5            glossary4 git-branches-contain   turns=5 in=12 out=521 invalid=2 17203ms
+PASS  claude-haiku-5-5             glossary4 git-last-author        turns=2 in=6 out=97 invalid=0 2039ms
+PASS  claude-haiku-5-5             glossary4 git-commit-one         turns=3 in=8 out=702 invalid=0 5613ms
+PASS  claude-haiku-5-5             glossary4 git-count-main         turns=3 in=8 out=211 invalid=0 3023ms
+PASS  claude-haiku-5-5             glossary4 git-commit-one         turns=3 in=8 out=1049 invalid=0 7717ms
+PASS  claude-haiku-5-5             glossary4 git-count-main         turns=3 in=8 out=211 invalid=0 3155ms
+PASS  claude-haiku-5-5             glossary4 git-new-branch         turns=2 in=6 out=212 invalid=0 2417ms
+PASS  claude-haiku-5-5             glossary4 git-count-main         turns=3 in=8 out=196 invalid=0 3208ms
+PASS  claude-haiku-5-5             glossary4 git-new-branch         turns=2 in=6 out=188 invalid=0 3430ms
+PASS  claude-haiku-5-5             glossary4 git-new-branch         turns=2 in=6 out=186 invalid=0 2978ms
+PASS  claude-haiku-5-5             glossary4 git-unstaged           turns=2 in=6 out=57 invalid=0 1764ms
+PASS  claude-haiku-5-5             glossary4 git-unstaged           turns=2 in=6 out=62 invalid=0 1880ms
+PASS  claude-haiku-5-5             glossary4 git-unstaged           turns=2 in=6 out=57 invalid=0 1927ms
+PASS  claude-haiku-5-5             glossary4 git-who-added-login    turns=3 in=8 out=354 invalid=1 3944ms
+PASS  claude-haiku-5-5             glossary4 git-who-added-login    turns=3 in=8 out=292 invalid=0 3541ms
+PASS  claude-haiku-5-5             glossary4 git-who-added-login    turns=3 in=8 out=553 invalid=1 4926ms
+PASS  claude-haiku-5-5             glossary4 git-stage-readme       turns=2 in=6 out=71 invalid=0 1951ms
+PASS  claude-haiku-5-5             glossary4 git-stage-readme       turns=2 in=6 out=74 invalid=0 2196ms
+PASS  claude-haiku-5-5             glossary4 git-stage-readme       turns=2 in=6 out=71 invalid=0 1906ms
+PASS  claude-haiku-5-5             glossary4 git-branches-contain   turns=4 in=10 out=518 invalid=1 5438ms
+PASS  claude-haiku-5-5             glossary4 git-branches-contain   turns=5 in=12 out=563 invalid=2 6585ms
+PASS  claude-haiku-5-5             glossary4 git-branches-contain   turns=5 in=12 out=575 invalid=2 7296ms
+PASS  claude-haiku-5-5             glossary4 git-unstage-all        turns=2 in=6 out=101 invalid=0 2241ms
+PASS  claude-haiku-5-5             glossary4 git-unstage-all        turns=2 in=6 out=192 invalid=0 2655ms
+PASS  claude-haiku-5-5             glossary4 git-unstage-all        turns=2 in=6 out=195 invalid=0 3682ms
+total tokens spent: 269661
+ledger total (this phase): 62.54 USD
+log: results/git-v4.jsonl

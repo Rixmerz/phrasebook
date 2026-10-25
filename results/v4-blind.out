@@ -1,0 +1,41 @@
+definition tokens  claude-sonnet-5-5: native=19384 glossary=1719 code=14480 glossary2=1765
+Deno.serve: request.signal aborts on successful responses (legacy behavior). To detect when a request has been fully delivered use the `completed` promise on the handler's info argument. Move cleanup to the handler's return path, or opt in to the new behavior with --unstable-no-legacy-abort. See https://docs.deno.com/go/unstable-no-legacy-abort
+PASS  claude-sonnet-5-5            glossary4 b-issue-author         turns=2 in=6 out=68 invalid=0 1868ms
+PASS  claude-sonnet-5-5            glossary4 b-issue-author         turns=2 in=6 out=68 invalid=0 1860ms
+PASS  claude-sonnet-5-5            glossary4 b-last-commenter       turns=2 in=6 out=63 invalid=0 2004ms
+PASS  claude-sonnet-5-5            glossary4 b-issue-author         turns=2 in=6 out=68 invalid=0 2096ms
+PASS  claude-sonnet-5-5            glossary4 b-last-commenter       turns=2 in=6 out=63 invalid=0 2053ms
+PASS  claude-sonnet-5-5            glossary4 b-last-commenter       turns=2 in=6 out=63 invalid=0 2551ms
+PASS  claude-sonnet-5-5            glossary4 b-pr-head              turns=2 in=6 out=63 invalid=0 1888ms
+PASS  claude-sonnet-5-5            glossary4 b-pr-head              turns=2 in=6 out=67 invalid=0 2025ms
+PASS  claude-sonnet-5-5            glossary4 b-release-threshold    turns=2 in=6 out=72 invalid=0 1947ms
+PASS  claude-sonnet-5-5            glossary4 b-release-threshold    turns=2 in=6 out=72 invalid=0 1886ms
+PASS  claude-sonnet-5-5            glossary4 b-pr-head              turns=2 in=6 out=67 invalid=0 2071ms
+PASS  claude-sonnet-5-5            glossary4 b-release-threshold    turns=2 in=6 out=72 invalid=0 1933ms
+PASS  claude-sonnet-5-5            glossary4 b-open-checkout-bugs   turns=3 in=8 out=197 invalid=0 3792ms
+PASS  claude-sonnet-5-5            glossary4 b-open-checkout-bugs   turns=3 in=8 out=205 invalid=0 4069ms
+PASS  claude-sonnet-5-5            glossary4 b-open-checkout-bugs   turns=3 in=8 out=221 invalid=0 3944ms
+PASS  claude-sonnet-5-5            glossary4 b-top-assignees        turns=3 in=8 out=199 invalid=0 3509ms
+PASS  claude-sonnet-5-5            glossary4 b-top-assignees        turns=3 in=8 out=216 invalid=0 3944ms
+PASS  claude-sonnet-5-5            glossary4 b-top-assignees        turns=3 in=8 out=208 invalid=0 4028ms
+PASS  claude-sonnet-5-5            glossary4 b-pct-not-planned      turns=6 in=14 out=690 invalid=0 10680ms
+PASS  claude-sonnet-5-5            glossary4 b-payment-bugs-no-pr   turns=2 in=6 out=407 invalid=0 4003ms
+PASS  claude-sonnet-5-5            glossary4 b-payment-bugs-no-pr   turns=2 in=6 out=429 invalid=0 4054ms
+PASS  claude-sonnet-5-5            glossary4 b-pct-not-planned      turns=7 in=16 out=905 invalid=0 11633ms
+PASS  claude-sonnet-5-5            glossary4 b-payment-bugs-no-pr   turns=2 in=6 out=356 invalid=0 3870ms
+PASS  claude-sonnet-5-5            glossary4 b-pct-not-planned      turns=8 in=18 out=1161 invalid=0 13638ms
+FAIL  claude-sonnet-5-5            glossary4 b-close-duplicates     turns=3 in=8 out=589 invalid=0 5435ms
+FAIL  claude-sonnet-5-5            glossary4 b-close-duplicates     turns=3 in=8 out=658 invalid=0 6206ms
+PASS  claude-sonnet-5-5            glossary4 b-retriage-carla       turns=4 in=10 out=342 invalid=0 5677ms
+PASS  claude-sonnet-5-5            glossary4 b-retriage-carla       turns=4 in=10 out=352 invalid=0 6271ms
+FAIL  claude-sonnet-5-5            glossary4 b-close-duplicates     turns=4 in=10 out=674 invalid=0 7222ms
+PASS  claude-sonnet-5-5            glossary4 b-retriage-carla       turns=3 in=8 out=265 invalid=0 5340ms
+PASS  claude-sonnet-5-5            glossary4 b-tax-pr               turns=4 in=10 out=378 invalid=0 5607ms
+PASS  claude-sonnet-5-5            glossary4 b-tax-pr               turns=4 in=10 out=411 invalid=0 5815ms
+PASS  claude-sonnet-5-5            glossary4 b-edit-threshold       turns=3 in=8 out=741 invalid=0 7480ms
+PASS  claude-sonnet-5-5            glossary4 b-tax-pr               turns=4 in=10 out=543 invalid=0 6926ms
+PASS  claude-sonnet-5-5            glossary4 b-edit-threshold       turns=5 in=12 out=1009 invalid=0 10780ms
+PASS  claude-sonnet-5-5            glossary4 b-edit-threshold       turns=6 in=14 out=1239 invalid=0 13627ms
+total tokens spent: 376393
+ledger total (this phase): 50.91 USD
+log: results/v4-blind.jsonl

@@ -1,0 +1,24 @@
+definition tokens  claude-sonnet-5-5: native=19384 glossary=1719 code=14480 glossary2=1765
+definition tokens  claude-haiku-5-5: native=19384 glossary=1719 code=14480 glossary2=1765
+Deno.serve: request.signal aborts on successful responses (legacy behavior). To detect when a request has been fully delivered use the `completed` promise on the handler's info argument. Move cleanup to the handler's return path, or opt in to the new behavior with --unstable-no-legacy-abort. See https://docs.deno.com/go/unstable-no-legacy-abort
+PASS  claude-sonnet-5-5            code      c-close-obsolete       turns=3 in=8 out=497 invalid=0 5487ms
+PASS  claude-sonnet-5-5            code      c-close-obsolete       turns=3 in=8 out=508 invalid=0 5514ms
+PASS  claude-sonnet-5-5            code      c-close-obsolete       turns=3 in=8 out=512 invalid=0 5767ms
+PASS  claude-sonnet-5-5            glossary3-feedback c-close-obsolete       turns=3 in=8 out=376 invalid=0 5753ms
+PASS  claude-sonnet-5-5            glossary3-feedback c-close-obsolete       turns=4 in=10 out=1079 invalid=0 8935ms
+PASS  claude-sonnet-5-5            glossary3-feedback c-close-obsolete       turns=4 in=10 out=1042 invalid=0 8993ms
+PASS  claude-sonnet-5-5            glossary4 c-close-obsolete       turns=3 in=8 out=300 invalid=0 4170ms
+PASS  claude-sonnet-5-5            glossary4 c-close-obsolete       turns=3 in=8 out=347 invalid=0 4691ms
+PASS  claude-sonnet-5-5            glossary4 c-close-obsolete       turns=3 in=8 out=378 invalid=0 4589ms
+PASS  claude-haiku-5-5             code      c-close-obsolete       turns=4 in=10 out=1165 invalid=0 7175ms
+PASS  claude-haiku-5-5             code      c-close-obsolete       turns=3 in=8 out=738 invalid=0 4585ms
+PASS  claude-haiku-5-5             code      c-close-obsolete       turns=3 in=8 out=769 invalid=0 4901ms
+PASS  claude-haiku-5-5             glossary3-feedback c-close-obsolete       turns=4 in=10 out=1393 invalid=0 9383ms
+PASS  claude-haiku-5-5             glossary3-feedback c-close-obsolete       turns=4 in=10 out=1381 invalid=0 9018ms
+PASS  claude-haiku-5-5             glossary3-feedback c-close-obsolete       turns=4 in=10 out=1326 invalid=0 9487ms
+PASS  claude-haiku-5-5             glossary4 c-close-obsolete       turns=4 in=10 out=1222 invalid=0 6979ms
+PASS  claude-haiku-5-5             glossary4 c-close-obsolete       turns=4 in=10 out=1242 invalid=0 6910ms
+PASS  claude-haiku-5-5             glossary4 c-close-obsolete       turns=5 in=12 out=1410 invalid=0 8593ms
+total tokens spent: 485243
+ledger total (this phase): 52.65 USD
+log: results/blind2-amended.jsonl

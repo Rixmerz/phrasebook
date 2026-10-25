@@ -1,0 +1,29 @@
+definition tokens  claude-sonnet-5-5: native=19384 glossary=1719 code=14480 glossary2=1765
+Deno.serve: request.signal aborts on successful responses (legacy behavior). To detect when a request has been fully delivered use the `completed` promise on the handler's info argument. Move cleanup to the handler's return path, or opt in to the new behavior with --unstable-no-legacy-abort. See https://docs.deno.com/go/unstable-no-legacy-abort
+PASS  claude-sonnet-5-5            glossary4 c-avg-comments         turns=2 in=6 out=71 invalid=0 1983ms
+PASS  claude-sonnet-5-5            glossary4 c-avg-comments         turns=2 in=6 out=71 invalid=0 2179ms
+PASS  claude-sonnet-5-5            glossary4 c-avg-comments         turns=2 in=6 out=71 invalid=0 2068ms
+PASS  claude-sonnet-5-5            glossary4 c-pct-bugs             turns=2 in=6 out=136 invalid=0 4197ms
+PASS  claude-sonnet-5-5            glossary4 c-pct-bugs             turns=2 in=6 out=165 invalid=0 4535ms
+PASS  claude-sonnet-5-5            glossary4 c-pct-bugs             turns=3 in=8 out=248 invalid=0 6455ms
+PASS  claude-sonnet-5-5            glossary4 c-assigned-no-pr       turns=2 in=6 out=220 invalid=0 3121ms
+PASS  claude-sonnet-5-5            glossary4 c-assigned-no-pr       turns=2 in=6 out=195 invalid=0 3818ms
+PASS  claude-sonnet-5-5            glossary4 c-sum-comments         turns=4 in=10 out=419 invalid=0 6492ms
+PASS  claude-sonnet-5-5            glossary4 c-sum-comments         turns=4 in=10 out=351 invalid=2 6671ms
+PASS  claude-sonnet-5-5            glossary4 c-assigned-no-pr       turns=2 in=6 out=212 invalid=0 2804ms
+PASS  claude-sonnet-5-5            glossary4 c-prs-by-assigned      turns=2 in=6 out=174 invalid=0 2594ms
+PASS  claude-sonnet-5-5            glossary4 c-sum-comments         turns=6 in=14 out=558 invalid=1 8967ms
+PASS  claude-sonnet-5-5            glossary4 c-prs-by-assigned      turns=2 in=6 out=164 invalid=0 2840ms
+PASS  claude-sonnet-5-5            glossary4 c-prs-by-assigned      turns=2 in=6 out=173 invalid=0 3681ms
+PASS  claude-sonnet-5-5            glossary4 c-most-commented       turns=3 in=8 out=267 invalid=0 3827ms
+PASS  claude-sonnet-5-5            glossary4 c-most-commented       turns=3 in=8 out=257 invalid=0 3919ms
+PASS  claude-sonnet-5-5            glossary4 c-most-commented       turns=3 in=8 out=264 invalid=0 4257ms
+PASS  claude-sonnet-5-5            glossary4 c-copy-version         turns=3 in=8 out=244 invalid=0 3742ms
+PASS  claude-sonnet-5-5            glossary4 c-copy-version         turns=3 in=8 out=241 invalid=0 3855ms
+PASS  claude-sonnet-5-5            glossary4 c-tag-no-newline       turns=2 in=6 out=184 invalid=0 2786ms
+PASS  claude-sonnet-5-5            glossary4 c-copy-version         turns=3 in=8 out=227 invalid=0 3769ms
+PASS  claude-sonnet-5-5            glossary4 c-tag-no-newline       turns=2 in=6 out=197 invalid=0 2867ms
+PASS  claude-sonnet-5-5            glossary4 c-tag-no-newline       turns=2 in=6 out=191 invalid=0 2650ms
+total tokens spent: 194989
+ledger total (this phase): 50.40 USD
+log: results/v4-calc.jsonl

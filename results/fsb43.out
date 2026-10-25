@@ -1,0 +1,40 @@
+definition tokens  claude-sonnet-5-5: native=2779 glossary=734 code=2296
+PASS  claude-sonnet-5-5            glossary4 fsb-read-buddy         turns=2 in=6 out=78 invalid=0 2005ms
+PASS  claude-sonnet-5-5            glossary4 fsb-read-buddy         turns=2 in=6 out=78 invalid=0 2102ms
+PASS  claude-sonnet-5-5            glossary4 fsb-read-db-primary    turns=2 in=6 out=71 invalid=0 2016ms
+PASS  claude-sonnet-5-5            glossary4 fsb-read-db-primary    turns=2 in=6 out=71 invalid=0 2164ms
+PASS  claude-sonnet-5-5            glossary4 fsb-read-db-primary    turns=2 in=6 out=71 invalid=0 2190ms
+PASS  claude-sonnet-5-5            glossary4 fsb-read-buddy         turns=2 in=6 out=78 invalid=0 2302ms
+PASS  claude-sonnet-5-5            glossary4 fsb-read-readme-link   turns=3 in=8 out=123 invalid=0 2936ms
+PASS  claude-sonnet-5-5            glossary4 fsb-read-readme-link   turns=3 in=8 out=123 invalid=0 2959ms
+PASS  claude-sonnet-5-5            glossary4 fsb-read-readme-link   turns=3 in=8 out=123 invalid=0 3249ms
+PASS  claude-sonnet-5-5            glossary4 fsb-count-errors       turns=4 in=10 out=475 invalid=0 6029ms
+PASS  claude-sonnet-5-5            glossary4 fsb-sum-norte          turns=3 in=8 out=227 invalid=0 3780ms
+PASS  claude-sonnet-5-5            glossary4 fsb-sum-norte          turns=3 in=8 out=222 invalid=0 4203ms
+PASS  claude-sonnet-5-5            glossary4 fsb-count-errors       turns=5 in=12 out=526 invalid=0 7189ms
+PASS  claude-sonnet-5-5            glossary4 fsb-sum-norte          turns=3 in=8 out=267 invalid=0 4318ms
+PASS  claude-sonnet-5-5            glossary4 fsb-list-md            turns=2 in=6 out=141 invalid=0 2287ms
+PASS  claude-sonnet-5-5            glossary4 fsb-list-md            turns=2 in=6 out=141 invalid=0 2612ms
+PASS  claude-sonnet-5-5            glossary4 fsb-most-warn          turns=4 in=10 out=447 invalid=0 5879ms
+PASS  claude-sonnet-5-5            glossary4 fsb-list-md            turns=2 in=6 out=141 invalid=0 2391ms
+PASS  claude-sonnet-5-5            glossary4 fsb-most-warn          turns=4 in=10 out=445 invalid=0 5936ms
+PASS  claude-sonnet-5-5            glossary4 fsb-count-errors       turns=8 in=18 out=1049 invalid=3 12930ms
+PASS  claude-sonnet-5-5            glossary4 fsb-config-diff        turns=2 in=6 out=86 invalid=0 2486ms
+PASS  claude-sonnet-5-5            glossary4 fsb-most-warn          turns=4 in=10 out=515 invalid=0 6304ms
+PASS  claude-sonnet-5-5            glossary4 fsb-config-diff        turns=2 in=6 out=86 invalid=0 2082ms
+PASS  claude-sonnet-5-5            glossary4 fsb-config-diff        turns=2 in=6 out=86 invalid=0 3027ms
+PASS  claude-sonnet-5-5            glossary4 fsb-create-oncall      turns=3 in=8 out=394 invalid=1 5095ms
+PASS  claude-sonnet-5-5            glossary4 fsb-edit-ini           turns=3 in=8 out=320 invalid=0 4496ms
+PASS  claude-sonnet-5-5            glossary4 fsb-create-oncall      turns=3 in=8 out=438 invalid=0 5492ms
+PASS  claude-sonnet-5-5            glossary4 fsb-create-oncall      turns=3 in=8 out=435 invalid=0 6317ms
+PASS  claude-sonnet-5-5            glossary4 fsb-edit-ini           turns=3 in=8 out=347 invalid=0 5685ms
+PASS  claude-sonnet-5-5            glossary4 fsb-edit-ini           turns=3 in=8 out=362 invalid=0 5064ms
+PASS  claude-sonnet-5-5            glossary4 fsb-move-archive       turns=3 in=8 out=295 invalid=1 4136ms
+PASS  claude-sonnet-5-5            glossary4 fsb-move-archive       turns=3 in=8 out=290 invalid=1 4113ms
+PASS  claude-sonnet-5-5            glossary4 fsb-move-archive       turns=3 in=8 out=302 invalid=1 4071ms
+PASS  claude-sonnet-5-5            glossary4 fsb-append-report      turns=6 in=14 out=955 invalid=0 11509ms
+PASS  claude-sonnet-5-5            glossary4 fsb-append-report      turns=7 in=16 out=1107 invalid=1 12347ms
+PASS  claude-sonnet-5-5            glossary4 fsb-append-report      turns=8 in=18 out=1234 invalid=1 15316ms
+total tokens spent: 446546
+ledger total (this phase): 67.14 USD
+log: results/fs-blind-v43.jsonl

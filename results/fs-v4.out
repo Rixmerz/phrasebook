@@ -1,0 +1,65 @@
+definition tokens  claude-sonnet-5-5: native=2779 glossary=734 code=2296
+definition tokens  claude-haiku-5-5: native=2779 glossary=734 code=2296
+PASS  claude-sonnet-5-5            glossary4 fs-create-file         turns=3 in=8 out=229 invalid=1 3351ms
+PASS  claude-sonnet-5-5            glossary4 fs-create-file         turns=3 in=8 out=230 invalid=1 3500ms
+PASS  claude-sonnet-5-5            glossary4 fs-create-file         turns=3 in=8 out=230 invalid=1 4035ms
+PASS  claude-sonnet-5-5            glossary4 fs-append-todo         turns=3 in=8 out=219 invalid=0 3885ms
+PASS  claude-sonnet-5-5            glossary4 fs-append-todo         turns=3 in=8 out=217 invalid=0 4033ms
+PASS  claude-sonnet-5-5            glossary4 fs-append-todo         turns=3 in=8 out=272 invalid=0 4346ms
+PASS  claude-sonnet-5-5            glossary4 fs-move                turns=4 in=10 out=315 invalid=1 5612ms
+PASS  claude-sonnet-5-5            glossary4 fs-move                turns=4 in=10 out=312 invalid=1 5687ms
+PASS  claude-sonnet-5-5            glossary4 fs-move                turns=4 in=10 out=312 invalid=1 6498ms
+PASS  claude-sonnet-5-5            glossary4 fs-count-errors        turns=2 in=6 out=77 invalid=0 2262ms
+PASS  claude-sonnet-5-5            glossary4 fs-count-errors        turns=2 in=6 out=77 invalid=0 2218ms
+PASS  claude-sonnet-5-5            glossary4 fs-read-version        turns=2 in=6 out=65 invalid=0 16291ms
+PASS  claude-sonnet-5-5            glossary4 fs-read-version        turns=2 in=6 out=65 invalid=0 16386ms
+PASS  claude-sonnet-5-5            glossary4 fs-read-version        turns=2 in=6 out=65 invalid=0 16384ms
+PASS  claude-sonnet-5-5            glossary4 fs-count-errors        turns=2 in=6 out=77 invalid=0 2509ms
+PASS  claude-sonnet-5-5            glossary4 fs-list-ts             turns=2 in=6 out=128 invalid=0 2345ms
+PASS  claude-sonnet-5-5            glossary4 fs-list-ts             turns=2 in=6 out=132 invalid=0 2322ms
+PASS  claude-sonnet-5-5            glossary4 fs-list-ts             turns=2 in=6 out=141 invalid=0 2341ms
+PASS  claude-sonnet-5-5            glossary4 fs-largest-log         turns=3 in=8 out=153 invalid=1 2948ms
+PASS  claude-sonnet-5-5            glossary4 fs-largest-log         turns=3 in=8 out=150 invalid=1 2982ms
+PASS  claude-sonnet-5-5            glossary4 fs-edit-version        turns=4 in=10 out=325 invalid=1 5341ms
+PASS  claude-sonnet-5-5            glossary4 fs-largest-log         turns=3 in=8 out=149 invalid=1 3153ms
+PASS  claude-sonnet-5-5            glossary4 fs-edit-version        turns=4 in=10 out=337 invalid=1 5754ms
+PASS  claude-sonnet-5-5            glossary4 fs-edit-version        turns=4 in=10 out=350 invalid=1 5330ms
+PASS  claude-sonnet-5-5            glossary4 fs-mentions-ana        turns=4 in=10 out=280 invalid=1 4919ms
+PASS  claude-sonnet-5-5            glossary4 fs-mentions-ana        turns=4 in=10 out=273 invalid=1 4575ms
+PASS  claude-sonnet-5-5            glossary4 fs-backup-readme       turns=3 in=8 out=244 invalid=0 4647ms
+PASS  claude-sonnet-5-5            glossary4 fs-mentions-ana        turns=4 in=10 out=273 invalid=1 5420ms
+PASS  claude-sonnet-5-5            glossary4 fs-backup-readme       turns=3 in=8 out=274 invalid=0 4599ms
+PASS  claude-sonnet-5-5            glossary4 fs-backup-readme       turns=3 in=8 out=258 invalid=0 4355ms
+PASS  claude-haiku-5-5             glossary4 fs-read-version        turns=2 in=6 out=65 invalid=0 1535ms
+PASS  claude-haiku-5-5             glossary4 fs-read-version        turns=2 in=6 out=65 invalid=0 1492ms
+PASS  claude-haiku-5-5             glossary4 fs-read-version        turns=2 in=6 out=65 invalid=0 1517ms
+PASS  claude-haiku-5-5             glossary4 fs-create-file         turns=3 in=8 out=301 invalid=1 2846ms
+PASS  claude-haiku-5-5             glossary4 fs-create-file         turns=3 in=8 out=285 invalid=1 3980ms
+PASS  claude-haiku-5-5             glossary4 fs-append-todo         turns=3 in=8 out=311 invalid=0 2943ms
+PASS  claude-haiku-5-5             glossary4 fs-create-file         turns=3 in=8 out=239 invalid=1 3705ms
+PASS  claude-haiku-5-5             glossary4 fs-count-errors        turns=2 in=6 out=77 invalid=0 1936ms
+PASS  claude-haiku-5-5             glossary4 fs-move                turns=4 in=10 out=423 invalid=2 3937ms
+PASS  claude-haiku-5-5             glossary4 fs-append-todo         turns=3 in=8 out=281 invalid=0 5608ms
+PASS  claude-haiku-5-5             glossary4 fs-append-todo         turns=4 in=10 out=449 invalid=1 6064ms
+PASS  claude-haiku-5-5             glossary4 fs-move                turns=4 in=10 out=395 invalid=2 3921ms
+PASS  claude-haiku-5-5             glossary4 fs-move                turns=4 in=10 out=387 invalid=2 3834ms
+PASS  claude-haiku-5-5             glossary4 fs-list-ts             turns=2 in=6 out=144 invalid=0 1834ms
+PASS  claude-haiku-5-5             glossary4 fs-count-errors        turns=2 in=6 out=77 invalid=0 2056ms
+PASS  claude-haiku-5-5             glossary4 fs-list-ts             turns=2 in=6 out=134 invalid=0 1925ms
+PASS  claude-haiku-5-5             glossary4 fs-count-errors        turns=2 in=6 out=77 invalid=0 2470ms
+PASS  claude-haiku-5-5             glossary4 fs-list-ts             turns=2 in=6 out=136 invalid=0 1836ms
+PASS  claude-haiku-5-5             glossary4 fs-largest-log         turns=3 in=8 out=128 invalid=1 2625ms
+PASS  claude-haiku-5-5             glossary4 fs-largest-log         turns=3 in=8 out=128 invalid=1 2702ms
+PASS  claude-haiku-5-5             glossary4 fs-largest-log         turns=3 in=8 out=128 invalid=1 3961ms
+PASS  claude-haiku-5-5             glossary4 fs-mentions-ana        turns=3 in=8 out=158 invalid=0 2491ms
+PASS  claude-haiku-5-5             glossary4 fs-mentions-ana        turns=3 in=8 out=158 invalid=0 2419ms
+PASS  claude-haiku-5-5             glossary4 fs-edit-version        turns=5 in=12 out=648 invalid=2 6226ms
+PASS  claude-haiku-5-5             glossary4 fs-mentions-ana        turns=3 in=8 out=216 invalid=0 2605ms
+PASS  claude-haiku-5-5             glossary4 fs-edit-version        turns=4 in=10 out=615 invalid=1 7108ms
+PASS  claude-haiku-5-5             glossary4 fs-edit-version        turns=5 in=12 out=758 invalid=2 9575ms
+PASS  claude-haiku-5-5             glossary4 fs-backup-readme       turns=3 in=8 out=159 invalid=0 3121ms
+PASS  claude-haiku-5-5             glossary4 fs-backup-readme       turns=3 in=8 out=159 invalid=0 3075ms
+PASS  claude-haiku-5-5             glossary4 fs-backup-readme       turns=4 in=10 out=316 invalid=0 4884ms
+total tokens spent: 268661
+ledger total (this phase): 62.54 USD
+log: results/fs-v4.jsonl

@@ -1,0 +1,34 @@
+PASS  claude-haiku-4-5           glossary4s nb-puntos-s1           turns=4 in=36 cr=35199 cw=5735 out=905 usd=0.0196 15.5s
+FAIL  claude-haiku-4-5           glossary4s nb-ana-media-alta      turns=5 in=44 cr=46405 cw=7740 out=1723 usd=0.0288 21.5s
+PASS  claude-haiku-4-5           glossary4s nb-ana-media-alta      turns=9 in=76 cr=94732 cw=7088 out=1868 usd=0.0331 24.7s
+PASS  claude-haiku-4-5           glossary4s nb-puntos-s1           turns=13 in=108 cr=142244 cw=8732 out=1874 usd=0.0412 26.4s
+PASS  claude-haiku-4-5           glossary4s nb-mas-cargado         turns=4 in=36 cr=35000 cw=5603 out=721 usd=0.0183 11.8s
+PASS  claude-haiku-4-5           glossary4s nb-vencidas            turns=4 in=36 cr=34148 cw=4811 out=681 usd=0.0165 11.8s
+PASS  claude-haiku-4-5           glossary4s nb-mas-cargado         turns=5 in=44 cr=48585 cw=3511 out=964 usd=0.0167 15.2s
+PASS  claude-haiku-4-5           glossary4s nb-vencidas            turns=5 in=44 cr=47200 cw=2847 out=800 usd=0.0145 14.6s
+PASS  claude-haiku-4-5           glossary4s nb-postgres-abiertas   turns=7 in=60 cr=68930 cw=6398 out=1520 usd=0.0273 19.5s
+PASS  claude-haiku-4-5           glossary4s nb-postgres-abiertas   turns=5 in=44 cr=48358 cw=3912 out=1098 usd=0.0182 14.7s
+PASS  claude-haiku-4-5           glossary4s nb-proyecto-pendiente  turns=6 in=52 cr=58396 cw=7286 out=1907 usd=0.0300 20.7s
+PASS  claude-haiku-4-5           glossary4s nb-proyecto-pendiente  turns=8 in=68 cr=85635 cw=5410 out=1866 usd=0.0288 21.5s
+PASS  claude-haiku-4-5           glossary4s nb-demo-acuerdos       turns=4 in=36 cr=34451 cw=5078 out=1472 usd=0.0210 17.1s
+PASS  claude-haiku-4-5           glossary4s nb-onboarding-staging  turns=4 in=36 cr=34317 cw=5032 out=608 usd=0.0166 10.6s
+PASS  claude-haiku-4-5           glossary4s nb-demo-acuerdos       turns=4 in=36 cr=36689 cw=2751 out=1829 usd=0.0184 21.5s
+PASS  claude-haiku-4-5           glossary4s nb-onboarding-staging  turns=4 in=36 cr=36742 cw=2823 out=691 usd=0.0128 12.0s
+PASS  claude-haiku-4-5           glossary4s nb-backend-bug         turns=4 in=36 cr=34888 cw=5577 out=760 usd=0.0185 12.0s
+PASS  claude-haiku-4-5           glossary4s nb-backend-bug         turns=5 in=44 cr=47867 cw=3664 out=1196 usd=0.0181 16.4s
+PASS  claude-haiku-4-5           glossary4s nb-lider-presupuesto   turns=4 in=36 cr=34457 cw=5386 out=748 usd=0.0180 12.5s
+PASS  claude-haiku-4-5           glossary4s nb-lider-presupuesto   turns=4 in=36 cr=36460 cw=2545 out=688 usd=0.0122 10.6s
+PASS  claude-haiku-4-5           glossary4s nb-mas-comentada       turns=10 in=84 cr=149465 cw=19794 out=4679 usd=0.0780 44.3s
+PASS  claude-haiku-4-5           glossary4s nb-cerrar-tarea        turns=5 in=44 cr=45345 cw=5623 out=795 usd=0.0198 12.5s
+PASS  claude-haiku-4-5           glossary4s nb-cerrar-tarea        turns=5 in=44 cr=47800 cw=3397 out=858 usd=0.0159 13.6s
+PASS  claude-haiku-4-5           glossary4s nb-mas-comentada       turns=13 in=108 cr=300633 cw=26850 out=6649 usd=0.1171 59.3s
+PASS  claude-haiku-4-5           glossary4s nb-agregar-todo        turns=6 in=52 cr=57171 cw=6637 out=1371 usd=0.0259 17.2s
+PASS  claude-haiku-4-5           glossary4s nb-reasignar-diego     turns=8 in=68 cr=84008 cw=7249 out=2730 usd=0.0366 27.2s
+PASS  claude-haiku-4-5           glossary4s nb-agregar-todo        turns=4 in=36 cr=36926 cw=3086 out=865 usd=0.0142 12.6s
+PASS  claude-haiku-4-5           glossary4s nb-marcar-acuerdo      turns=6 in=52 cr=56890 cw=6290 out=1040 usd=0.0235 15.9s
+PASS  claude-haiku-4-5           glossary4s nb-reasignar-diego     turns=14 in=116 cr=171086 cw=11892 out=3924 usd=0.0606 40.3s
+FAIL  claude-haiku-4-5           glossary4s nb-marcar-acuerdo      turns=5 in=44 cr=47485 cw=3184 out=867 usd=0.0155 13.8s
+PASS  claude-haiku-4-5           glossary4s nb-comentar-bloqueada  turns=8 in=68 cr=78814 cw=6301 out=1461 usd=0.0279 19.0s
+PASS  claude-haiku-4-5           glossary4s nb-comentar-bloqueada  turns=5 in=44 cr=47884 cw=3457 out=1073 usd=0.0171 14.7s
+ledger total (this phase): 84.62 USD
+log: results/client-notion-h45s4.jsonl

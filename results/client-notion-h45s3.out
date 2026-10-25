@@ -1,0 +1,34 @@
+FAIL  claude-haiku-4-5           glossary4s nb-ana-media-alta      turns=3 in=28 cr=23784 cw=5298 out=556 usd=0.0158 11.6s
+FAIL  claude-haiku-4-5           glossary4s nb-vencidas            turns=4 in=36 cr=34162 cw=5467 out=820 usd=0.0185 14.1s
+FAIL  claude-haiku-4-5           glossary4s nb-mas-cargado         turns=5 in=44 cr=46024 cw=5772 out=1016 usd=0.0213 16.3s
+PASS  claude-haiku-4-5           glossary4s nb-puntos-s1           turns=6 in=52 cr=56298 cw=5967 out=989 usd=0.0226 16.7s
+PASS  claude-haiku-4-5           glossary4s nb-onboarding-staging  turns=4 in=36 cr=34404 cw=5187 out=689 usd=0.0173 12.7s
+PASS  claude-haiku-4-5           glossary4s nb-demo-acuerdos       turns=4 in=36 cr=34224 cw=4985 out=1257 usd=0.0197 16.4s
+PASS  claude-haiku-4-5           glossary4s nb-postgres-abiertas   turns=7 in=60 cr=68335 cw=6165 out=1506 usd=0.0268 22.1s
+PASS  claude-haiku-4-5           glossary4s nb-proyecto-pendiente  turns=6 in=52 cr=56838 cw=6422 out=1857 usd=0.0279 20.6s
+PASS  claude-haiku-4-5           glossary4s nb-backend-bug         turns=5 in=44 cr=45360 cw=6000 out=923 usd=0.0212 14.8s
+PASS  claude-haiku-4-5           glossary4s nb-lider-presupuesto   turns=5 in=44 cr=45019 cw=5768 out=1010 usd=0.0211 14.9s
+PASS  claude-haiku-4-5           glossary4s nb-cerrar-tarea        turns=7 in=60 cr=67448 cw=6252 out=1356 usd=0.0261 19.2s
+PASS  claude-haiku-4-5           glossary4s nb-agregar-todo        turns=6 in=52 cr=56750 cw=6498 out=1272 usd=0.0251 17.5s
+PASS  claude-haiku-4-5           glossary4s nb-mas-comentada       turns=5 in=44 cr=58859 cw=27546 out=4996 usd=0.0860 38.4s
+PASS  claude-haiku-4-5           glossary4s nb-marcar-acuerdo      turns=6 in=52 cr=56891 cw=6282 out=1044 usd=0.0235 15.3s
+PASS  claude-haiku-4-5           glossary4s nb-reasignar-diego     turns=9 in=76 cr=113001 cw=14183 out=4063 usd=0.0601 39.0s
+PASS  claude-haiku-4-5           glossary4s nb-comentar-bloqueada  turns=7 in=60 cr=71513 cw=8320 out=1825 usd=0.0330 22.2s
+PASS  claude-haiku-4-5           glossary4 nb-mas-cargado         turns=4 in=36 cr=33785 cw=5099 out=911 usd=0.0182 12.8s
+GAP   claude-haiku-4-5           glossary4 nb-ana-media-alta      turns=5 in=44 cr=45016 cw=18813 out=3345 usd=0.0589 34.3s
+PASS  claude-haiku-4-5           glossary4 nb-vencidas            turns=6 in=52 cr=51836 cw=5704 out=1308 usd=0.0232 19.0s
+PASS  claude-haiku-4-5           glossary4 nb-postgres-abiertas   turns=8 in=68 cr=78537 cw=7809 out=1977 usd=0.0334 23.6s
+FAIL  claude-haiku-4-5           glossary4 nb-puntos-s1           turns=16 in=124 cr=216400 cw=32661 out=5612 usd=0.1151 56.2s  error=error_max_turns 
+PASS  claude-haiku-4-5           glossary4 nb-demo-acuerdos       turns=4 in=36 cr=33111 cw=4450 out=1814 usd=0.0213 20.4s
+FAIL  claude-haiku-4-5           glossary4 nb-onboarding-staging  turns=3 in=26 cr=21980 cw=2740 out=575 usd=0.0106 9.7s
+PASS  claude-haiku-4-5           glossary4 nb-lider-presupuesto   turns=4 in=36 cr=33538 cw=5110 out=984 usd=0.0185 15.3s
+PASS  claude-haiku-4-5           glossary4 nb-cerrar-tarea        turns=5 in=44 cr=43674 cw=5093 out=846 usd=0.0188 14.6s
+PASS  claude-haiku-4-5           glossary4 nb-mas-comentada       turns=13 in=108 cr=291909 cw=28566 out=4641 usd=0.1096 46.6s
+FAIL  claude-haiku-4-5           glossary4 nb-proyecto-pendiente  turns=8 in=68 cr=102299 cw=23524 out=9956 usd=0.1071 71.2s
+PASS  claude-haiku-4-5           glossary4 nb-backend-bug         turns=6 in=52 cr=98645 cw=29724 out=6099 usd=0.0999 48.9s
+FAIL  claude-haiku-4-5           glossary4 nb-reasignar-diego     turns=5 in=44 cr=43399 cw=4540 out=937 usd=0.0181 14.2s
+FAIL  claude-haiku-4-5           glossary4 nb-marcar-acuerdo      turns=6 in=52 cr=54415 cw=5453 out=1256 usd=0.0227 16.6s
+FAIL  claude-haiku-4-5           glossary4 nb-agregar-todo        turns=6 in=52 cr=55290 cw=5693 out=1483 usd=0.0244 19.3s
+PASS  claude-haiku-4-5           glossary4 nb-comentar-bloqueada  turns=8 in=68 cr=95678 cw=10792 out=1892 usd=0.0407 27.0s
+ledger total (this phase): 84.62 USD
+log: results/client-notion-h45s3.jsonl

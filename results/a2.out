@@ -1,0 +1,20 @@
+definition tokens  claude-sonnet-5-5: native=19384 glossary=1719 code=14480 glossary2=1765
+Deno.serve: request.signal aborts on successful responses (legacy behavior). To detect when a request has been fully delivered use the `completed` promise on the handler's info argument. Move cleanup to the handler's return path, or opt in to the new behavior with --unstable-no-legacy-abort. See https://docs.deno.com/go/unstable-no-legacy-abort
+PASS  claude-sonnet-5-5            code      b-close-duplicates     turns=3 in=8 out=416 invalid=0 4803ms
+PASS  claude-sonnet-5-5            code      b-close-duplicates     turns=3 in=8 out=416 invalid=0 5418ms
+PASS  claude-sonnet-5-5            code      b-close-duplicates     turns=3 in=8 out=436 invalid=0 5523ms
+PASS  claude-sonnet-5-5            native    b-close-duplicates     turns=4 in=10 out=2041 invalid=0 14306ms
+PASS  claude-sonnet-5-5            native    b-close-duplicates     turns=4 in=10 out=2038 invalid=0 14764ms
+PASS  claude-sonnet-5-5            native    b-close-duplicates     turns=4 in=10 out=2010 invalid=0 14948ms
+PASS  claude-sonnet-5-5            ptc       b-close-duplicates     turns=4 in=8 out=494 invalid=0 10543ms
+PASS  claude-sonnet-5-5            ptc       b-close-duplicates     turns=4 in=8 out=448 invalid=0 10907ms
+PASS  claude-sonnet-5-5            glossary3-feedback b-close-duplicates     turns=4 in=10 out=567 invalid=0 7013ms
+PASS  claude-sonnet-5-5            glossary3-feedback b-close-duplicates     turns=4 in=10 out=583 invalid=0 6361ms
+PASS  claude-sonnet-5-5            glossary3-feedback b-close-duplicates     turns=4 in=10 out=589 invalid=0 6776ms
+PASS  claude-sonnet-5-5            glossary4 b-close-duplicates     turns=3 in=8 out=526 invalid=0 5679ms
+PASS  claude-sonnet-5-5            glossary4 b-close-duplicates     turns=3 in=8 out=527 invalid=0 5266ms
+PASS  claude-sonnet-5-5            ptc       b-close-duplicates     turns=14 in=8 out=409 invalid=0 21182ms
+PASS  claude-sonnet-5-5            glossary4 b-close-duplicates     turns=3 in=8 out=528 invalid=0 5222ms
+total tokens spent: 654413
+ledger total (this phase): 52.72 USD
+log: results/blind-amended.jsonl

@@ -1,0 +1,40 @@
+definition tokens  claude-haiku-5-5: native=2779 glossary=734 code=2296
+PASS  claude-haiku-5-5             native    fsb-read-buddy         turns=2 in=6 out=74 invalid=0 1605ms
+PASS  claude-haiku-5-5             native    fsb-read-db-primary    turns=2 in=6 out=67 invalid=0 1833ms
+PASS  claude-haiku-5-5             native    fsb-sum-norte          turns=2 in=6 out=198 invalid=0 2229ms
+PASS  claude-haiku-5-5             native    fsb-read-readme-link   turns=3 in=8 out=133 invalid=0 2388ms
+PASS  claude-haiku-5-5             native    fsb-list-md            turns=2 in=6 out=241 invalid=0 2265ms
+PASS  claude-haiku-5-5             native    fsb-config-diff        turns=3 in=8 out=155 invalid=0 2531ms
+PASS  claude-haiku-5-5             native    fsb-edit-ini           turns=3 in=8 out=279 invalid=0 3181ms
+PASS  claude-haiku-5-5             native    fsb-create-oncall      turns=3 in=8 out=546 invalid=1 3723ms
+PASS  claude-haiku-5-5             code      fsb-read-buddy         turns=2 in=6 out=97 invalid=0 1752ms
+PASS  claude-haiku-5-5             native    fsb-move-archive       turns=3 in=8 out=431 invalid=1 3508ms
+PASS  claude-haiku-5-5             native    fsb-count-errors       turns=3 in=8 out=2104 invalid=0 8254ms
+PASS  claude-haiku-5-5             code      fsb-read-db-primary    turns=2 in=6 out=90 invalid=0 3307ms
+PASS  claude-haiku-5-5             code      fsb-sum-norte          turns=2 in=6 out=221 invalid=0 1791ms
+PASS  claude-haiku-5-5             code      fsb-read-readme-link   turns=3 in=8 out=163 invalid=0 2548ms
+PASS  claude-haiku-5-5             native    fsb-most-warn          turns=3 in=8 out=2685 invalid=0 11151ms
+PASS  claude-haiku-5-5             code      fsb-config-diff        turns=2 in=6 out=233 invalid=0 2389ms
+PASS  claude-haiku-5-5             code      fsb-list-md            turns=2 in=6 out=187 invalid=0 3327ms
+PASS  claude-haiku-5-5             code      fsb-count-errors       turns=4 in=10 out=647 invalid=0 5847ms
+PASS  claude-haiku-5-5             code      fsb-create-oncall      turns=2 in=6 out=377 invalid=0 3397ms
+PASS  claude-haiku-5-5             native    fsb-append-report      turns=4 in=10 out=2273 invalid=0 10248ms
+PASS  claude-haiku-5-5             code      fsb-most-warn          turns=3 in=8 out=440 invalid=0 6195ms
+PASS  claude-haiku-5-5             glossary4 fsb-read-buddy         turns=2 in=6 out=78 invalid=0 1712ms
+PASS  claude-haiku-5-5             glossary4 fsb-read-db-primary    turns=2 in=6 out=71 invalid=0 2051ms
+PASS  claude-haiku-5-5             code      fsb-move-archive       turns=3 in=8 out=492 invalid=2 3737ms
+PASS  claude-haiku-5-5             code      fsb-edit-ini           turns=4 in=10 out=789 invalid=1 5561ms
+PASS  claude-haiku-5-5             glossary4 fsb-read-readme-link   turns=3 in=8 out=123 invalid=0 2615ms
+PASS  claude-haiku-5-5             glossary4 fsb-sum-norte          turns=2 in=6 out=202 invalid=0 1977ms
+PASS  claude-haiku-5-5             glossary4 fsb-config-diff        turns=2 in=6 out=86 invalid=0 1789ms
+PASS  claude-haiku-5-5             glossary4 fsb-list-md            turns=2 in=6 out=215 invalid=0 2168ms
+PASS  claude-haiku-5-5             glossary4 fsb-most-warn          turns=4 in=10 out=612 invalid=0 4631ms
+PASS  claude-haiku-5-5             code      fsb-append-report      turns=4 in=10 out=753 invalid=0 9743ms
+PASS  claude-haiku-5-5             glossary4 fsb-move-archive       turns=4 in=10 out=422 invalid=2 4690ms
+PASS  claude-haiku-5-5             glossary4 fsb-edit-ini           turns=3 in=8 out=433 invalid=0 5652ms
+PASS  claude-haiku-5-5             glossary4 fsb-create-oncall      turns=3 in=8 out=561 invalid=1 7413ms
+PASS  claude-haiku-5-5             glossary4 fsb-count-errors       turns=5 in=12 out=2560 invalid=1 11426ms
+PASS  claude-haiku-5-5             glossary4 fsb-append-report      turns=8 in=18 out=1690 invalid=2 11567ms
+total tokens spent: 484652
+ledger total (this phase): 63.52 USD
+log: results/fsb-pilot.jsonl

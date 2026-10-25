@@ -1,0 +1,25 @@
+Deno.serve: request.signal aborts on successful responses (legacy behavior). To detect when a request has been fully delivered use the `completed` promise on the handler's info argument. Move cleanup to the handler's return path, or opt in to the new behavior with --unstable-no-legacy-abort. See https://docs.deno.com/go/unstable-no-legacy-abort
+FAIL  claude-haiku-4-5           glossary4 x-fix-branch-pr        turns=1 in=10 cr=5773 cw=2238 out=686 usd=0.0085 9.0s
+PASS  claude-haiku-4-5           glossary4 x-merge-by-branch      turns=4 in=36 cr=34772 cw=5178 out=753 usd=0.0176 11.9s
+PASS  claude-haiku-4-5           glossary4 x-missing-branch       turns=4 in=36 cr=34520 cw=5054 out=821 usd=0.0177 11.0s
+PASS  claude-haiku-4-5           glossary4 x-uncommented          turns=8 in=68 cr=79331 cw=6172 out=1582 usd=0.0283 21.0s
+PASS  claude-haiku-4-5           glossary4 x-reopen-latest        turns=4 in=36 cr=34874 cw=5208 out=869 usd=0.0183 11.3s
+PASS  claude-haiku-4-5           glossary4 x-label-summary        turns=4 in=36 cr=34882 cw=6212 out=1402 usd=0.0230 15.3s
+FAIL  claude-haiku-4-5           glossary4 x-two-files-pr         turns=1 in=10 cr=5773 cw=2240 out=890 usd=0.0095 9.6s
+PASS  claude-haiku-4-5           glossary4 x-move-label           turns=11 in=92 cr=108139 cw=8607 out=2442 usd=0.0403 29.4s
+PASS  claude-haiku-4-5           glossary4 x-pr-references        turns=4 in=36 cr=34628 cw=5136 out=550 usd=0.0165 9.4s
+FAIL  claude-haiku-4-5           glossary4 x-conditional-merge    turns=1 in=10 cr=5773 cw=2211 out=326 usd=0.0066 5.1s
+FAIL  claude-haiku-4-5           glossary4 x-close-dupes          turns=4 in=36 cr=35093 cw=5365 out=1044 usd=0.0195 12.8s
+PASS  claude-haiku-4-5           native    x-uncommented          turns=3 in=28 cr=24730 cw=4514 out=718 usd=0.0151 10.2s
+FAIL  claude-haiku-4-5           native    x-merge-by-branch      turns=7 in=60 cr=69125 cw=6209 out=1911 usd=0.0289 20.2s
+PASS  claude-haiku-4-5           native    x-fix-branch-pr        turns=7 in=54 cr=61432 cw=7102 out=2167 usd=0.0312 22.2s
+FAIL  claude-haiku-4-5           native    x-missing-branch       turns=3 in=28 cr=24293 cw=4087 out=688 usd=0.0141 9.4s
+PASS  claude-haiku-4-5           native    x-move-label           turns=6 in=36 cr=37238 cw=6336 out=1415 usd=0.0235 14.0s
+PASS  claude-haiku-4-5           native    x-label-summary        turns=3 in=28 cr=24820 cw=4737 out=854 usd=0.0163 11.3s
+PASS  claude-haiku-4-5           native    x-reopen-latest        turns=6 in=56 cr=63519 cw=7652 out=1820 usd=0.0308 20.9s
+FAIL  claude-haiku-4-5           native    x-conditional-merge    turns=1 in=10 cr=5773 cw=3191 out=658 usd=0.0103 8.1s
+PASS  claude-haiku-4-5           native    x-pr-references        turns=5 in=46 cr=46250 cw=5697 out=869 usd=0.0204 14.4s
+PASS  claude-haiku-4-5           native    x-two-files-pr         turns=7 in=52 cr=58466 cw=6641 out=2003 usd=0.0292 20.8s
+FAIL  claude-haiku-4-5           native    x-close-dupes          turns=4 in=28 cr=25510 cw=5530 out=841 usd=0.0178 9.8s
+ledger total (this phase): 84.62 USD
+log: results/client-ghhard-h45b.jsonl

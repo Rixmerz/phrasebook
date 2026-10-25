@@ -1,0 +1,2 @@
+Deno.serve: request.signal aborts on successful responses (legacy behavior). To detect when a request has been fully delivered use the `completed` promise on the handler's info argument. Move cleanup to the handler's return path, or opt in to the new behavior with --unstable-no-legacy-abort. See https://docs.deno.com/go/unstable-no-legacy-abort
+PASS  claude-haiku-4-5           glossary4 x-uncommented          turns=7 in=60 cr=67340 cw=5681 out=1063 usd=0.0235 17.0s
