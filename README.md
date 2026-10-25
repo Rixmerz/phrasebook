@@ -1034,3 +1034,7 @@ add blocks with `append block` (a markdown edit rewrites every block). Tuned set
 - Haiku 5.5 on notion-blind6, 3 reps: glossary4s 36/36 (0.062 USD), glossary4 36/36 (0.064 USD). The small notes cost nothing on the stronger model.
 - GitHub small notes (`glossaries/github-small.json`, passed with the proxy's `--notes=`): tuned on github-hard with Haiku 4.5, 22/22 against 7/11 for glossary4 and native.
 - Blind, `github-blind4` (frozen in df22286, sha256 c82e6ba3), Haiku 4.5, 3 reps: glossary4s 27/30 (0.61 USD), native 23/30 (0.59 USD), glossary4 13/30 (0.41 USD). The `b4-missing-branch` grader misses "No encontré"-style replies, so it undercounts every arm on that task. It is left as frozen.
+
+## License
+
+Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
