@@ -138,6 +138,27 @@ function armFolder(arm: string): string {
   return dir;
 }
 
+// Claude Code can exit without stopping the MCP servers it started. Left running, one proxy and one
+// server per run filled the container's memory and got later runs killed (exit 137). Every process of
+// a run carries its unique token in its environment, so those still alive are stopped here (Linux).
+function killLeftovers(token: string) {
+  let entries: Iterable<Deno.DirEntry>;
+  try {
+    entries = Deno.readDirSync("/proc");
+  } catch {
+    return;
+  }
+  for (const e of entries) {
+    const pid = Number(e.name);
+    if (!pid || pid === Deno.pid) continue;
+    try {
+      if (Deno.readTextFileSync(`/proc/${pid}/environ`).includes(token)) Deno.kill(pid, "SIGKILL");
+    } catch {
+      // gone already, or not ours to read
+    }
+  }
+}
+
 async function runOnce(model: string, arm: string, task: Task, rep: number) {
   const token = `client-${crypto.randomUUID()}`;
   await suite.begin(token);
@@ -165,6 +186,7 @@ async function runOnce(model: string, arm: string, task: Task, rep: number) {
     stderr: "piped",
   });
   const out = await cmd.output();
+  killLeftovers(token);
   const latency = Math.round(performance.now() - t0);
   let res: Record<string, unknown> = {};
   try {

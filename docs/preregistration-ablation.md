@@ -37,5 +37,9 @@ Predictions:
 Amendment (2026-10-28, during the run): two Sonnet 5.5 attempts aborted inside the client
 (0 turns, no output, cost 0): 58 runs in the first, 169 in the second. Kept apart in
 `results/runs/client-ablation-sonnet-aborted*.jsonl`; they are not model outcomes. Haiku 5.5
-finished without such aborts. `src/client_bench.ts` now records what the client printed when a
-run aborts (diagnostics only; grading unchanged), and Sonnet is rerun with concurrency 1.
+finished without such aborts. Cause, found on a third attempt: Claude Code left each run's MCP
+servers running after it exited; about 240 proxies and 240 GitHub servers filled the container's
+16 GB and the system killed later runs (exit 137). `src/client_bench.ts` now stops every process
+that carries a run's token when the run ends, and records what the client printed when a run
+aborts. Grading is unchanged. Sonnet is rerun in full with concurrency 2. The Haiku runs ran with
+the leak but none aborted; they are kept.

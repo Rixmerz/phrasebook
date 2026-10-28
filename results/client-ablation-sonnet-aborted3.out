@@ -1,0 +1,8 @@
+FAIL  claude-sonnet-5-5          glossary4 t3-issue-facts         turns=0 in=0 cr=0 cw=0 out=0 usd=0.0000 27.7s  error=exit 137 
+FAIL  claude-sonnet-5-5          glossary4 t3-issue-facts         turns=0 in=0 cr=0 cw=0 out=0 usd=0.0000 3.7s  error=exit 137 
+FAIL  claude-sonnet-5-5          glossary4 t3-issue-facts         turns=0 in=0 cr=0 cw=0 out=0 usd=0.0000 3.4s  error=exit 137 
+FAIL  claude-sonnet-5-5          glossary4 t3-pr-base-author      turns=0 in=0 cr=0 cw=0 out=0 usd=0.0000 3.7s  error=exit 137 
+FAIL  claude-sonnet-5-5          glossary4 t3-pr-base-author      turns=0 in=0 cr=0 cw=0 out=0 usd=0.0000 3.7s  error=exit 137 
+FAIL  claude-sonnet-5-5          glossary4 t3-pr-base-author      turns=0 in=0 cr=0 cw=0 out=0 usd=0.0000 3.2s  error=exit 137 
+FAIL  claude-sonnet-5-5          glossary4 t3-release-flag        turns=0 in=0 cr=0 cw=0 out=0 usd=0.0000 3.2s  error=exit 137 
+FAIL  claude-sonnet-5-5          glossary4 t3-release-flag        turns=0 in=0 cr=0 cw=0 out=0 usd=0.0000 3.1s  error=exit 137 
