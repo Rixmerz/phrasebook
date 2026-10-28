@@ -43,3 +43,19 @@ servers running after it exited; about 240 proxies and 240 GitHub servers filled
 that carries a run's token when the run ends, and records what the client printed when a run
 aborts. Grading is unchanged. Sonnet is rerun in full with concurrency 2. The Haiku runs ran with
 the leak but none aborted; they are kept.
+
+## Result (2026-10-28)
+
+Logs: `results/runs/client-ablation.jsonl` (Haiku 5.5), `results/runs/client-ablation-sonnet.jsonl`
+(Sonnet 5.5, third attempt). One Sonnet glossary4 run hit a route the fake lacks and is excluded
+(it passed). Cost relative to glossary4, 95% bootstrap over tasks:
+
+| model | glossary4 | native | native-compact | native-trimmed | native-trimmed-compact |
+|---|---|---|---|---|---|
+| Haiku 5.5 | 46/48 | 43/48, 1.89x [1.49, 2.41] | 44/48, 1.58x [1.22, 2.04] | 46/48, 1.63x [1.26, 2.03] | 45/48, 1.24x [0.87, 1.67] |
+| Sonnet 5.5 | 47/47 | 48/48, 2.05x [1.44, 2.84] | 45/48, 1.82x [1.21, 2.70] | 48/48, 1.84x [1.34, 2.60] | 45/48, 1.53x [1.03, 2.21] |
+
+Scorecard: (1) held on both models. (2) held: no difference survives Holm. (3) held on both
+models. (4) held on Sonnet 5.5, barely (lower bound 1.03); on Haiku 5.5, not predicted, the
+interval crosses 1x. All six Sonnet failures of the compact arms are `t3-pct-unassigned-v42`:
+the right value (14.3%) after its arithmetic, rejected by the frozen grader.

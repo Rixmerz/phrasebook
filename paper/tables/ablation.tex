@@ -1,11 +1,12 @@
 \begin{table*}[t]
 \centering
-\small
-\begin{tabular}{ll lp{2.6cm}p{2.6cm}p{2.6cm}p{2.6cm}}
+\footnotesize
+\begin{tabular}{ll lp{2.0cm}p{2.0cm}p{2.0cm}p{2.0cm}}
 \toprule
-Set & Model & Phrasebook & Native & Native + compact results & Native, trimmed defs & Native, trimmed + compact \\
+Set & Model & Phrasebook & Native & + compact & + trimmed & + both \\
 \midrule
-GitHub blind 3 & Haiku 5.5 & 46/48 & 43/48 \newline {\scriptsize \textbf{1.89$\times$} [1.49, 2.41]} & 44/48 \newline {\scriptsize \textbf{1.58$\times$} [1.22, 2.04]} & 46/48 \newline {\scriptsize \textbf{1.63$\times$} [1.26, 2.03]} & 45/48 \newline {\scriptsize 1.24$\times$ [0.87, 1.67]} \\
+GitHub blind 3 & Haiku 5.5 & 46/48 & 43/48 \newline {\scriptsize \textbf{1.89$\times$}\newline [1.49, 2.41]} & 44/48 \newline {\scriptsize \textbf{1.58$\times$}\newline [1.22, 2.04]} & 46/48 \newline {\scriptsize \textbf{1.63$\times$}\newline [1.26, 2.03]} & 45/48 \newline {\scriptsize 1.24$\times$\newline [0.87, 1.67]} \\
+GitHub blind 3 & Sonnet 5.5 & 47/47 & 48/48 \newline {\scriptsize \textbf{2.05$\times$}\newline [1.44, 2.84]} & 45/48 \newline {\scriptsize \textbf{1.82$\times$}\newline [1.21, 2.70]} & 48/48 \newline {\scriptsize \textbf{1.84$\times$}\newline [1.34, 2.60]} & 45/48 \newline {\scriptsize \textbf{1.53$\times$}\newline [1.03, 2.21]} \\
 \bottomrule
 \end{tabular}
 \caption{Ablation through Claude Code on GitHub blind 3 (3 repetitions). Native MCP with one ingredient of the phrasebook at a time: results shaped as the phrasebook shapes them (compact), descriptions cut to their first sentence (trimmed), or both. Columns as in Table~\ref{tab:api}.}

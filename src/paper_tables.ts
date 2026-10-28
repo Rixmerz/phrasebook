@@ -116,7 +116,7 @@ function analyse(blocks: Block[]): Row[] {
 }
 
 const MODEL: Record<string, string> = { "haiku-4-5": "Haiku 4.5", "haiku-5-5": "Haiku 5.5", "sonnet-5-5": "Sonnet 5.5", "opus-5-5": "Opus 5.5" };
-const ARM: Record<string, string> = { "native-compact": "Native + compact results", "native-trimmed": "Native, trimmed defs", "native-trimmed-compact": "Native, trimmed + compact", native: "Native", code: "Code mode", ptc: "PTC", glossary4: "Phrasebook", glossary4s: "Phrasebook-S", "glossary3-feedback": "Phrasebook v3" };
+const ARM: Record<string, string> = { "native-compact": "+ compact", "native-trimmed": "+ trimmed", "native-trimmed-compact": "+ both", native: "Native", code: "Code mode", ptc: "PTC", glossary4: "Phrasebook", glossary4s: "Phrasebook-S", "glossary3-feedback": "Phrasebook v3" };
 const f2 = (x: number) => x.toFixed(2);
 const pv = (p: number) => p < 0.001 ? "<0.001" : f2(p);
 
@@ -127,14 +127,14 @@ function latex(rows: Row[], arms: string[], caption: string, label: string): str
       const c = r.cmps.find((x) => x.arm === a);
       if (!c) return "--";
       const sig = c.lo > 1 || c.hi < 1 ? "\\textbf{" + f2(c.ratio) + "$\\times$}" : f2(c.ratio) + "$\\times$";
-      return `${c.k}/${c.n}${c.pHolm! < 0.05 ? "$^{*}$" : ""} \\newline {\\scriptsize ${sig} [${f2(c.lo)}, ${f2(c.hi)}]}`;
+      return `${c.k}/${c.n}${c.pHolm! < 0.05 ? "$^{*}$" : ""} \\newline {\\scriptsize ${sig}\\newline [${f2(c.lo)}, ${f2(c.hi)}]}`;
     });
     const refName = r.ref === "glossary4" ? "" : r.ref === "glossary4s" ? " (S)" : " (v3)";
     return [r.block, MODEL[r.model], `${r.k}/${r.n}${refName}`, ...cells].join(" & ") + " \\\\";
   });
   return [
-    "\\begin{table*}[t]", "\\centering", "\\small",
-    `\\begin{tabular}{ll l${"p{2.6cm}".repeat(arms.length)}}`, "\\toprule", head + " \\\\", "\\midrule",
+    "\\begin{table*}[t]", "\\centering", arms.length > 3 ? "\\footnotesize" : "\\small",
+    `\\begin{tabular}{ll l${(arms.length > 3 ? "p{2.0cm}" : "p{2.6cm}").repeat(arms.length)}}`, "\\toprule", head + " \\\\", "\\midrule",
     ...lines, "\\bottomrule", "\\end{tabular}", `\\caption{${caption}}`, `\\label{${label}}`, "\\end{table*}", "",
   ].join("\n");
 }
