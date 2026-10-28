@@ -1037,3 +1037,14 @@ add blocks with `append block` (a markdown edit rewrites every block). Tuned set
 - GitHub small notes (`glossaries/github-small.json`, passed with the proxy's `--notes=`): tuned on github-hard with Haiku 4.5, 22/22 against 7/11 for glossary4 and native.
 - Blind, `github-blind4` (frozen in 41446e6, sha256 c82e6ba3), Haiku 4.5, 3 reps: glossary4s 27/30 (0.61 USD), native 23/30 (0.59 USD), glossary4 13/30 (0.41 USD). The `b4-missing-branch` grader misses "No encontré"-style replies, so it undercounts every arm on that task. It is left as frozen.
 
+
+## Field report: a Gemini data agent (2026-10-28)
+
+Outside this benchmark: a team ported the phrasebook to a production text-to-SQL
+agent on Gemini Flash-Lite (17 tools already written for the model). Tool
+definitions fell 79%; tokens per turn fell about 21% against two native runs whose
+noise was 11%; tool rounds did not move. Data glossaries that replace catalog
+discovery saved 12% of tokens and lowered graded answer quality (-0.29 of 5,
+95% CI [-0.49, -0.12], 99 replayed turns). The gap with GitHub comes from little
+left to compress, a baseline already shaped for the model, and dependent rounds.
+Details, anonymized: [field-report-gemini-data-agent.md](field-report-gemini-data-agent.md).
