@@ -85,3 +85,19 @@ Exclusions:
    native.
 
 A refuted prediction is reported as refuted.
+
+## Intake (added 2026-10-28, before any run; analysis rules unchanged)
+
+Each returned log is checked with `deno run -A src/xv_check.ts <file>`. It verifies:
+
+- one runner, one model and one suite per file;
+- every (arm, task, rep) present exactly once, with the frozen task ids;
+- no API-error rows.
+
+A file that passes is copied to `results/runs/` as is. `src/paper_tables.ts` then picks up every
+`xv-*.jsonl` and writes `paper/tables/crossvendor.tex`, one block per language.
+
+- Rows are keyed by model and runner, so two people running the same model stay separate.
+- The cost column is input plus output tokens per run, as prediction 2 states, not USD.
+- If a runner left `--runner` empty, it is filled in from their contribution form; no other
+  field is edited.

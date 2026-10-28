@@ -21,6 +21,12 @@ function load(files: string[]): Run[] {
       const r = JSON.parse(l);
       // Harness gaps and our own budget aborts are not the model's outcome.
       if (r.kind !== "run" || r.harness_gaps?.length || /budget of|USD cap/.test(r.stop ?? "")) continue;
+      // Cross-vendor runs (src/openai_bench.ts) are compared in tokens, since vendors price differently,
+      // and keyed by runner as well as model, so two people running one model stay apart.
+      if (r.client === "openai-compatible") {
+        out.push({ suite: r.suite, model: `${r.model} (${r.runner || "?"})`, arm: r.arm, task: r.task, rep: r.rep, success: !!r.success, usd: r.input_tokens + r.output_tokens, turns: r.turns });
+        continue;
+      }
       // Claude Code runs carry the cost the client reported; API runs are priced from tokens.
       out.push({ suite: r.suite, model: shortModel(r.model), arm: r.arm, task: r.task, rep: r.rep, success: !!r.success, usd: r.usd ?? usd(r.model, r), turns: r.turns });
     }
@@ -29,7 +35,7 @@ function load(files: string[]): Run[] {
 }
 
 // One block per blind set. `ref` is the phrasebook arm the others are compared with.
-type Block = { label: string; files: string[]; ref: string; arms: string[]; note?: string };
+type Block = { label: string; files: string[]; ref: string; arms: string[]; note?: string; suite?: string };
 const API: Block[] = [
   { label: "GitHub blind 1", files: ["blind-haiku55.jsonl", "blind-sonnet55.jsonl", "blind-opus55.jsonl"], ref: "glossary3-feedback", arms: ["native", "code", "ptc"], note: "v3" },
   { label: "GitHub blind 2", files: ["blind2.jsonl"], ref: "glossary4", arms: ["code"] },
@@ -46,6 +52,20 @@ const CLIENT: Block[] = [
   { label: "Notion blind 5", files: ["client-blind5-h45.jsonl"], ref: "glossary4s", arms: ["native", "glossary4"] },
   { label: "Notion blind 6", files: ["client-blind6-h45.jsonl"], ref: "glossary4s", arms: ["native", "glossary4"] },
   { label: "GitHub blind 4", files: ["client-ghblind4-h45.jsonl"], ref: "glossary4s", arms: ["native", "glossary4"] },
+];
+
+// Cross-vendor round (docs/preregistration-crossvendor.md): every xv-*.jsonl returned by an external
+// runner (checked first with src/xv_check.ts), one block per language. "Cost" here is tokens per run.
+const xvFiles = (() => {
+  try {
+    return [...Deno.readDirSync(RUNS)].map((e) => e.name).filter((n) => /^xv-.*\.jsonl$/.test(n) && !n.endsWith(".errors.jsonl")).sort();
+  } catch {
+    return [];
+  }
+})();
+const CROSSVENDOR: Block[] = [
+  { label: "Beacon (ES)", files: xvFiles, suite: "github-beacon", ref: "glossary4", arms: ["native", "code", "glossary4s", "native-trimmed-compact"] },
+  { label: "Beacon (EN)", files: xvFiles, suite: "github-beacon-en", ref: "glossary4", arms: ["native", "code", "glossary4s", "native-trimmed-compact"] },
 ];
 
 // Ablation round (docs/preregistration-ablation.md): native with one ingredient of the phrasebook at a time.
@@ -78,7 +98,8 @@ type Row = { block: string; model: string; ref: string; note?: string; k: number
 function analyse(blocks: Block[]): Row[] {
   const rows: Row[] = [];
   for (const b of blocks) {
-    const runs = load(b.files.filter((f) => { try { return Deno.statSync(RUNS + f).isFile; } catch { return false; } }));
+    const runs = load(b.files.filter((f) => { try { return Deno.statSync(RUNS + f).isFile; } catch { return false; } }))
+      .filter((r) => !b.suite || r.suite === b.suite);
     for (const model of [...new Set(runs.map((r) => r.model))]) {
       const mine = runs.filter((r) => r.model === model);
       const ref = mine.filter((r) => r.arm === b.ref);
@@ -130,7 +151,7 @@ function latex(rows: Row[], arms: string[], caption: string, label: string): str
       return `${c.k}/${c.n}${c.pHolm! < 0.05 ? "$^{*}$" : ""} \\newline {\\scriptsize ${sig}\\newline [${f2(c.lo)}, ${f2(c.hi)}]}`;
     });
     const refName = r.ref === "glossary4" ? "" : r.ref === "glossary4s" ? " (S)" : " (v3)";
-    return [r.block, MODEL[r.model], `${r.k}/${r.n}${refName}`, ...cells].join(" & ") + " \\\\";
+    return [r.block, MODEL[r.model] ?? r.model.replace(/_/g, "\\_"), `${r.k}/${r.n}${refName}`, ...cells].join(" & ") + " \\\\";
   });
   return [
     "\\begin{table*}[t]", "\\centering", arms.length > 3 ? "\\footnotesize" : "\\small",
@@ -141,13 +162,14 @@ function latex(rows: Row[], arms: string[], caption: string, label: string): str
 
 function text(rows: Row[]): string {
   return rows.map((r) =>
-    `${r.block.padEnd(20)} ${r.model.padEnd(11)} ${ARM[r.ref].padEnd(14)} ${`${r.k}/${r.n}`.padEnd(6)} ${r.usd.toFixed(5)} USD/run  ` +
+    `${r.block.padEnd(20)} ${r.model.padEnd(11)} ${ARM[r.ref].padEnd(14)} ${`${r.k}/${r.n}`.padEnd(6)} ${r.model.includes(" (") ? `${r.usd.toFixed(0)} tokens/run` : `${r.usd.toFixed(5)} USD/run`}  ` +
     r.cmps.map((c) => `${ARM[c.arm]} ${c.k}/${c.n} p=${pv(c.p)} holm=${pv(c.pHolm!)} cost ${f2(c.ratio)}x [${f2(c.lo)}, ${f2(c.hi)}]`).join("; ")
   ).join("\n");
 }
 
-const api = analyse(API), client = analyse(CLIENT), ablation = analyse(ABLATION);
-console.log("Direct API, blind sets\n" + text(api) + "\n\nClaude Code, blind sets\n" + text(client) + "\n\nAblation (Claude Code)\n" + text(ablation));
+const api = analyse(API), client = analyse(CLIENT), ablation = analyse(ABLATION), crossvendor = analyse(CROSSVENDOR);
+console.log("Direct API, blind sets\n" + text(api) + "\n\nClaude Code, blind sets\n" + text(client) + "\n\nAblation (Claude Code)\n" + text(ablation) +
+  (crossvendor.length ? "\n\nCross-vendor (cost column = tokens per run, not USD)\n" + text(crossvendor) : ""));
 
 const capApi = "Blind sets through the API. Phrasebook column: pass count of the phrasebook arm (v4 engine unless marked v3). " +
   "Other columns: pass count, then mean cost per run relative to the phrasebook with a 95\\% bootstrap interval over tasks " +
@@ -162,5 +184,9 @@ const capAblation = "Ablation through Claude Code on GitHub blind 3 (3 repetitio
   "at a time: results shaped as the phrasebook shapes them (compact), descriptions cut to their first sentence (trimmed), or both. " +
   "Columns as in Table~\\ref{tab:api}.";
 await Deno.writeTextFile(`${flags.out}/ablation.tex`, latex(ablation, ["native", "native-compact", "native-trimmed", "native-trimmed-compact"], capAblation, "tab:ablation"));
-await Deno.writeTextFile(`${flags.out}/summary.json`, JSON.stringify({ api, client, ablation }, null, 1));
-console.log(`\nWrote ${flags.out}/api.tex, client.tex, ablation.tex, summary.json`);
+const capXv = "Cross-vendor round on blind set 7 (orchard/beacon, Claude-generated from the brief alone), through an " +
+  "OpenAI-compatible client against the same MCP servers. Model ids as reported by each provider; the runner who ran them in " +
+  "parentheses. Ratios are mean input plus output tokens per run relative to the phrasebook, not USD. Columns otherwise as in Table~\\ref{tab:api}.";
+if (crossvendor.length) await Deno.writeTextFile(`${flags.out}/crossvendor.tex`, latex(crossvendor, ["native", "code", "glossary4s", "native-trimmed-compact"], capXv, "tab:crossvendor"));
+await Deno.writeTextFile(`${flags.out}/summary.json`, JSON.stringify({ api, client, ablation, crossvendor }, null, 1));
+console.log(`\nWrote ${flags.out}/api.tex, client.tex, ablation.tex${crossvendor.length ? ", crossvendor.tex" : ""}, summary.json`);
