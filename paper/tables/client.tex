@@ -1,0 +1,22 @@
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{ll lp{2.6cm}p{2.6cm}}
+\toprule
+Set & Model & Phrasebook & Native & Phrasebook \\
+\midrule
+GitHub blind 3 & Haiku 5.5 & 32/32 & 32/32 \newline {\scriptsize \textbf{1.77$\times$} [1.33, 2.40]} & -- \\
+GitHub blind 3 & Sonnet 5.5 & 31/32 & 32/32 \newline {\scriptsize \textbf{2.16$\times$} [1.41, 3.45]} & -- \\
+Notion blind 2 & Sonnet 5.5 & 36/36 & 35/36 \newline {\scriptsize \textbf{1.60$\times$} [1.39, 1.81]} & -- \\
+Notion blind 2 & Haiku 5.5 & 35/36 & 32/36 \newline {\scriptsize \textbf{1.50$\times$} [1.35, 1.67]} & -- \\
+Notion blind 3 & Sonnet 5.5 & 30/36 & 31/36 \newline {\scriptsize \textbf{2.60$\times$} [1.82, 3.55]} & -- \\
+Notion blind 3 & Haiku 5.5 & 35/36 & 34/36 \newline {\scriptsize \textbf{2.79$\times$} [1.57, 4.17]} & -- \\
+Notion blind 4 & Haiku 4.5 & 29/36 (S) & 19/36 \newline {\scriptsize \textbf{2.07$\times$} [1.44, 2.72]} & 25/36 \newline {\scriptsize \textbf{1.37$\times$} [1.06, 1.81]} \\
+Notion blind 5 & Haiku 4.5 & 32/36 (S) & 21/35 \newline {\scriptsize \textbf{1.40$\times$} [1.03, 1.84]} & 30/36 \newline {\scriptsize 1.08$\times$ [0.76, 1.54]} \\
+Notion blind 6 & Haiku 4.5 & 36/36 (S) & 23/36$^{*}$ \newline {\scriptsize \textbf{1.70$\times$} [1.14, 2.42]} & 31/36 \newline {\scriptsize 1.07$\times$ [0.95, 1.21]} \\
+GitHub blind 4 & Haiku 4.5 & 27/29 (S) & 23/30 \newline {\scriptsize 1.00$\times$ [0.89, 1.08]} & 13/29$^{*}$ \newline {\scriptsize \textbf{0.64$\times$} [0.47, 0.82]} \\
+\bottomrule
+\end{tabular}
+\caption{Blind sets through Claude Code (\texttt{claude -p}, notional USD reported by the client). (S): the small-model variant with notes and recipes, compared with native MCP and the plain phrasebook. Columns as in Table~\ref{tab:api}.}
+\label{tab:client}
+\end{table*}
