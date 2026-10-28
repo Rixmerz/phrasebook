@@ -23,8 +23,12 @@ function load(files: string[]): Run[] {
       if (r.kind !== "run" || r.harness_gaps?.length || /budget of|USD cap/.test(r.stop ?? "")) continue;
       // Cross-vendor runs (src/openai_bench.ts) are compared in tokens, since vendors price differently,
       // and keyed by runner as well as model, so two people running one model stay apart.
-      if (r.client === "openai-compatible") {
-        out.push({ suite: r.suite, model: `${r.model} (${r.runner || "?"})`, arm: r.arm, task: r.task, rep: r.rep, success: !!r.success, usd: r.input_tokens + r.output_tokens, turns: r.turns });
+      // Vendor CLIs (src/cli_bench.ts) are labelled by CLI too: their token counts include the CLI's own prompt.
+      // A CLI run that used a tool outside the GitHub server is a setup leak, not the model's outcome.
+      if (["openai-compatible", "codex-cli", "gemini-cli"].includes(r.client)) {
+        if (r.foreign_tools?.length) continue;
+        const who = r.client === "openai-compatible" ? r.runner || "?" : `${r.runner || "?"}, ${r.client.replace("-cli", "")}`;
+        out.push({ suite: r.suite, model: `${r.model} (${who})`, arm: r.arm, task: r.task, rep: r.rep, success: !!r.success, usd: r.input_tokens + r.output_tokens, turns: r.turns });
         continue;
       }
       // Claude Code runs carry the cost the client reported; API runs are priced from tokens.
@@ -185,8 +189,8 @@ const capAblation = "Ablation through Claude Code on GitHub blind 3 (3 repetitio
   "Columns as in Table~\\ref{tab:api}.";
 await Deno.writeTextFile(`${flags.out}/ablation.tex`, latex(ablation, ["native", "native-compact", "native-trimmed", "native-trimmed-compact"], capAblation, "tab:ablation"));
 const capXv = "Cross-vendor round on blind set 7 (orchard/beacon, Claude-generated from the brief alone), through an " +
-  "OpenAI-compatible client against the same MCP servers. Model ids as reported by each provider; the runner who ran them in " +
-  "parentheses. Ratios are mean input plus output tokens per run relative to the phrasebook, not USD. Columns otherwise as in Table~\\ref{tab:api}.";
+  "OpenAI-compatible API client, or through the vendor's own CLI (codex, gemini) for runners with a subscription, against the same MCP servers. " +
+  "Model ids as given by each runner; the runner (and CLI, if any) in parentheses. CLI token counts include the CLI's own prompt. Ratios are mean input plus output tokens per run relative to the phrasebook, not USD. Columns otherwise as in Table~\\ref{tab:api}.";
 if (crossvendor.length) await Deno.writeTextFile(`${flags.out}/crossvendor.tex`, latex(crossvendor, ["native", "code", "glossary4s", "native-trimmed-compact"], capXv, "tab:crossvendor"));
 await Deno.writeTextFile(`${flags.out}/summary.json`, JSON.stringify({ api, client, ablation, crossvendor }, null, 1));
 console.log(`\nWrote ${flags.out}/api.tex, client.tex, ablation.tex${crossvendor.length ? ", crossvendor.tex" : ""}, summary.json`);

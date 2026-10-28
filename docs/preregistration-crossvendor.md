@@ -101,3 +101,43 @@ A file that passes is copied to `results/runs/` as is. `src/paper_tables.ts` the
 - The cost column is input plus output tokens per run, as prediction 2 states, not USD.
 - If a runner left `--runner` empty, it is filled in from their contribution form; no other
   field is edited.
+
+## Amendment 1 (2026-10-28, before any run): runners with a subscription instead of an API key
+
+Some runners pay for a chat subscription (ChatGPT, Google AI) rather than an API key. They run
+the same set through the vendor's own coding CLI, headless, with `src/cli_bench.ts`:
+
+- **Codex CLI** 0.165.0 (ChatGPT login) and **Gemini CLI** 0.66.0 (Google login).
+- **Same backend.** The CLI talks to the same MCP servers as the other runners.
+- **Built-in tools off.** Each CLI runs in an empty folder with shell, files, web, images,
+  sub-agents, skills and plugins turned off. The only tools left are the GitHub server's (or
+  the phrasebook's), plus the MCP resource helpers both CLIs add.
+- **Tested setup.** This was checked by capturing the requests each CLI sends to a fake model
+  API:
+  - both CLIs carry out MCP reads and writes;
+  - a correct write through each CLI passes its grader.
+- **Codex approvals.** Codex refuses unapproved MCP tools in headless mode, so every GitHub tool
+  is approved up front (`default_tools_approval_mode="approve"`).
+- **Foreign tools.** Any other tool a CLI still uses is logged in `foreign_tools`. Such runs
+  count as failed in the log, are excluded from the analysis, are counted, and are reported as a
+  setup leak.
+
+Differences from the API runs, stated in the paper:
+
+- **Tokens** are what the CLI reports. They include the CLI's own system prompt, which is the
+  same for every arm, so ratios against the phrasebook are diluted toward 1.
+- **Code mode** has no CLI equivalent. CLI rows have native, glossary4 and glossary4s, plus
+  native-trimmed-compact as an option.
+- **Separate rows.** CLI rows are a separate row per (model, runner, CLI) in
+  `paper/tables/crossvendor.tex`, never pooled with API rows of the same model.
+- **Model id** is the one the runner passes with `--model`, which is required.
+- **Usage limits.** Runs cut short by a subscription limit are retried, never scored.
+
+Predictions 1, 3, 4 and 5 apply to CLI rows unchanged. Prediction 2 (tokens, native ≥ 1.5×
+glossary4) applies to API rows only. For CLI rows the ratio is reported without a prediction,
+because the CLI's fixed prompt shifts it.
+
+The Claude baselines stay with us (`src/client_bench.ts`); runners who only have a Claude
+subscription are not needed for this round.
+
+The amendment's code is frozen by `results/crossvendor-freeze-amendment1.sha256`.

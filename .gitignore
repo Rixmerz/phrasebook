@@ -21,3 +21,4 @@ paper/*.fdb_latexmk
 
 # Private task sets (blind; distributed outside git, frozen by hash)
 private/
+.cli-runs/
