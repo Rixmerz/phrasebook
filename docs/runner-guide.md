@@ -118,13 +118,17 @@ Una corrida por idioma. Español (`github-beacon`) e inglés (`github-beacon-en`
 ```sh
 deno run -A src/openai_bench.ts --model=<MODELO> <flags del proveedor> \
   --suite=github-beacon --arms=native,glossary4s,glossary4,code --reps=3 --concurrency=4 \
-  --runner=<tu-nombre> --out=results/runs/xv-<modelo>-es.jsonl
+  --runner=<tu-usuario> --out=results/runs/xv-<tu-usuario>-<modelo>-es.jsonl
 
 deno run -A src/openai_bench.ts --model=<MODELO> <flags del proveedor> \
   --suite=github-beacon-en --arms=native,glossary4s,glossary4,code --reps=3 --concurrency=4 \
-  --runner=<tu-nombre> --out=results/runs/xv-<modelo>-en.jsonl
+  --runner=<tu-usuario> --out=results/runs/xv-<tu-usuario>-<modelo>-en.jsonl
 ```
 
+- **`--runner` es obligatorio en la práctica**: pon siempre el mismo identificador corto (tu
+  usuario de GitHub, o nombre-apellido sin espacios). Queda grabado en cada línea del log y
+  es lo que usamos para saber de quién es cada aporte. Si dos personas corren el mismo modelo,
+  así no se mezclan. Úsalo también en el nombre del archivo, como en el ejemplo.
 - Cada run imprime una línea. Al final verás un resumen por arm.
 - **Si se corta** (red, límite de cuota, Ctrl-C), vuelve a correr **el mismo comando**. Se salta
   lo que ya está en el archivo y reintenta los runs que terminaron en error de API.
@@ -156,20 +160,41 @@ Qué es cada arm (no hace falta para correr):
 
 Por privado, igual que recibiste el set:
 
-1. Los archivos `results/runs/xv-<modelo>-es.jsonl` y `-en.jsonl`. Contienen las
+1. Los archivos `results/runs/xv-<tu-usuario>-<modelo>-es.jsonl` y `-en.jsonl`. Contienen las
    conversaciones completas: no los publiques.
-2. Un texto corto con:
-   - proveedor;
-   - id exacto del modelo;
-   - cuantización y hardware, si es local;
-   - el comando exacto que usaste;
-   - el commit de phrasebook (`git rev-parse HEAD`);
-   - la salida de `sha256sum -c results/crossvendor-freeze.sha256`;
-   - si cambiaste algo o hubo errores raros.
-3. Cómo quieres aparecer en los agradecimientos del paper, o si prefieres no aparecer.
+2. Esta ficha, completa (copia y pega en el mensaje, o como `ficha-<tu-usuario>.md`):
+
+```text
+## Aporte cross-vendor — orchard/beacon
+
+Quién
+- Nombre para los agradecimientos: (o "anónimo" si prefieres no aparecer)
+- Afiliación (opcional):
+- Usuario de GitHub o enlace (opcional):
+- Identificador usado en --runner:
+- Contacto (para dudas sobre la corrida):
+
+Qué corriste
+- Proveedor y endpoint (--base-url):
+- Id exacto del modelo (--model):
+- Si es local: cuantización, servidor (Ollama/vLLM/...) y versión, GPU, contexto máximo:
+- Flags extra (--extra, --schemas, --drop-fields, --concurrency):
+- Comando exacto (los dos, ES y EN):
+- Commit de phrasebook (git rev-parse HEAD):
+- Salida de sha256sum -c results/crossvendor-freeze.sha256 (¿todo OK?):
+- Fecha(s) de la corrida:
+
+Incidencias
+- ¿Cambiaste algo del código o del set? (debería ser "no"):
+- Errores, GAPs o comportamientos raros:
+- Costo aproximado (opcional):
+```
+
+Cada aporte se registra con ese identificador: el nombre que pongas en la ficha es el que
+aparece en los agradecimientos, junto al modelo que corriste.
 
 Si quieres ver tus números antes de mandarlos:
 
 ```sh
-deno run -A src/client_stats.ts results/runs/xv-<modelo>-es.jsonl --a=glossary4 --b=native
+deno run -A src/client_stats.ts results/runs/xv-<tu-usuario>-<modelo>-es.jsonl --a=glossary4 --b=native
 ```
