@@ -36,7 +36,11 @@ En ninguno de los dos caminos calculas tokens tú: el runner los guarda en cada 
    cambio invalida la corrida.
 3. **Anota exactamente qué corriste:** proveedor, id exacto del modelo, cuantización si es un
    modelo local, y cualquier `--extra` que uses.
-4. **No mires las tareas para "ayudar" al modelo** ni ajustes prompts o configuración según los
+4. **Corre solo con los runners de esta guía** (`openai_bench.ts` o `cli_bench.ts`). Corridas
+   hechas en otras herramientas (la app web, Cursor, Cline, otra CLI) o tokens anotados a mano no
+   se pueden usar: no se pueden verificar ni comparar con el resto. Si tu herramienta no está
+   aquí, avísanos y vemos si se puede agregar.
+5. **No mires las tareas para "ayudar" al modelo** ni ajustes prompts o configuración según los
    resultados. Elige la configuración antes de la primera corrida y no la cambies después.
 
 ## 1. Preparar el entorno
