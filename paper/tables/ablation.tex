@@ -1,0 +1,13 @@
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{ll lp{2.6cm}p{2.6cm}p{2.6cm}p{2.6cm}}
+\toprule
+Set & Model & Phrasebook & Native & Native + compact results & Native, trimmed defs & Native, trimmed + compact \\
+\midrule
+GitHub blind 3 & Haiku 5.5 & 46/48 & 43/48 \newline {\scriptsize \textbf{1.89$\times$} [1.49, 2.41]} & 44/48 \newline {\scriptsize \textbf{1.58$\times$} [1.22, 2.04]} & 46/48 \newline {\scriptsize \textbf{1.63$\times$} [1.26, 2.03]} & 45/48 \newline {\scriptsize 1.24$\times$ [0.87, 1.67]} \\
+\bottomrule
+\end{tabular}
+\caption{Ablation through Claude Code on GitHub blind 3 (3 repetitions). Native MCP with one ingredient of the phrasebook at a time: results shaped as the phrasebook shapes them (compact), descriptions cut to their first sentence (trimmed), or both. Columns as in Table~\ref{tab:api}.}
+\label{tab:ablation}
+\end{table*}

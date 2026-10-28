@@ -48,6 +48,11 @@ const CLIENT: Block[] = [
   { label: "GitHub blind 4", files: ["client-ghblind4-h45.jsonl"], ref: "glossary4s", arms: ["native", "glossary4"] },
 ];
 
+// Ablation round (docs/preregistration-ablation.md): native with one ingredient of the phrasebook at a time.
+const ABLATION: Block[] = [
+  { label: "GitHub blind 3", files: ["client-ablation.jsonl", "client-ablation-sonnet.jsonl"], ref: "glossary4", arms: ["native", "native-compact", "native-trimmed", "native-trimmed-compact"] },
+];
+
 function wilson(k: number, n: number): [number, number] {
   const z = 1.96, p = k / n, d = 1 + z * z / n;
   const c = (p + z * z / (2 * n)) / d, h = (z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n))) / d;
@@ -73,7 +78,7 @@ type Row = { block: string; model: string; ref: string; note?: string; k: number
 function analyse(blocks: Block[]): Row[] {
   const rows: Row[] = [];
   for (const b of blocks) {
-    const runs = load(b.files);
+    const runs = load(b.files.filter((f) => { try { return Deno.statSync(RUNS + f).isFile; } catch { return false; } }));
     for (const model of [...new Set(runs.map((r) => r.model))]) {
       const mine = runs.filter((r) => r.model === model);
       const ref = mine.filter((r) => r.arm === b.ref);
@@ -111,7 +116,7 @@ function analyse(blocks: Block[]): Row[] {
 }
 
 const MODEL: Record<string, string> = { "haiku-4-5": "Haiku 4.5", "haiku-5-5": "Haiku 5.5", "sonnet-5-5": "Sonnet 5.5", "opus-5-5": "Opus 5.5" };
-const ARM: Record<string, string> = { native: "Native", code: "Code mode", ptc: "PTC", glossary4: "Phrasebook", glossary4s: "Phrasebook-S", "glossary3-feedback": "Phrasebook v3" };
+const ARM: Record<string, string> = { "native-compact": "Native + compact results", "native-trimmed": "Native, trimmed defs", "native-trimmed-compact": "Native, trimmed + compact", native: "Native", code: "Code mode", ptc: "PTC", glossary4: "Phrasebook", glossary4s: "Phrasebook-S", "glossary3-feedback": "Phrasebook v3" };
 const f2 = (x: number) => x.toFixed(2);
 const pv = (p: number) => p < 0.001 ? "<0.001" : f2(p);
 
@@ -141,8 +146,8 @@ function text(rows: Row[]): string {
   ).join("\n");
 }
 
-const api = analyse(API), client = analyse(CLIENT);
-console.log("Direct API, blind sets\n" + text(api) + "\n\nClaude Code, blind sets\n" + text(client));
+const api = analyse(API), client = analyse(CLIENT), ablation = analyse(ABLATION);
+console.log("Direct API, blind sets\n" + text(api) + "\n\nClaude Code, blind sets\n" + text(client) + "\n\nAblation (Claude Code)\n" + text(ablation));
 
 const capApi = "Blind sets through the API. Phrasebook column: pass count of the phrasebook arm (v4 engine unless marked v3). " +
   "Other columns: pass count, then mean cost per run relative to the phrasebook with a 95\\% bootstrap interval over tasks " +
@@ -153,5 +158,9 @@ const capClient = "Blind sets through Claude Code (\\texttt{claude -p}, notional
 await Deno.mkdir(flags.out, { recursive: true });
 await Deno.writeTextFile(`${flags.out}/api.tex`, latex(api, ["native", "code", "ptc"], capApi, "tab:api"));
 await Deno.writeTextFile(`${flags.out}/client.tex`, latex(client, ["native", "glossary4"], capClient, "tab:client"));
-await Deno.writeTextFile(`${flags.out}/summary.json`, JSON.stringify({ api, client }, null, 1));
-console.log(`\nWrote ${flags.out}/api.tex, client.tex, summary.json`);
+const capAblation = "Ablation through Claude Code on GitHub blind 3 (3 repetitions). Native MCP with one ingredient of the phrasebook " +
+  "at a time: results shaped as the phrasebook shapes them (compact), descriptions cut to their first sentence (trimmed), or both. " +
+  "Columns as in Table~\\ref{tab:api}.";
+await Deno.writeTextFile(`${flags.out}/ablation.tex`, latex(ablation, ["native", "native-compact", "native-trimmed", "native-trimmed-compact"], capAblation, "tab:ablation"));
+await Deno.writeTextFile(`${flags.out}/summary.json`, JSON.stringify({ api, client, ablation }, null, 1));
+console.log(`\nWrote ${flags.out}/api.tex, client.tex, ablation.tex, summary.json`);
