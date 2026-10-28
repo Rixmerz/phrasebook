@@ -173,7 +173,9 @@ async function runOnce(model: string, arm: string, task: Task, rep: number) {
     if (Deno.env.get("PHRASEBOOK_TRACE")) Deno.writeTextFileSync(`scratch/trace-${model}-${arm}-${task.id}-${rep}.jsonl`, raw);
     res = Deno.env.get("PHRASEBOOK_TRACE") ? JSON.parse(raw.trim().split("\n").at(-1)!) : JSON.parse(raw);
   } catch {
-    res = { is_error: true, result: new TextDecoder().decode(out.stderr).slice(0, 500) };
+    // Keep whatever the client printed (a usage-limit notice comes back as plain text).
+    const said = new TextDecoder().decode(out.stderr).trim() || new TextDecoder().decode(out.stdout).trim();
+    res = { is_error: true, subtype: `exit ${out.code}`, result: said.slice(0, 500) };
   }
   const { state, gaps } = await suite.end(token);
   if (!SUB) Deno.removeSync(dir, { recursive: true });

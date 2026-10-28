@@ -33,3 +33,9 @@ Predictions:
 4. The language adds beyond less text: native-trimmed-compact costs at least 1.3x glossary4 on
    Sonnet 5.5, interval above 1x. If refuted, the paper says the saving comes from shorter
    definitions and compact results, not from the command language.
+
+Amendment (2026-10-28, during the run): two Sonnet 5.5 attempts aborted inside the client
+(0 turns, no output, cost 0): 58 runs in the first, 169 in the second. Kept apart in
+`results/runs/client-ablation-sonnet-aborted*.jsonl`; they are not model outcomes. Haiku 5.5
+finished without such aborts. `src/client_bench.ts` now records what the client printed when a
+run aborts (diagnostics only; grading unchanged), and Sonnet is rerun with concurrency 1.
