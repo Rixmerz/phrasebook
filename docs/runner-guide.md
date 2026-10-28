@@ -26,12 +26,21 @@ un modelo de precio medio calcula entre 10 y 40 USD por idioma.
 Necesitas **Linux x86_64**. En macOS o Windows usa Docker (ver abajo). Instala
 [Deno 2.5.x](https://deno.com), `git` y `curl`.
 
+Usa esta rama y este commit exactos:
+
+- Rama: `ccr-2b013821-lycp47`
+- Commit: `c63c6f13f0c15f5f055a0640b67a11598c033c1e`
+
 ```sh
-git clone https://github.com/Rixmerz/phrasebook.git
+git clone --branch ccr-2b013821-lycp47 https://github.com/Rixmerz/phrasebook.git
 cd phrasebook
-git checkout <COMMIT>      # el commit que te pasamos junto con el zip
+git checkout c63c6f13f0c15f5f055a0640b67a11598c033c1e   # git avisará "detached HEAD": es normal
 ./scripts/setup.sh         # descarga el servidor MCP de GitHub y verifica su checksum
 ```
+
+Si `git checkout` dice que no encuentra el commit (por ejemplo, porque la rama ya se mergeó),
+usa `main` y sigue: lo que cuenta es que la verificación del paso siguiente diga `OK` en
+todos los archivos.
 
 Copia el set en su lugar y verifica que llegó intacto:
 
@@ -39,6 +48,7 @@ Copia el set en su lugar y verifica que llegó intacto:
 mkdir -p private
 unzip beacon-bundle.zip -d private/      # queda private/beacon/...
 sha256sum -c private/beacon/SHA256SUMS   # todas las líneas deben decir OK
+sha256sum -c results/crossvendor-freeze.sha256   # código y set congelados: todo OK
 deno test -A private/beacon/tasks_test.ts   # 4 tests "ok", sin usar ningún modelo
 ```
 
@@ -153,8 +163,8 @@ Por privado, igual que recibiste el set:
    - id exacto del modelo;
    - cuantización y hardware, si es local;
    - el comando exacto que usaste;
-   - el commit de phrasebook;
-   - la salida de `sha256sum -c private/beacon/SHA256SUMS`;
+   - el commit de phrasebook (`git rev-parse HEAD`);
+   - la salida de `sha256sum -c results/crossvendor-freeze.sha256`;
    - si cambiaste algo o hubo errores raros.
 3. Cómo quieres aparecer en los agradecimientos del paper, o si prefieres no aparecer.
 
