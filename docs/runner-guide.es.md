@@ -2,6 +2,8 @@
 
 *English version: [runner-guide.md](runner-guide.md). Si las dos difieren, vale la inglesa.*
 
+*¿Prefieres que tu propio agente de IA haga la instalación y las pruebas? Mira [agent-runbook.md](agent-runbook.md): tiene el texto que le pegas.*
+
 Gracias por ayudar. Vas a correr 24 tareas de GitHub con tu modelo, de cuatro formas distintas
 de darle acceso a GitHub, y nos devuelves un archivo con los resultados. No hace falta que
 entiendas cómo funciona cada forma; el runner se encarga.

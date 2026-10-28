@@ -2,6 +2,8 @@
 
 *Versión en español: [runner-guide.es.md](runner-guide.es.md). If the two differ, this one holds.*
 
+*Prefer to let your own AI coding agent do the setup? See [agent-runbook.md](agent-runbook.md).*
+
 Thank you for helping. You will run 24 GitHub tasks with your model, through four different ways
 of giving it access to GitHub, and send us back a file with the results. You do not need to
 understand how each way works; the runner takes care of it.
