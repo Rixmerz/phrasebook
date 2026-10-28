@@ -4,10 +4,28 @@ Gracias por ayudar. Vas a correr 24 tareas de GitHub con tu modelo, de cuatro fo
 de darle acceso a GitHub, y nos devuelves un archivo con los resultados. No hace falta que
 entiendas cómo funciona cada forma; el runner se encarga.
 
-Tiempo: 1 a 2 horas de máquina por modelo y por idioma, según la velocidad del proveedor.
-Costo: lo paga tu cuenta. Una corrida completa son 24 tareas × 4 formas × 3 repeticiones =
-288 runs por idioma. El arm `native` envía unos 27 mil tokens de entrada por turno, así que con
-un modelo de precio medio calcula entre 10 y 40 USD por idioma.
+Tiempo: 1 a 2 horas de máquina por modelo y por idioma, según la velocidad del proveedor (más con
+suscripción, por los límites de uso). Una corrida completa son 24 tareas × 4 formas ×
+3 repeticiones = 288 runs por idioma (216 con suscripción, que no tiene la forma `code`).
+
+## 0. ¿API key o suscripción?
+
+Hay dos caminos. Elige uno según lo que tengas; los dos sirven para el paper.
+
+| Tienes | Camino | Runner | Tokens |
+|---|---|---|---|
+| Una API key (OpenAI, Google AI Studio, OpenRouter, DeepSeek...) o un modelo local (Ollama, vLLM) | **A. API** (secciones 2A a 4A) | `src/openai_bench.ts` | los cuenta el runner, desde lo que devuelve la API |
+| Solo una suscripción de chat: ChatGPT (Plus/Pro/Team) o Google AI (o una cuenta de Google gratis) | **B. Suscripción** (sección 4B) | `src/cli_bench.ts` | los reporta la CLI oficial del proveedor (Codex CLI o Gemini CLI); el runner los guarda |
+| Solo una suscripción de Claude | no hace falta | — | las corridas de Claude las hacemos nosotros |
+
+En ninguno de los dos caminos calculas tokens tú: el runner los guarda en cada línea del log
+(`input_tokens`, `output_tokens`, `cached_tokens`). No necesitas precios.
+
+- **Costo, camino A**: lo paga tu cuenta. El arm `native` envía unos 27 mil tokens de entrada por
+  turno; con un modelo de precio medio calcula entre 10 y 40 USD por idioma. Una API key gratis
+  de Google AI Studio también sirve (es más lenta por los límites del plan gratis).
+- **Costo, camino B**: no pagas aparte. Gastas cuota de tu suscripción. Si llegas al límite, el
+  runner se detiene solo y continúas cuando se renueve la cuota, con el mismo comando.
 
 ## Reglas
 
@@ -29,12 +47,12 @@ Necesitas **Linux x86_64**. En macOS o Windows usa Docker (ver abajo). Instala
 Usa esta rama y este commit exactos:
 
 - Rama: `ccr-2b013821-lycp47`
-- Commit: `c63c6f13f0c15f5f055a0640b67a11598c033c1e`
+- Commit: `b591386b3040472fea2a1811a6bec0c0187158e3`
 
 ```sh
 git clone --branch ccr-2b013821-lycp47 https://github.com/Rixmerz/phrasebook.git
 cd phrasebook
-git checkout c63c6f13f0c15f5f055a0640b67a11598c033c1e   # git avisará "detached HEAD": es normal
+git checkout b591386b3040472fea2a1811a6bec0c0187158e3   # git avisará "detached HEAD": es normal
 ./scripts/setup.sh         # descarga el servidor MCP de GitHub y verifica su checksum
 ```
 
@@ -48,7 +66,7 @@ Copia el set en su lugar y verifica que llegó intacto:
 mkdir -p private
 unzip beacon-bundle.zip -d private/      # queda private/beacon/...
 sha256sum -c private/beacon/SHA256SUMS   # todas las líneas deben decir OK
-sha256sum -c results/crossvendor-freeze.sha256   # código y set congelados: todo OK
+sha256sum -c results/crossvendor-freeze.sha256 results/crossvendor-freeze-amendment1.sha256   # código y set congelados: todo OK
 deno test -A private/beacon/tasks_test.ts   # 4 tests "ok", sin usar ningún modelo
 ```
 
@@ -66,7 +84,7 @@ apt-get update && apt-get install -y curl git   # dentro del contenedor
 Si tu modelo corre en tu máquina (Ollama, LM Studio), desde el contenedor usa
 `--base-url=http://host.docker.internal:11434/v1`.
 
-## 2. Prueba rápida (2 minutos, unos centavos)
+## 2A. Prueba rápida, camino API (2 minutos, unos centavos)
 
 Antes de la corrida real, prueba la conexión con un set público que ya corrimos con Claude:
 
@@ -81,7 +99,7 @@ Debe imprimir dos líneas `PASS` o `FAIL` con `turns=` mayor que 1. Si ves `GAP`
 `turns=1` en todo, revisa la sección 5 antes de seguir. El resultado (PASS o FAIL) no importa
 aquí; solo que el modelo llegue a usar las herramientas.
 
-## 3. Elegir proveedor
+## 3A. Elegir proveedor (camino API)
 
 El runner habla con cualquier API compatible con OpenAI Chat Completions. Dos flags la eligen:
 `--base-url` y `--key-env` (el nombre de la variable de entorno que tiene la clave).
@@ -111,7 +129,7 @@ Notas por proveedor:
 - **Precios**: si quieres que el log calcule USD, pasa `--price-in` y `--price-out` en USD por
   millón de tokens. Es opcional; lo que usamos son los tokens.
 
-## 4. La corrida
+## 4A. La corrida (camino API)
 
 Una corrida por idioma. Español (`github-beacon`) e inglés (`github-beacon-en`):
 
@@ -143,6 +161,66 @@ Qué es cada arm (no hace falta para correr):
   añade recetas pensadas para modelos chicos.
 - `code`: el modelo escribe JavaScript contra una API generada desde las herramientas.
 
+## 4B. Camino suscripción: Codex CLI o Gemini CLI
+
+Usas la CLI oficial de tu proveedor con tu login de siempre. El runner la lanza sin interfaz, en
+una carpeta vacía y con sus herramientas propias apagadas (sin shell, archivos ni web), así que
+el modelo solo puede usar GitHub. Necesitas además [Node.js](https://nodejs.org) 20 o más.
+
+**1. Instala la versión exacta de la CLI y entra con tu cuenta** (una vez):
+
+| Suscripción | Instalar | Entrar |
+|---|---|---|
+| ChatGPT | `npm install -g @openai/codex@0.165.0` | `codex login` (elige "Sign in with ChatGPT") |
+| Google AI o cuenta de Google | `npm install -g @google/gemini-cli@0.66.0` | `gemini`, elige "Login with Google", y cierra con `/quit` |
+
+Dentro de Docker, el login abre un enlace: cópialo en el navegador de tu máquina. La imagen de
+Deno no trae Node; para este camino usa mejor la de Node e instala Deno con npm:
+
+```sh
+docker run --rm -it --platform linux/amd64 -v "$PWD":/w -w /w node:22 bash
+npm install -g deno@2.5.6 && ./scripts/setup.sh
+```
+
+**2. Prueba rápida** (consume unas pocas peticiones de tu cuota):
+
+```sh
+deno run -A src/cli_bench.ts --cli=codex --model=<MODELO> --runner=<tu-usuario> \
+  --suite=github-blind4 --tasks=b4-count-offline-p1 --arms=native,glossary4 --reps=1 \
+  --out=results/runs/smoke-cli.jsonl
+```
+
+(Con Gemini, `--cli=gemini`.) Debe imprimir dos líneas `PASS` o `FAIL` con `calls=` mayor que 0.
+
+- **`ERR`**: lee el mensaje. Suele ser el login, o que el modelo no existe en tu plan.
+- **`FRGN`**: la CLI usó una herramienta que debía estar apagada. No sigas y avísanos.
+
+`--model` es obligatorio. Usa el id exacto que acepta tu CLI, por ejemplo uno de los que lista
+`/model` dentro de la CLI. Anótalo en la ficha.
+
+**3. La corrida**, una por idioma:
+
+```sh
+deno run -A src/cli_bench.ts --cli=codex --model=<MODELO> --runner=<tu-usuario> \
+  --suite=github-beacon --arms=native,glossary4s,glossary4 --reps=3 --concurrency=2 \
+  --out=results/runs/xv-<tu-usuario>-codex-<modelo>-es.jsonl
+
+deno run -A src/cli_bench.ts --cli=codex --model=<MODELO> --runner=<tu-usuario> \
+  --suite=github-beacon-en --arms=native,glossary4s,glossary4 --reps=3 --concurrency=2 \
+  --out=results/runs/xv-<tu-usuario>-codex-<modelo>-en.jsonl
+```
+
+- **Límite de uso.** Si llegas al límite de tu plan, verás varios `ERR` seguidos y el runner se
+  detiene solo. Cuando se renueve tu cuota, corre el mismo comando y sigue donde quedó. Los runs
+  cortados no cuentan.
+- **Tokens.** Los reporta la propia CLI e incluyen su prompt interno, que es igual en todas las
+  formas. No tienes que calcular nada.
+- **No hay forma `code`.** No existe en este camino, y es lo esperado.
+- **Esfuerzo de razonamiento.** Si quieres fijarlo, decídelo antes de empezar, anótalo y
+  pásalo igual en las dos corridas:
+  - Codex: `--cli-args='["-c","model_reasoning_effort=\"low\""]'`.
+  - Gemini: no tiene opción equivalente; usa el modelo tal cual.
+
 ## 5. Problemas comunes
 
 | Síntoma | Causa probable |
@@ -155,12 +233,17 @@ Qué es cada arm (no hace falta para correr):
 | `HTTP 429` muchas veces | baja `--concurrency`; el runner ya reintenta con espera |
 | Líneas `GAP` | el GitHub simulado no conoce una llamada. No es culpa del modelo: esos runs se excluyen. Mándanos el log igual |
 | `github-mcp-server: not found` | no corriste `./scripts/setup.sh`, o no estás en Linux x86_64 |
+| (B) `cannot run codex` / `cannot run gemini` | la CLI no está instalada o no está en el `PATH`; o pasa su ruta con `--bin=` |
+| (B) `ERR` con "login", "auth" o "401" | vuelve a entrar con `codex login` o `gemini` |
+| (B) `warning: codex X; this runner was tested with ...` | instala la versión de la tabla de 4B |
+| (B) líneas `FRGN` | la CLI usó una herramienta que debía estar apagada: para y avísanos |
 
 ## 6. Qué nos devuelves
 
 Por privado, igual que recibiste el set:
 
-1. Los archivos `results/runs/xv-<tu-usuario>-<modelo>-es.jsonl` y `-en.jsonl`. Contienen las
+1. Los archivos `results/runs/xv-<tu-usuario>-...-es.jsonl` y `-en.jsonl` (los que pusiste en
+   `--out`), y los `.errors.jsonl` si quedaron. Contienen las
    conversaciones completas: no los publiques.
 2. Esta ficha, completa (copia y pega en el mensaje, o como `ficha-<tu-usuario>.md`):
 
@@ -175,7 +258,8 @@ Quién
 - Contacto (para dudas sobre la corrida):
 
 Qué corriste
-- Proveedor y endpoint (--base-url):
+- Camino (A: API / B: suscripción con codex o gemini) y versión de la CLI si es B:
+- Proveedor y endpoint (--base-url, solo camino A):
 - Id exacto del modelo (--model):
 - Si es local: cuantización, servidor (Ollama/vLLM/...) y versión, GPU, contexto máximo:
 - Flags extra (--extra, --schemas, --drop-fields, --concurrency):
