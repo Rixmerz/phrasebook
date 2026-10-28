@@ -69,7 +69,7 @@ Copia el set en su lugar y verifica que llegó intacto:
 ```sh
 mkdir -p private
 unzip beacon-bundle.zip -d private/      # queda private/beacon/...
-sha256sum -c private/beacon/SHA256SUMS   # todas las líneas deben decir OK
+(cd private/beacon && sha256sum -c SHA256SUMS)   # todas las líneas deben decir OK
 sha256sum -c results/crossvendor-freeze.sha256 results/crossvendor-freeze-amendment1.sha256   # código y set congelados: todo OK
 deno test -A private/beacon/tasks_test.ts   # 4 tests "ok", sin usar ningún modelo
 ```
