@@ -12,7 +12,8 @@ for (const f of flags._ as string[]) {
   for (const line of Deno.readTextFileSync(f).split("\n")) {
     if (!line.trim()) continue;
     const r = JSON.parse(line);
-    if (r.kind === "run") runs.push({ model: r.model, arm: r.arm, task: r.task, rep: r.rep, success: !!r.success, usd: r.usd ?? 0 });
+    // Harness gaps are not the model's outcome (as in paper_tables.ts).
+    if (r.kind === "run" && !r.harness_gaps?.length) runs.push({ model: r.model, arm: r.arm, task: r.task, rep: r.rep, success: !!r.success, usd: r.usd ?? 0 });
   }
 }
 

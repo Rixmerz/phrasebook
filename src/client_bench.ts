@@ -15,6 +15,7 @@ import { startMock } from "./github/mock.ts";
 import { ghTasks, seed } from "./github/tasks.ts";
 import { hardSeed, hardTasks } from "./github/hard.ts";
 import { blind4Seed, blind4Tasks } from "./github/blind4tasks.ts";
+import { privateSets } from "./github/private_sets.ts";
 import { blind3Seed, blind3Tasks } from "./github/blind3tasks.ts";
 import type { GhTask } from "./github/tasks.ts";
 import type { State } from "./github/mock.ts";
@@ -112,6 +113,10 @@ const SUITES: Record<string, ClientSuite> = {
   "notion-blind5": notionSuite(notionBlind5Tasks as Task[]),
   "notion-blind6": notionSuite(notionBlind6Tasks as Task[]),
 };
+for (const p of privateSets) {
+  SUITES[`github-${p.name}`] = githubSuite(p.tasks("es"), p.seed);
+  SUITES[`github-${p.name}-en`] = githubSuite(p.tasks("en"), p.seed);
+}
 const suite = SUITES[flags.suite];
 
 const DISALLOWED = ["Bash", "Edit", "Write", "NotebookEdit", "WebFetch", "WebSearch", "Task", "Agent", "Read", "Glob", "Grep",
