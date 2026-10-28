@@ -4,6 +4,16 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2026-10-28
+
+### Added
+- Field report follow-up: graded answer quality for the Gemini data agent (15
+  questions, blind judge). The phrasebook cut tokens about a third with no sign of
+  lower quality; `glossary4s` matched `glossary4` and did not help. The report
+  explains why: its notes fix procedural errors of small models, while this agent's
+  errors are choosing the wrong source, and its prompt and catalog already carry
+  notes.
+
 ## [0.1.0] - 2026-10-28
 
 First tagged version: the engine, proxy and benchmark as of the glossary v4 rounds.
@@ -16,4 +26,5 @@ First tagged version: the engine, proxy and benchmark as of the glossary v4 roun
   the gap with the GitHub results and lists lessons for porting.
 - Results row in `README.md` and a summary section in `docs/RESULTS.md`.
 
+[0.1.1]: https://github.com/Rixmerz/phrasebook/releases/tag/v0.1.1
 [0.1.0]: https://github.com/Rixmerz/phrasebook/releases/tag/v0.1.0

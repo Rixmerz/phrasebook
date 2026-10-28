@@ -77,6 +77,52 @@ twice the native-to-native noise (11%). Answer quality was not graded in this ru
 - These are signals, not a model comparison: no larger model was run on the same
   tasks, and the long prompt pushes step-by-step work regardless of the model.
 
+## Follow-up: answer quality and the small-model variant (glossary4s)
+
+The first run did not grade answers. A second, small run did: 15 questions drawn at
+random from the approved conversations (single turn, needing SQL, judged
+evaluable), each run once on native tools, on the phrasebook (glossary4) and on
+`glossary4s`. For the data agent, glossary4s added about 1.3k tokens of notes:
+four procedure rules (discover first, read the schema and honour its rules, switch
+table when a "do not use when" matches, use the official summary table for
+aggregates) and one line per query purpose naming the usual source tables and
+when not to use them. Same blind judge, scores 1 to 5 against the approved answer.
+
+| | Native | glossary4 | glossary4s |
+|---|---|---|---|
+| Input tokens per turn | 1.00 | 0.66 | 0.70 |
+| Tool rounds per turn | 6.5 | 5.3 | 5.3 |
+| Judge score | 3.71 | 4.00 (+0.29, 95% CI [-0.29, +0.86]) | 3.87 (+0.29, [-0.29, +0.79]) |
+| Better / same / worse than native | | 4 / 8 / 2 | 5 / 7 / 2 |
+
+- The phrasebook saved about a third of the tokens with no sign of lower quality.
+  With 15 questions the interval does not show a gain either.
+- glossary4s matched glossary4 (3 turns better, 2 worse) and cost a little more.
+  The notes did not help.
+
+### Why glossary4s helped Haiku 4.5 here in the repo and not the data agent
+
+1. **Different failure.** In the Notion and GitHub sets, glossary4s fixed
+   *procedural* errors of a small model: asking for confirmation instead of acting,
+   describing a plan instead of doing it, rewriting a whole page to change one
+   block, losing its way in unrelated tools. The data agent's errors are
+   *epistemic*: choosing the wrong source table or missing a business filter. A
+   recipe can say "use the summary table for aggregates", but the model still has
+   to recognise that a question is an aggregate, and the catalog it reads next
+   already says the same thing.
+2. **The native agent already carries recipes.** Its 37k-character system prompt
+   and its curated catalog (use when, do not use when, interpretation rules) are a
+   large set of notes written for the model. One more page of notes repeats them.
+   The Notion and GitHub baselines had no notes at all.
+3. **Behaviour did not change.** Discovery and schema calls per turn stayed at about
+   2 with and without the notes, so the notes did not replace or shorten any step;
+   they only added tokens.
+4. **The repo's recipes were tuned on failures.** The repo wrote its small notes
+   from the failures of a tuned set and then checked them blind. These notes were
+   generated from query purposes without looking at the agent's failures. Recipes
+   written from the judge's reasons (wrong table, missing filter) are the untested
+   next step.
+
 ## A related idea that lost: data glossaries
 
 A second experiment replaced catalog discovery with **data glossaries**: one call
@@ -132,5 +178,5 @@ exploration that found the right table.
 - The judge is from the same model family as the agent; no judge-noise control.
 - 30 of 99 replayed turns depended on earlier turns missing from the export and
   were graded as not evaluable.
-- The small-model variant of this repo (`glossary4s`: notes and recipes for small
-  models) was not tried; it is the obvious next arm for Flash-Lite.
+- The quality follow-up used 15 questions and one repetition; it rules out a large
+  drop, not a small one.

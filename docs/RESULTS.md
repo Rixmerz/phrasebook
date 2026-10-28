@@ -1047,4 +1047,7 @@ noise was 11%; tool rounds did not move. Data glossaries that replace catalog
 discovery saved 12% of tokens and lowered graded answer quality (-0.29 of 5,
 95% CI [-0.49, -0.12], 99 replayed turns). The gap with GitHub comes from little
 left to compress, a baseline already shaped for the model, and dependent rounds.
+A graded follow-up (15 questions) found no quality drop for the phrasebook (tokens
+-34%, judge +0.29, CI crosses 0) and no gain from glossary4s, whose notes target
+procedural errors while this agent's errors are choosing the wrong source.
 Details, anonymized: [field-report-gemini-data-agent.md](field-report-gemini-data-agent.md).
