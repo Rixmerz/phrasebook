@@ -28,13 +28,14 @@ import { notionBlind6Tasks } from "./notion/blind6tasks.ts";
 import { NOTION_SERVER } from "./notion/suite.ts";
 import { endRun, mockUrl, newRun } from "./notion/mock.ts";
 
-await loadEnv();
 const flags = parseArgs(Deno.args, {
   string: ["suite", "models", "arms", "reps", "tasks", "out", "concurrency", "usd-cap", "auth"],
   default: { suite: "github", models: "claude-haiku-5-5", arms: "native,glossary", reps: "1", concurrency: "4", "usd-cap": "70", auth: "api" },
 });
 
 const SUB = flags.auth === "subscription";
+// The API key is needed only for --auth=api.
+if (!SUB) await loadEnv();
 const GH = new URL("../vendor/github-mcp/github-mcp-server", import.meta.url).pathname;
 const PROXY = new URL("./proxy.ts", import.meta.url).pathname;
 const NOTION_TABLE = new URL("../glossaries/notion-auto.json", import.meta.url).pathname;
@@ -57,9 +58,11 @@ type ClientSuite = {
 };
 const baseEnv = () => ({ PATH: Deno.env.get("PATH") ?? "", HOME: Deno.env.get("HOME") ?? "" });
 // A proxy arm wraps the native server: glossary (v2), glossary4 (v4 runtime), with a table for non-GitHub servers.
+// native-compact, native-trimmed, native-trimmed-compact: the upstream's own tools through the proxy's passthrough.
 const proxied = (arm: string, name: string, native: Server, table?: string, notes?: string): Server => ({
   command: "deno",
-  args: ["run", "-A", PROXY, `--name=${name}`, ...(arm.startsWith("glossary4") ? ["--runtime=v4"] : []), ...(table ? [`--table=${table}`] : []), ...(notes ? [`--notes=${notes}`] : []),
+  args: ["run", "-A", PROXY, `--name=${name}`, ...(arm.startsWith("native-") ? [`--passthrough=${arm.slice("native-".length)}`] : []),
+    ...(arm.startsWith("glossary4") ? ["--runtime=v4"] : []), ...(table ? [`--table=${table}`] : []), ...(notes ? [`--notes=${notes}`] : []),
     "--", native.command, ...native.args],
   env: native.env,
 });
@@ -115,7 +118,10 @@ const DISALLOWED = ["Bash", "Edit", "Write", "NotebookEdit", "WebFetch", "WebSea
   // Runs must not reach other sessions or start workflows: a peer could hand them the answer.
   "SendMessage", "ListAgents", "Workflow", "Skill",
   // Claude Code's own task list: small models take "Tareas" (tasks) for it and never open the server.
-  "TaskList", "TaskCreate", "TaskGet", "TaskUpdate", "TaskStop", "TodoWrite"];
+  "TaskList", "TaskCreate", "TaskGet", "TaskUpdate", "TaskStop", "TodoWrite",
+  // Added in later Claude Code versions: scheduling, notifications and other side effects outside the run.
+  "CronCreate", "CronDelete", "CronList", "RemoteTrigger", "ScheduleWakeup", "PushNotification",
+  "DesignSync", "EnterWorktree", "ExitWorktree", "ReportFindings"];
 
 const mcpConfig = (arm: string, token: string) => ({ mcpServers: { [flags.suite.startsWith("notion") ? "notion" : "gh"]: suite.server(arm, token) } });
 
@@ -151,7 +157,8 @@ async function runOnce(model: string, arm: string, task: Task, rep: number) {
     env: {
       ...(SUB ? { CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1", PHRASEBOOK_TOKEN: token, ENABLE_CLAUDEAI_MCP_SERVERS: "false" } : { ANTHROPIC_API_KEY: Deno.env.get("ANTHROPIC_API_KEY")! }), PATH: Deno.env.get("PATH") ?? "", HOME: Deno.env.get("HOME") ?? "",
       // native-defer: Claude Code's own deferred MCP tool loading (tool search), forced on.
-      ...(arm === "native-defer" ? { ENABLE_TOOL_SEARCH: "true" } : {}),
+      // Every other arm loads its tools up front, as Claude Code did by default before 2.1.312.
+      ENABLE_TOOL_SEARCH: arm === "native-defer" ? "true" : "false",
     },
     clearEnv: true,
     stdout: "piped",

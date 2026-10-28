@@ -19,11 +19,14 @@ import type { Call, Session } from "./suites.ts";
 import { compile, CommandError as TableError, loadTable } from "./auto/engine.ts";
 import { stripDialect } from "./auto/validate.ts";
 import { GENERIC_V4_EXTRAS } from "./v3/glossary.ts";
+import { compactResult, trimTools } from "./arms/ablations.ts";
 
 // --table=<glossary json> drives any server from a generated command table (needs --runtime=v4).
 // --notes=<json {instructions, extra}> adds server instructions and extra glossary lines (small-model variants).
 // --runtime=v4 runs commands through the glossary v4 engine (references, pipelines, compact output).
-const flags = parseArgs(Deno.args, { string: ["name", "runtime", "table", "notes"], default: { name: "github", runtime: "v2" }, "--": true });
+// --passthrough=trimmed|compact|trimmed-compact serves the upstream's own tools instead of a glossary,
+// with trimmed definitions and/or compacted results (the ablation arms in src/arms/ablations.ts).
+const flags = parseArgs(Deno.args, { string: ["name", "runtime", "table", "notes", "passthrough"], default: { name: "github", runtime: "v2" }, "--": true });
 const upstreamCmd = flags["--"] ?? [];
 if (!upstreamCmd.length) {
   console.error("Usage: deno run -A src/proxy.ts --name=github -- <upstream command> [args...]");
@@ -71,11 +74,23 @@ const session: Session = {
   finish: () => Promise.resolve({ success: false, harnessGaps: [] }),
 };
 
+const pass = flags.passthrough;
+if (pass && !["trimmed", "compact", "trimmed-compact"].includes(pass)) throw new Error(`--passthrough=${pass}: use trimmed, compact or trimmed-compact`);
+const passTools = pass?.includes("trimmed")
+  ? trimTools(tools).map((t) => ({ name: t.name, description: t.description, inputSchema: t.input_schema }))
+  : tools;
+
 server.setRequestHandler(ListToolsRequestSchema, () => ({
-  tools: [{ name: flags.name, description, inputSchema: githubGlossaryToolV2.input_schema }],
+  tools: pass ? passTools : [{ name: flags.name, description, inputSchema: githubGlossaryToolV2.input_schema }],
 }));
 
-server.setRequestHandler(CallToolRequestSchema, async (req: { params: { arguments?: Record<string, unknown> } }) => {
+server.setRequestHandler(CallToolRequestSchema, async (req: { params: { name: string; arguments?: Record<string, unknown> } }) => {
+  if (pass) {
+    const res = await upstream.callTool({ name: req.params.name, arguments: req.params.arguments ?? {} });
+    if (res.isError || !pass.includes("compact")) return res;
+    const text = (res.content as { text?: string; resource?: { text?: string } }[]).map((x) => x.text ?? x.resource?.text ?? "").join("\n");
+    return { content: [{ type: "text", text: compactResult(text) }] };
+  }
   const command = (req.params.arguments ?? {}).command;
   if (typeof command !== "string") {
     return { content: [{ type: "text", text: 'Send {"command": "..."}' }], isError: true };
