@@ -28,7 +28,11 @@ En ninguno de los dos caminos calculas tokens tú: el runner los guarda en cada 
 - **Costo, camino A**: lo paga tu cuenta. El arm `native` envía unos 27 mil tokens de entrada por
   turno; con un modelo de precio medio calcula entre 10 y 40 USD por idioma. Una API key gratis
   de Google AI Studio también sirve (es más lenta por los límites del plan gratis).
-- **Costo, camino B**: no pagas aparte. Gastas cuota de tu suscripción. Si llegas al límite, el
+- **Costo, camino B**: no pagas aparte, pero gasta mucha cuota: la ronda completa equivale a unas
+  200 veces el smoke test. Mira tu cuota antes y después del smoke test (Codex: `/status`) y
+  multiplica. En ChatGPT Plus, con un modelo grande y razonamiento medio, un runner midió cerca de
+  1,5% de la ventana de 5 horas y 0,5% de la semanal por corrida: la ronda toma varias semanas de
+  un plan Plus. Un modelo más chico o menos razonamiento gasta menos. Si llegas al límite, el
   runner se detiene solo y continúas cuando se renueve la cuota, con el mismo comando.
 
 ## Reglas
@@ -245,6 +249,9 @@ deno run -A src/cli_bench.ts --cli=codex --model=<MODELO> --runner=<tu-usuario> 
 | (B) `ERR` con "login", "auth" o "401" | vuelve a entrar con `codex login` o `gemini` |
 | (B) `warning: codex X; this runner was tested with ...` | instala la versión de la tabla de 4B |
 | (B) líneas `FRGN` | la CLI usó una herramienta que debía estar apagada: para y avísanos |
+| (B) ChatGPT dice que el login por código de dispositivo está deshabilitado | activa la autorización por código de dispositivo para Codex en la configuración de ChatGPT (Seguridad) y repite `codex login` |
+| `git status` muestra `deno.lock` modificado | Deno resolvió una dependencia; es inofensivo y no forma parte del congelamiento. `git checkout deno.lock` lo restaura |
+| `git status` muestra `vendor/` o `.cli-runs/` | los escriben `setup.sh` y `cli_bench.ts`; es esperado |
 
 ## 6. Qué nos devuelves
 

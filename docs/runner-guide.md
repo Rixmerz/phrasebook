@@ -31,7 +31,11 @@ On neither path do you count tokens yourself. The runner stores them on every li
   - The `native` arm sends about 27k input tokens per turn. With a mid-priced model, expect 10 to
     40 USD per language.
   - A free Google AI Studio API key also works; it is slower because of the free tier's limits.
-- **Cost, path B:** nothing extra; it uses your subscription's quota.
+- **Cost, path B:** nothing extra in money, but a lot of quota: the full round is about 200 times
+  the smoke test. Check your quota before and after the smoke test (Codex: `/status`) and
+  multiply. On ChatGPT Plus with a large model and medium reasoning, one runner measured about
+  1.5% of the 5-hour window and 0.5% of the weekly window per run, so the round takes several weeks
+  of a Plus plan. A smaller model or lower reasoning effort uses less.
   - If you hit the limit, the runner stops by itself.
   - Run the same command again once the quota renews and it picks up where it stopped.
 
@@ -250,6 +254,9 @@ deno run -A src/cli_bench.ts --cli=codex --model=<MODEL> --runner=<your-id> \
 | (B) `ERR` mentioning "login", "auth" or "401" | log in again with `codex login` or `gemini` |
 | (B) `warning: codex X; this runner was tested with ...` | install the version in the table in 4B |
 | (B) `FRGN` lines | the CLI used a tool that should have been off: stop and tell us |
+| (B) ChatGPT says device-code login is disabled | turn on device code authorization for Codex in ChatGPT's settings (Security), then run `codex login` again |
+| `git status` shows `deno.lock` modified | Deno resolved a dependency; harmless and not part of the freeze. `git checkout deno.lock` restores it |
+| `git status` shows `vendor/` or `.cli-runs/` | written by `setup.sh` and `cli_bench.ts`; expected |
 
 ## 6. What you send back
 

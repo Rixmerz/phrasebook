@@ -32,8 +32,15 @@ a step fails, stop and report; do not improvise a fix.
    `beacon-bundle.zip`.** It is a confidential test set. Anything you read is sent to your model
    provider, and that leaks it. You may only run the exact commands below that touch it: unzip,
    the `sha256sum -c` checks and the `deno test`.
-2. **Do not modify, create or delete any file inside the `phrasebook` repository**, except the
-   outputs the commands write under `results/runs/` and the form in step 9.
+2. **Do not modify, create or delete any file inside the `phrasebook` repository yourself.**
+   The commands in this runbook write some files on their own, and that is expected:
+   - `./scripts/setup.sh` downloads the GitHub MCP server into `vendor/`;
+   - `cli_bench.ts` makes temporary folders under `.cli-runs/`;
+   - the runs write their logs under `results/runs/`;
+   - Deno may add entries to `deno.lock` while resolving dependencies. This file is not part of
+     the freeze; restore it with `git checkout deno.lock` if you want a clean tree.
+
+   Apart from those, and the form in step 9 (saved outside the repository):
    - Do not "fix" errors, and do not patch code, configs or the lockfile.
    - If something fails, stop, show the person the exact error, and point them to section 5 of
      `docs/runner-guide.md`.
@@ -122,7 +129,9 @@ Install the exact version:
 - ChatGPT: `npm install -g @openai/codex@0.165.0`
 - Google: `npm install -g @google/gemini-cli@0.66.0`
 
-Then ask the person to log in themselves:
+Then ask the person to log in themselves. If the ChatGPT page says device-code login is
+disabled, the person must turn on device code authorization for Codex in their ChatGPT settings
+(Security), then try again.
 
 - `codex login`, choosing "Sign in with ChatGPT";
 - or `gemini`, choosing "Login with Google", then `/quit`.
@@ -164,7 +173,9 @@ Tell the person what the full round is:
 
 - 288 runs per language on path A, or 216 on path B;
 - two languages;
-- the expected cost or quota use from section 0 of the guide.
+- the expected cost or quota use from section 0 of the guide. On path B, before asking, show the
+  quota the smoke test used (for Codex, `/status` inside `codex` shows the 5-hour and weekly
+  windows) and multiply it out: the full round is about 200 times the smoke test.
 
 Wait for an explicit yes. Then run both languages, one after the other. Start them so they
 survive your session ending (`nohup ... > run-es.log 2>&1 &`, or `tmux`), and tell the person
