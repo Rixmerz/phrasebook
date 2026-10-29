@@ -11,3 +11,14 @@ clients/
 !results/runs/
 !results/runs/*.jsonl
 docs/STATUS.md
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.fls
+paper/*.fdb_latexmk
+
+# Private task sets (blind; distributed outside git, frozen by hash)
+private/
+.cli-runs/

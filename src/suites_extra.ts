@@ -21,6 +21,7 @@ import { makeRealSuite } from "./github/real/suite.ts";
 import { realBlindTasks } from "./github/real/blindtasks.ts";
 import { makeNotionSuite } from "./notion/suite.ts";
 import { notionBlindTasks } from "./notion/blindtasks.ts";
+import { privateSets } from "./github/private_sets.ts";
 
 const root = new URL("../", import.meta.url).pathname;
 const tableAt = (name: string): Table | null => {
@@ -196,3 +197,7 @@ const candidates: Record<string, Suite | null> = {
 export const extraSuites: Record<string, Suite> = Object.fromEntries(
   Object.entries(candidates).filter((e): e is [string, Suite] => e[1] !== null),
 );
+for (const p of privateSets) {
+  extraSuites[`github-${p.name}`] = makeGithubSuite(`github-${p.name}`, p.tasks("es"), p.seed);
+  extraSuites[`github-${p.name}-en`] = makeGithubSuite(`github-${p.name}-en`, p.tasks("en"), p.seed);
+}

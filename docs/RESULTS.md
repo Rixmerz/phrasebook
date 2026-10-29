@@ -1038,6 +1038,24 @@ add blocks with `append block` (a markdown edit rewrites every block). Tuned set
 - Blind, `github-blind4` (frozen in 41446e6, sha256 c82e6ba3), Haiku 4.5, 3 reps: glossary4s 27/30 (0.61 USD), native 23/30 (0.59 USD), glossary4 13/30 (0.41 USD). The `b4-missing-branch` grader misses "No encontré"-style replies, so it undercounts every arm on that task. It is left as frozen.
 
 
+## Ablation (2026-10-28): what carries the saving
+
+Preregistration and full table: `docs/preregistration-ablation.md`. Claude Code 2.1.312 on the
+subscription, github-blind3, 3 reps, tool search off for every arm. Native MCP with one ingredient
+of the phrasebook at a time: compact results (`native-compact`), descriptions cut to their first
+sentence (`native-trimmed`), or both. Cost relative to glossary4:
+
+| model | native | native-compact | native-trimmed | native-trimmed-compact |
+|---|---|---|---|---|
+| Haiku 5.5 | 1.89x [1.49, 2.41] | 1.58x [1.22, 2.04] | 1.63x [1.26, 2.03] | 1.24x [0.87, 1.67] |
+| Sonnet 5.5 | 2.05x [1.44, 2.84] | 1.82x [1.21, 2.70] | 1.84x [1.34, 2.60] | 1.53x [1.03, 2.21] |
+
+Accuracy ties. Trimming and compaction explain about two thirds of the saving on Haiku 5.5 and 40%
+on Sonnet 5.5 (log scale); the rest comes with the language, through fewer turns (2.9 to 3.2 per
+run for glossary4, 5.1 to 5.7 for every native variant). All four predictions held, the fourth
+barely. Two Sonnet attempts were lost to a harness leak: Claude Code left each run's MCP servers
+running until the container ran out of memory. `client_bench` now stops them after each run.
+
 ## Field report: a Gemini data agent (2026-10-28)
 
 Outside this benchmark: a team ported the phrasebook to a production text-to-SQL
@@ -1051,3 +1069,17 @@ A graded follow-up (15 questions) found no quality drop for the phrasebook (toke
 -34%, judge +0.29, CI crosses 0) and no gain from glossary4s, whose notes target
 procedural errors while this agent's errors are choosing the wrong source.
 Details, anonymized: [field-report-gemini-data-agent.md](field-report-gemini-data-agent.md).
+
+## Cross-vendor round: first external runner (2026-10-29)
+
+One runner (`julio-opazo`) took the subscription path (Codex CLI 0.165.0, ChatGPT login,
+`gpt-6.1-sol` with medium reasoning, Windows 11 through WSL2) through setup, the integrity checks
+and the smoke test on `github-blind4`: native and glossary4 both passed, with no errors and no
+foreign tools. This is the first run of the external runners against a real non-Anthropic model.
+It confirms the Codex path works end to end; two runs on a public smoke task are not data, so
+nothing from it enters the tables.
+
+The full round on `orchard/beacon` was not run. The smoke test moved the account's 5-hour window
+by about 3 points and the weekly window by about 1, which projects the 432 runs to two or three weeks of weekly quota
+of a Plus plan (0.5% of the weekly window per run, times 432). The paper states this as a limit of the subscription path. The runner's dry run also
+fixed three problems in the runner docs (commit 69efd98).

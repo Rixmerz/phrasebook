@@ -23,6 +23,7 @@ import { toolsearchArm } from "./arms/toolsearch.ts";
 import { codesearchArm } from "./arms/codesearch.ts";
 import { ptcArm } from "./arms/ptc.ts";
 import { glossaryHelpArm } from "./arms/glossary_help.ts";
+import { nativeCompactArm, nativeTrimmedArm, nativeTrimmedCompactArm } from "./arms/ablations.ts";
 import { glossary3FeedbackArm, glossary3LegendArm, glossary4Arm } from "./v3/arms.ts";
 
 export const extraArms: Record<string, ExtraArm> = {
@@ -33,4 +34,7 @@ export const extraArms: Record<string, ExtraArm> = {
   "glossary3-legend": glossary3LegendArm,
   "glossary3-feedback": glossary3FeedbackArm,
   glossary4: glossary4Arm,
+  "native-compact": nativeCompactArm,
+  "native-trimmed": nativeTrimmedArm,
+  "native-trimmed-compact": nativeTrimmedCompactArm,
 };

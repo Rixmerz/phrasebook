@@ -15,6 +15,7 @@ import { startMock } from "./github/mock.ts";
 import { ghTasks, seed } from "./github/tasks.ts";
 import { hardSeed, hardTasks } from "./github/hard.ts";
 import { blind4Seed, blind4Tasks } from "./github/blind4tasks.ts";
+import { privateSets } from "./github/private_sets.ts";
 import { blind3Seed, blind3Tasks } from "./github/blind3tasks.ts";
 import type { GhTask } from "./github/tasks.ts";
 import type { State } from "./github/mock.ts";
@@ -28,13 +29,14 @@ import { notionBlind6Tasks } from "./notion/blind6tasks.ts";
 import { NOTION_SERVER } from "./notion/suite.ts";
 import { endRun, mockUrl, newRun } from "./notion/mock.ts";
 
-await loadEnv();
 const flags = parseArgs(Deno.args, {
   string: ["suite", "models", "arms", "reps", "tasks", "out", "concurrency", "usd-cap", "auth"],
   default: { suite: "github", models: "claude-haiku-5-5", arms: "native,glossary", reps: "1", concurrency: "4", "usd-cap": "70", auth: "api" },
 });
 
 const SUB = flags.auth === "subscription";
+// The API key is needed only for --auth=api.
+if (!SUB) await loadEnv();
 const GH = new URL("../vendor/github-mcp/github-mcp-server", import.meta.url).pathname;
 const PROXY = new URL("./proxy.ts", import.meta.url).pathname;
 const NOTION_TABLE = new URL("../glossaries/notion-auto.json", import.meta.url).pathname;
@@ -57,9 +59,11 @@ type ClientSuite = {
 };
 const baseEnv = () => ({ PATH: Deno.env.get("PATH") ?? "", HOME: Deno.env.get("HOME") ?? "" });
 // A proxy arm wraps the native server: glossary (v2), glossary4 (v4 runtime), with a table for non-GitHub servers.
+// native-compact, native-trimmed, native-trimmed-compact: the upstream's own tools through the proxy's passthrough.
 const proxied = (arm: string, name: string, native: Server, table?: string, notes?: string): Server => ({
   command: "deno",
-  args: ["run", "-A", PROXY, `--name=${name}`, ...(arm.startsWith("glossary4") ? ["--runtime=v4"] : []), ...(table ? [`--table=${table}`] : []), ...(notes ? [`--notes=${notes}`] : []),
+  args: ["run", "-A", PROXY, `--name=${name}`, ...(arm.startsWith("native-") ? [`--passthrough=${arm.slice("native-".length)}`] : []),
+    ...(arm.startsWith("glossary4") ? ["--runtime=v4"] : []), ...(table ? [`--table=${table}`] : []), ...(notes ? [`--notes=${notes}`] : []),
     "--", native.command, ...native.args],
   env: native.env,
 });
@@ -109,13 +113,20 @@ const SUITES: Record<string, ClientSuite> = {
   "notion-blind5": notionSuite(notionBlind5Tasks as Task[]),
   "notion-blind6": notionSuite(notionBlind6Tasks as Task[]),
 };
+for (const p of privateSets) {
+  SUITES[`github-${p.name}`] = githubSuite(p.tasks("es"), p.seed);
+  SUITES[`github-${p.name}-en`] = githubSuite(p.tasks("en"), p.seed);
+}
 const suite = SUITES[flags.suite];
 
 const DISALLOWED = ["Bash", "Edit", "Write", "NotebookEdit", "WebFetch", "WebSearch", "Task", "Agent", "Read", "Glob", "Grep",
   // Runs must not reach other sessions or start workflows: a peer could hand them the answer.
   "SendMessage", "ListAgents", "Workflow", "Skill",
   // Claude Code's own task list: small models take "Tareas" (tasks) for it and never open the server.
-  "TaskList", "TaskCreate", "TaskGet", "TaskUpdate", "TaskStop", "TodoWrite"];
+  "TaskList", "TaskCreate", "TaskGet", "TaskUpdate", "TaskStop", "TodoWrite",
+  // Added in later Claude Code versions: scheduling, notifications and other side effects outside the run.
+  "CronCreate", "CronDelete", "CronList", "RemoteTrigger", "ScheduleWakeup", "PushNotification",
+  "DesignSync", "EnterWorktree", "ExitWorktree", "ReportFindings"];
 
 const mcpConfig = (arm: string, token: string) => ({ mcpServers: { [flags.suite.startsWith("notion") ? "notion" : "gh"]: suite.server(arm, token) } });
 
@@ -130,6 +141,27 @@ function armFolder(arm: string): string {
   Deno.writeTextFileSync(`${dir}.claude/settings.json`, JSON.stringify({ enableAllProjectMcpServers: true }, null, 2) + "\n");
   folders.set(arm, dir);
   return dir;
+}
+
+// Claude Code can exit without stopping the MCP servers it started. Left running, one proxy and one
+// server per run filled the container's memory and got later runs killed (exit 137). Every process of
+// a run carries its unique token in its environment, so those still alive are stopped here (Linux).
+function killLeftovers(token: string) {
+  let entries: Iterable<Deno.DirEntry>;
+  try {
+    entries = Deno.readDirSync("/proc");
+  } catch {
+    return;
+  }
+  for (const e of entries) {
+    const pid = Number(e.name);
+    if (!pid || pid === Deno.pid) continue;
+    try {
+      if (Deno.readTextFileSync(`/proc/${pid}/environ`).includes(token)) Deno.kill(pid, "SIGKILL");
+    } catch {
+      // gone already, or not ours to read
+    }
+  }
 }
 
 async function runOnce(model: string, arm: string, task: Task, rep: number) {
@@ -151,13 +183,15 @@ async function runOnce(model: string, arm: string, task: Task, rep: number) {
     env: {
       ...(SUB ? { CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1", PHRASEBOOK_TOKEN: token, ENABLE_CLAUDEAI_MCP_SERVERS: "false" } : { ANTHROPIC_API_KEY: Deno.env.get("ANTHROPIC_API_KEY")! }), PATH: Deno.env.get("PATH") ?? "", HOME: Deno.env.get("HOME") ?? "",
       // native-defer: Claude Code's own deferred MCP tool loading (tool search), forced on.
-      ...(arm === "native-defer" ? { ENABLE_TOOL_SEARCH: "true" } : {}),
+      // Every other arm loads its tools up front, as Claude Code did by default before 2.1.312.
+      ENABLE_TOOL_SEARCH: arm === "native-defer" ? "true" : "false",
     },
     clearEnv: true,
     stdout: "piped",
     stderr: "piped",
   });
   const out = await cmd.output();
+  killLeftovers(token);
   const latency = Math.round(performance.now() - t0);
   let res: Record<string, unknown> = {};
   try {
@@ -166,7 +200,9 @@ async function runOnce(model: string, arm: string, task: Task, rep: number) {
     if (Deno.env.get("PHRASEBOOK_TRACE")) Deno.writeTextFileSync(`scratch/trace-${model}-${arm}-${task.id}-${rep}.jsonl`, raw);
     res = Deno.env.get("PHRASEBOOK_TRACE") ? JSON.parse(raw.trim().split("\n").at(-1)!) : JSON.parse(raw);
   } catch {
-    res = { is_error: true, result: new TextDecoder().decode(out.stderr).slice(0, 500) };
+    // Keep whatever the client printed (a usage-limit notice comes back as plain text).
+    const said = new TextDecoder().decode(out.stderr).trim() || new TextDecoder().decode(out.stdout).trim();
+    res = { is_error: true, subtype: `exit ${out.code}`, result: said.slice(0, 500) };
   }
   const { state, gaps } = await suite.end(token);
   if (!SUB) Deno.removeSync(dir, { recursive: true });
