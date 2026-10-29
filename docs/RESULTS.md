@@ -1069,3 +1069,17 @@ A graded follow-up (15 questions) found no quality drop for the phrasebook (toke
 -34%, judge +0.29, CI crosses 0) and no gain from glossary4s, whose notes target
 procedural errors while this agent's errors are choosing the wrong source.
 Details, anonymized: [field-report-gemini-data-agent.md](field-report-gemini-data-agent.md).
+
+## Cross-vendor round: first external runner (2026-10-29)
+
+One runner (`julio-opazo`) took the subscription path (Codex CLI 0.165.0, ChatGPT login,
+`gpt-6.1-sol` with medium reasoning, Windows 11 through WSL2) through setup, the integrity checks
+and the smoke test on `github-blind4`: native and glossary4 both passed, with no errors and no
+foreign tools. This is the first run of the external runners against a real non-Anthropic model.
+It confirms the Codex path works end to end; two runs on a public smoke task are not data, so
+nothing from it enters the tables.
+
+The full round on `orchard/beacon` was not run. The smoke test moved the account's 5-hour window
+by about 3 points and the weekly window by about 1, which projects the 432 runs to several weeks
+of a Plus plan. The paper states this as a limit of the subscription path. The runner's dry run also
+fixed three problems in the runner docs (commit 69efd98).
