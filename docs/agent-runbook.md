@@ -65,7 +65,8 @@ Ask for these, then repeat them back in one message and wait for confirmation:
 - a short runner id: their GitHub user, or firstname-lastname without spaces;
 - any reasoning-effort or extra setting they want fixed for the whole round (default: none);
 - for path A, the name of the environment variable that will hold the key;
-- for a local model, the server (Ollama, vLLM, LM Studio) and its URL.
+- for a local model: the server (Ollama, vLLM, LM Studio) and its URL, the model's parameter
+  count, the quantization, and the GPU with its memory.
 
 ### Step 2. Environment
 
@@ -138,6 +139,20 @@ disabled, the person must turn on device code authorization for Codex in their C
 
 In Docker the login prints a link they open in their own browser. Wait until they say it is done.
 
+### Step 5A. Path A with a local model only: server check
+
+The model server must run where the benchmark runs. Under WSL2, run it inside the same WSL
+Ubuntu; a server on the Windows side is usually not reachable at `localhost`. Check, and ask the
+person to fix it (do not change their server yourself):
+
+- **Context of at least 65536 tokens.** The `native` arm alone sends about 27k tokens of
+  definitions; with less context everything fails silently.
+  - Ollama: started as `OLLAMA_CONTEXT_LENGTH=65536 ollama serve`.
+  - vLLM: `--max-model-len 65536 --enable-auto-tool-choice --tool-call-parser <parser>`.
+  - LM Studio: context length set to 65536 in the model's load settings.
+- **Tool calling enabled** for this model in the server.
+- `curl <BASE URL>/models` lists the model id the person gave you.
+
 ### Step 6. Smoke test
 
 Path A (the person has exported the key in the variable they named):
@@ -160,7 +175,8 @@ deno run -A src/cli_bench.ts --cli=<codex|gemini> --model=<MODEL> --runner=<RUNN
 
 Success means two result lines, either `PASS` or `FAIL`; whether they pass does not matter.
 
-- Path A also needs `turns=` above 1.
+- Path A also needs `turns=` above 1. On a local model, `turns=1` everywhere almost always
+  means tool calling or context is not set up (step 5A).
 - Path B also needs `calls=` above 0.
 - `ERR`, `GAP`, `FRGN`, `error:`, or `turns=1` on every line all count as failures. Report them
   with section 5 of the guide.
@@ -173,7 +189,10 @@ Tell the person what the full round is:
 
 - 288 runs per language on path A, or 216 on path B;
 - two languages;
-- the expected cost or quota use from section 0 of the guide. On path B, before asking, show the
+- the expected cost or quota use from section 0 of the guide. With a local model there is no
+  cost, but there is time: tell the person how long the smoke test took. The full round is about
+  290 times the smoke test at `--concurrency=1`. Agree on a `--concurrency` the GPU can take
+  (1 or 2 on one consumer GPU). On path B, before asking, show the
   quota the smoke test used (for Codex, `/status` inside `codex` shows the 5-hour and weekly
   windows) and multiply it out: the full round is about 200 times the smoke test.
 

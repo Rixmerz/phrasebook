@@ -276,7 +276,7 @@ Qué corriste
 - Camino (A: API / B: suscripción con codex o gemini) y versión de la CLI si es B:
 - Proveedor y endpoint (--base-url, solo camino A):
 - Id exacto del modelo (--model):
-- Si es local: cuantización, servidor (Ollama/vLLM/...) y versión, GPU, contexto máximo:
+- Si es local: cantidad de parámetros, cuantización, servidor (Ollama/vLLM/...) y versión, GPU, contexto máximo:
 - Flags extra (--extra, --schemas, --drop-fields, --concurrency):
 - Comando exacto (los dos, ES y EN):
 - Commit de phrasebook (git rev-parse HEAD):

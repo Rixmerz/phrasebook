@@ -281,7 +281,7 @@ What you ran
 - Path (A: API / B: subscription with codex or gemini) and CLI version if B:
 - Provider and endpoint (--base-url, path A only):
 - Exact model id (--model):
-- If local: quantization, server (Ollama/vLLM/...) and version, GPU, maximum context:
+- If local: parameter count, quantization, server (Ollama/vLLM/...) and version, GPU, maximum context:
 - Extra flags (--extra, --schemas, --drop-fields, --concurrency, --cli-args):
 - Exact commands (both, ES and EN):
 - phrasebook commit (git rev-parse HEAD):
