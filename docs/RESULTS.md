@@ -1055,3 +1055,17 @@ on Sonnet 5.5 (log scale); the rest comes with the language, through fewer turns
 run for glossary4, 5.1 to 5.7 for every native variant). All four predictions held, the fourth
 barely. Two Sonnet attempts were lost to a harness leak: Claude Code left each run's MCP servers
 running until the container ran out of memory. `client_bench` now stops them after each run.
+
+## Field report: a Gemini data agent (2026-10-28)
+
+Outside this benchmark: a team ported the phrasebook to a production text-to-SQL
+agent on Gemini Flash-Lite (17 tools already written for the model). Tool
+definitions fell 79%; tokens per turn fell about 21% against two native runs whose
+noise was 11%; tool rounds did not move. Data glossaries that replace catalog
+discovery saved 12% of tokens and lowered graded answer quality (-0.29 of 5,
+95% CI [-0.49, -0.12], 99 replayed turns). The gap with GitHub comes from little
+left to compress, a baseline already shaped for the model, and dependent rounds.
+A graded follow-up (15 questions) found no quality drop for the phrasebook (tokens
+-34%, judge +0.29, CI crosses 0) and no gain from glossary4s, whose notes target
+procedural errors while this agent's errors are choosing the wrong source.
+Details, anonymized: [field-report-gemini-data-agent.md](field-report-gemini-data-agent.md).

@@ -34,6 +34,7 @@ or any result. Intervals are 95%. The full record, including refutations, is in
 | Cheaper than native tools | Opus 5.5: native 5.1x; inside Claude Code: native 1.8x to 2.5x |
 | Small models: a variant that wins | Haiku 4.5, Notion blind sets 4 to 6 (36 tasks, 108 runs per arm): glossary4s 90% [83, 94], native 58% [49, 67], p < 0.001, at 58% of native's cost |
 | Holds on real GitHub | live sandbox repo, 12 blind tasks: glossary4 36/36 and 33/36 vs native 31/36 and 29/36 (Haiku 5.5, Sonnet 5.5); native costs 3.3x to 4.2x |
+| First non-Claude port: modest gain | a production text-to-SQL agent on Gemini Flash-Lite, 17 model-friendly tools: definitions -79%, tokens per turn -21% (noise 11%) to -34%, same graded quality, glossary4s no better; data glossaries that replace discovery saved 12% but lowered graded quality (-0.29 of 5, CI excludes 0). [Field report](docs/field-report-gemini-data-agent.md) |
 
 Where it does not win: on small servers that return plain text (filesystem, git) all
 arms cost about the same, and code mode is about 2x cheaper on text-file data work.
@@ -43,7 +44,7 @@ that is not significant (p = 0.29).
 Caveats that matter: most backends are local fakes of the real APIs (GitHub REST and
 GraphQL, Notion), plus two rounds on real GitHub; tasks and graders were written by the
 authors, so some graders have bugs (documented, left frozen); prompts are in Spanish;
-only Claude models were tested.
+only Claude models were tested in the benchmark; one field port ran on Gemini (see the [field report](docs/field-report-gemini-data-agent.md)).
 
 ## How it works
 
