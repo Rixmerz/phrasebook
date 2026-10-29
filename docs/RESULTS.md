@@ -1080,6 +1080,6 @@ It confirms the Codex path works end to end; two runs on a public smoke task are
 nothing from it enters the tables.
 
 The full round on `orchard/beacon` was not run. The smoke test moved the account's 5-hour window
-by about 3 points and the weekly window by about 1, which projects the 432 runs to several weeks
-of a Plus plan. The paper states this as a limit of the subscription path. The runner's dry run also
+by about 3 points and the weekly window by about 1, which projects the 432 runs to two or three weeks of weekly quota
+of a Plus plan (0.5% of the weekly window per run, times 432). The paper states this as a limit of the subscription path. The runner's dry run also
 fixed three problems in the runner docs (commit 69efd98).
